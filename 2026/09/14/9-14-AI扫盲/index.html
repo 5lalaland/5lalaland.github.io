@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>9.14_AI扫盲 | 5lalaland</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1---  用户任务 ↓ 【Agent（智能体，逻辑概念）】 负责思考、规划、决定什么时候调用工具 ↓ 【LangChain（开发框架）】 是实现Agent的代码库，提供Agent运行时、记忆、提示词、工具管理 ↓ 【MCP（通信协议）】 LangChain通过MCPAdapter，把MCP Server的外部工具接入LangChain Agent ↓ MCP Server（文件、数据库、API、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9.14_AI扫盲">
+<meta property="og:url" content="https://5lalaland.github.io/2026/09/14/9-14-AI%E6%89%AB%E7%9B%B2/index.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="1---  用户任务 ↓ 【Agent（智能体，逻辑概念）】 负责思考、规划、决定什么时候调用工具 ↓ 【LangChain（开发框架）】 是实现Agent的代码库，提供Agent运行时、记忆、提示词、工具管理 ↓ 【MCP（通信协议）】 LangChain通过MCPAdapter，把MCP Server的外部工具接入LangChain Agent ↓ MCP Server（文件、数据库、API、">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-09-14T09:21:41.000Z">
+<meta property="article:modified_time" content="2026-09-14T11:37:11.423Z">
+<meta property="article:author" content="5lalaland">
+<meta property="article:tag" content="agent_mcp_langchai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "9.14_AI扫盲",
+  "url": "https://5lalaland.github.io/2026/09/14/9-14-AI%E6%89%AB%E7%9B%B2/",
+  "image": "https://5lalaland.github.io/img/avatar.png",
+  "datePublished": "2026-09-14T09:21:41.000Z",
+  "dateModified": "2026-09-14T11:37:11.423Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "5lalaland",
+      "url": "https://5lalaland.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/2026/09/14/9-14-AI%E6%89%AB%E7%9B%B2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '9.14_AI扫盲',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a><a class="nav-page-title" href="/"><span class="site-name">9.14_AI扫盲</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">9.14_AI扫盲</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-14T09:21:41.000Z" title="发表于 2026-09-14 17:21:41">2026-09-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-14T11:37:11.423Z" title="更新于 2026-09-14 19:37:11">2026-09-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>用户任务<br> ↓<br> 【Agent（智能体，逻辑概念）】 负责思考、规划、决定什么时候调用工具<br> ↓<br> 【LangChain（开发框架）】 是实现Agent的代码库，提供Agent运行时、记忆、提示词、工具管理<br> ↓<br> 【MCP（通信协议）】 LangChain通过MCPAdapter，把MCP Server的外部工具接入LangChain Agent<br> ↓<br> MCP Server（文件、数据库、API、计算器）</p>
+<p><strong>MCP</strong>:模型上下文协议，用来让 Agent 标准化调用外部工具 &#x2F; 服务。</p>
+<ul>
+<li><p>写一次 MCP Server，任何支持 MCP 的 Agent（LangChain、Claude Desktop、Cursor）都可以直接调用；</p>
+</li>
+<li><p>工具能力自动发现，不用硬编码工具列表；</p>
+</li>
+<li><p>统一权限边界，隔离外部系统，方便管控安全。<br> <strong>不负责思考推理</strong>，只管 Agent 和外部工具之间的标准化通信。</p>
+</li>
+<li><p>Host（AI 应用 &#x2F; Agent）：用于协调和管理一个或多个 MCP 客户端的 AI 应用程序</p>
+</li>
+<li><p>MCP Client ：一个维护与 MCP 服务器连接并从 MCP 服务器获取上下文以供 MCP 主机使用的组件。</p>
+</li>
+<li><p>MCP Server：一个为 MCP 客户端提供上下文信息的程序</p>
+</li>
+</ul>
+<p><strong>Agent</strong>:根据信息进行推理&#x2F;规划并采取行动的AI智能系统<br> 组件：</p>
+<ul>
+<li>大脑：LLM:chatpgt,qwen等</li>
+<li>记忆：大模型记住之前的聊天和操作，利用背景和上下文</li>
+<li>工具：互动的主要方式<ol>
+<li>主动获取上下文信息：检索数据并搜集文档</li>
+<li>采取行动：收发邮件，增删数据库</li>
+<li>编排：调用其他代理，触发工作流<br> 大部分是单agent 也可以用多Agent</li>
+</ol>
+</li>
+<li>API &#x3D; 两个程序交流的接口：定义与规定了可以发送什么请求并且获得什么数据<br> 常用Get&#x2F;Post方式，采用json格式<br> <code>https://example.com/api/chat</code> 是 <strong>API 地址</strong><br> sk-xxxxxxxx是 <strong>API Key</strong>，证明我有权限调用这个 API</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>东西</th>
+<th>例子</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>API地址</td>
+<td><a target="_blank" rel="noopener" href="https://xxx.com/api/chat">https://xxx.com/api/chat</a></td>
+<td>去哪里调用</td>
+</tr>
+<tr>
+<td>API Key</td>
+<td>sk-xxxx</td>
+<td>证明身份</td>
+</tr>
+<tr>
+<td>Token</td>
+<td>eyJxxx</td>
+<td>登录凭证</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>{“message”:”hello”}</td>
+<td>发送的数据</td>
+</tr>
+</tbody></table>
+<p>搭建agent平台:n8n</p>
+<p><strong>LangChain</strong>:开源的python AI应用开发框架，提供了摸快和工具<br> 功能：</p>
+<ul>
+<li>统一接口：管理LLM和prompt</li>
+<li>chain：智能流水线，把多个组件链接起来</li>
+<li>LCEL：灵活自定义整个AI任务的处理流程</li>
+<li>RAG:检索增强，全套工具</li>
+<li>agent：LLM为核心的决策引擎</li>
+<li>memory：让大模型记住部分对话</li>
+</ul>
+<p>组成：</p>
+<ol>
+<li>langchain libraries:提供多个包，框架清晰</li>
+<li>langchain  templates:langchain 提供的官方模版</li>
+<li>langchain serve :基于fastapi将langchain的链发布为rest api</li>
+<li>langsmith:开发平台，适合debug</li>
+</ol>
+<p><strong>1预处理阶段</strong>：文本-&gt;分词token<br> 数据来源：common crawl<br> 词语-&gt;UTF编码(01)-&gt;8位一组十进制-&gt;116,32这种常见的合并<br> 训练：神经网络，根据前面的token预测后面的词元  现代参数量接近1万亿 上下文几十万<br> 16亿-&gt;1天600美元 </p>
+<p>预处理阶段-&gt;自回归模型，autoregressive (AR)模型，只负责根据前面的token预测后面的内容，无对话功能</p>
+<p><strong>2.后训练阶段</strong> post-training<br> SFT监督 微调<br> 训练时间远小于预训练，学习对话</p>
+<p>hallucination解决<br> 找到ai的知识边界，将知识边界外的问题设置为我不知道并放入训练集；评估置信度<br> 推理好过直接给答案</p>
+<p><strong>3.RL强化学习（后训练的一种）</strong><br> 预训练-&gt;读书获得背景信息<br> 后训练-&gt;学习专家的解题办法<br> 强化学习-&gt;找到例题的最优解<br> 我们和llm的理解方式不同，人工标注的数据集并不一定是llm最易于理解的方式</p>
+<p>1.SFT -&gt;<br> 2.训练奖励模型 RM（Reward Model）【离线】</p>
+<ol>
+<li>拿同一个 prompt，让 SFT 模型<strong>采样多条不同回答</strong></li>
+<li>交给人类标注员，对多条回答做排序：哪个更好、哪个更差</li>
+<li>训练一个奖励模型：输入<code>prompt+回答</code>，输出一个标量分数，代表这个回答有多好<br> 3.PPO 强化学习在线优化【真正的 RL 循环】</li>
+<li><strong>Rollout（在线采样）</strong>：当前策略模型（Policy）接收 prompt，<strong>自己生成回答（包含完整思维链）</strong></li>
+<li><strong>打分</strong>：把生成的<code>prompt+模型输出</code>送入奖励模型 RM，得到奖励 r；额外加上<strong>KL 惩罚项</strong>&gt; KL 惩罚：约束新模型输出不能和原始 SFT 模型差太远，防止模型乱编、奖励黑客、语言崩坏</li>
+<li><strong>更新策略（PPO）</strong>：最大化期望奖励，更新大模型权重；PPO 会限制策略更新幅度，避免一次更新过大</li>
+<li>循环：回到 Rollout，不断生成新回答、打分、更新，直到收敛</li>
+</ol>
+<p>带来“神之一手”和“顿悟时刻”<br> 奶酪漏洞：ndrej Karpathy 提出的，专门用来描述<strong>大语言模型能力的特点</strong>，也就是写的 <em>Swiss cheese model of LLM capabilities</em>。</p>
+<blockquote>
+<p>瑞士奶酪（埃曼塔奶酪）本身有很多随机孔洞，用它比喻大模型： ✅ <strong>奶酪实体部分</strong>：模型做得很好的能力； 🕳️ <strong>奶酪上的孔洞</strong>：模型莫名其妙会翻车、做不好的能力（也就是 “漏洞”）。</p>
+</blockquote>
+<p>PPO：近端策略优化：</p>
+<ul>
+<li><strong>Clip 裁剪</strong>：限制每一轮策略更新的幅度，不让新模型和上一轮差距太大，避免训练崩坏。</li>
+<li><strong>KL 散度惩罚</strong>：额外加一个惩罚项，约束当前策略模型与初始 SFT 模型的输出分布差异，防止模型为了拿高分彻底偏离正常语言、编造事实。<br> RLHF：目前大语言模型对齐人类偏好的经典方案，目标是让模型输出不仅正确，还符合人类对 “有用、无害、清晰、有条理” 的主观期待。</li>
+</ul>
+<ol>
+<li><strong>SFT 监督微调</strong>：用人工撰写的「指令 - 高质量回答」成对数据，先把基座模型调教成能听懂指令的基础助手模型。</li>
+<li><strong>奖励模型（RM）训练</strong>：同一个 prompt 让 SFT 模型生成多条回答，由人类标注员按偏好排序，用排序数据训练一个奖励模型，输入「问题 + 回答」输出一个代表质量的分数。</li>
+<li><strong>强化学习优化</strong>：用 PPO 算法，让策略模型不断生成回答，从 RM 获取分数作为奖励，迭代更新模型权重，最大化预期得分。<br> . RLVR：可验证奖励强化学习：<strong>奖励不来自人类主观打分，而来自程序自动验证的客观结果</strong>。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io">5lalaland</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io/2026/09/14/9-14-AI%E6%89%AB%E7%9B%B2/">https://5lalaland.github.io/2026/09/14/9-14-AI%E6%89%AB%E7%9B%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://5lalaland.github.io" target="_blank">5lalaland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/agent-mcp-langchai/">agent_mcp_langchai</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/09/14/9-13-RAG/" title="9.13_RAG"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">9.13_RAG</div></div><div class="info-2"><div class="info-item-1">准备：切片-&gt;索引 回答：召回-重排-生成 1.切片：按照字数，段落…..方式分 2.索引：embedding将文本转换成向量 再将向量存储在向量数据库（原文和向量）当中 3.召回：返回与用户问题向量相似度最高的topk个文段；目前根据欧氏距离，点积,cos相似度等  成本低但准确率低 4.重排：返回用cross-encoder计算出的刚刚的topk个文段中更相近的几个文段 5.生成：AI根据文段生成结果 ✅ 为什么RAG比普通LLM更容易受到数据投毒？ RAG系统容易受到投毒攻击的主要原因是它引入了外部知识源，而这些数据通常被模型默认认为具有一定可信度。传统LLM主要依赖训练阶段固定的参数知识，而RAG系统会实时检索外部文档并拼接到Prompt中，因此攻击者可以通过影响检索结果间接影响模型输出。此外，向量数据库通常根据语义相似度进行检索，而不是根据真实性进行判断，因此攻击者可以构造与目标查询高度相关的恶意文档，提高其被召回的概率。同时，LLM本身缺乏可靠的事实验证能力，当恶意文档进入上下文后，模型可能会将其作为可信信息进行总结和生成。因此RAG系统需要额外考虑数据可信度、...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/14/9-14-AI%E6%89%AB%E7%9B%B2/" title="9.14_AI扫盲">9.14_AI扫盲</a><time datetime="2026-09-14T09:21:41.000Z" title="发表于 2026-09-14 17:21:41">2026-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/14/9-13-RAG/" title="9.13_RAG">9.13_RAG</a><time datetime="2026-09-14T09:19:01.000Z" title="发表于 2026-09-14 17:19:01">2026-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/14/9-10-prompt/" title="9.10_prompt">9.10_prompt</a><time datetime="2026-09-14T09:16:29.000Z" title="发表于 2026-09-14 17:16:29">2026-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/09/9-9-garak/" title="9.9_garak">9.9_garak</a><time datetime="2026-09-09T11:49:54.000Z" title="发表于 2026-09-09 19:49:54">2026-09-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/07/9-7-promprfoo%E9%85%8D%E7%BD%AE/" title="9.7_promprfoo配置">9.7_promprfoo配置</a><time datetime="2026-09-07T11:10:39.000Z" title="发表于 2026-09-07 19:10:39">2026-09-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
