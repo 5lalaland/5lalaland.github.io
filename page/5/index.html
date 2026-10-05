@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>5lalaland - 记录学习、技术与生活</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我的个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="5lalaland">
+<meta property="og:url" content="https://5lalaland.github.io/page/5/index.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="我的个人博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:author" content="5lalaland">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/page/5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '5lalaland',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">5lalaland</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/13/8-13-TPR-FPR/" title="8.13_TPR@FPR">8.13_TPR@FPR</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-13T06:25:30.000Z" title="发表于 2026-08-13 14:25:30">2026-08-13</time></span></div><div class="content">1. 攻击首先给每个样本一个分数假设攻击规定：  分数越高，越可能是训练成员。  例如：    文本 攻击分数    (x_1) 8.7   (x_2) 6.2   (x_3) 3.1   (x_4) 0.8   但只有分数还不够，还需要一个阈值 (\tau)： ![image-20260820142550027](&#x2F;Users&#x2F;yangxianle&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20260820142550027.png) 阈值越低，攻击越“激进”：能抓住更多成员，但也会误伤更多非成员。  2. “FPR&#x3D;1%”是怎样得到的？![image-20260820142557231](&#x2F;Users&#x2F;yangxianle&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20260820142557231.png)3. 然后计算...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/12/7.26-%E8%8A%A6%E8%8B%87/" title="7.26-芦苇">7.26-芦苇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-12T01:53:40.000Z" title="发表于 2026-08-12 09:53:40">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Security/">AI Security</a></span></div><div class="content">最近论文出分了第一次投稿的分数果然肯定还是不尽人意难过了一个晚上之后第二天好多了那就抓紧做实验转投吧不接受也得接受 </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/12/8-11-hongkong/" title="8.11-hongkong">8.11-hongkong</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-12T01:42:18.000Z" title="发表于 2026-08-12 09:42:18">2026-08-12</time></span></div><div class="content">一方面结束了家教 另一方面结束了论文的修订 来香港这里重启这个博客 现有的M IA的benchmark:  Hayes ，CheckMIABench Hayes : 先前的MIA采用的模型过小-选用大规模的gpt 成果： （1）强MIAs可以在预训练LLMs上成功，（2）但在实际场景中，其有效性仍然有限（例如AUC &lt; 0.7）； 尽管我们证明了LiRA能够在大模型规模上取得成功，但我们只有在偏离典型训练条件时才能实现令人印象深刻的结果（即AUC≥0.7）——具体来说，通过训练多个周期（第4.1节）和改变训练数据集大小（第4.2节）。 （3）即使强MIAs实现了优于随机的AUC，聚合指标也可能掩盖显著的单样本MIA决策不稳定：由于训练随机性，许多决策的稳定性极低，以至于在统计上无法与抛硬币区分开； （4）MIA成功与相关的LLM隐私度量之间的关系并不像先前研究所建议的那样直接。训练过程中较晚看到的样本往往面临更大的风险（第6.1节）  (5) AUC在中等规模的数据集（约100万样本，AUC&#x3D;0.753）时达到最高，而在数据集非常小或非常大的情况下，AUC均下降至...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/07/26/7-26-%E8%8A%A6%E8%8B%87/" title="7.26-芦苇">7.26-芦苇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-07-26T01:38:44.000Z" title="发表于 2026-07-26 09:38:44">2026-07-26</time></span></div><div class="content">最近论文出分了 第一次投稿的分数果然肯定还是不尽人意 难过了一个晚上之后第二天好多了 那就抓紧做实验转投吧 不接受也得接受 </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/07/22/7.22%20%20web%E7%AB%AFLLM%E6%94%BB%E5%87%BB/" title="7.22  web端LLM攻击">7.22  web端LLM攻击</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-07-22T03:23:04.000Z" title="发表于 2026-07-22 11:23:04">2026-07-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Security/">AI Security</a></span></div><div class="content">https://portswigger.net/web-security/llm-attacks  学习网站 1.LLM API 的工作原理将LLM与API集成的工作流程取决于API本身的结构。调用外部API时，某些LLM可能要求客户端调用单独的函数端点（实际上是一个私有API）来生成可以发送到这些API的有效请求。此工作流程可能如下所示：  客户端根据用户的提示调用 LLM。 LLM 检测到需要调用某个函数，并返回一个 JSON 对象，其中包含符合外部 API 架构的参数。 客户端使用提供的参数调用该函数。 客户端处理函数的响应。 客户端再次调用 LLM，并将函数响应作为新消息附加到该消息中。 LLM 调用外部 API 并返回函数响应。 LLM 会将此 API 调用的结果汇总并返回给用户。  2.**“过度授权”**是指LLM（生命周期管理）拥有访问敏感信息API的权限，并且可能被诱使以不安全的方式使用这些API。这使得攻击者能够将LLM的权限扩展到其预期范围之外，并通过其API发起攻击。 使用 LLM 攻击 API 和插件的第一步是确定 LLM 可以访问哪些 API 和插件。...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/07/21/lab-2-%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%B3%A8%E5%85%A5/" title="实验02：提示词注入攻防演练平台">实验02：提示词注入攻防演练平台</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-07-21T05:44:15.000Z" title="发表于 2026-07-21 13:44:15">2026-07-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Security/">AI Security</a></span></div><div class="content">实验02：提示词注入攻防演练平台概述本实验针对多套防护强度逐级提升的聊天机器人开展攻击。从无任何防护的靶机入手，依次突破关键词过滤、大模型安全护栏、多层复合防御体系。系统学习各类提示词注入手法，掌握绕过每一层防御的攻击思路。 学习目标 对无防护聊天机器人实施直接提示词注入攻击 从号称“安全加固”的应用中提取系统提示词 利用编码手段（Base64、Unicode字符变形）绕过内容关键词过滤器 执行多轮递进式Crescendo渐增攻击 突破基于大模型的安全护栏分类检测模块 规避输出侧内容过滤机制 针对不同攻击策略计算攻击成功率（ASR）  环境架构1234567891011               ┌─────────────┐               │   Ollama    │               │   端口:11434 │               └──────┬──────┘     ┌────────┬───────┼────────┬────────┐     ▼        ▼       ▼        ▼        │┌───────...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/07/21/lab-1-%E5%AE%9E%E9%AA%8C01%EF%BC%9A%E6%90%AD%E5%BB%BAAI%E7%BA%A2%E9%98%9F%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%EF%BC%88%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88%EF%BC%89/" title="启动所有实验服务">启动所有实验服务</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-07-21T05:33:11.000Z" title="发表于 2026-07-21 13:33:11">2026-07-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Security/">AI Security</a></span></div><div class="content">实验01：搭建AI红队实验环境（中文翻译版） 概述部署一套完整的AI红队攻防实验环境，包含本地大语言模型（LLM）、向量数据库，以及首个存在漏洞的靶场应用。本实验是后续所有实操实验的基础。 学习目标 部署Ollama并运行本地大语言模型（Mistral 7B）  搭建ChromaDB向量数据库环境  部署存在安全漏洞的AI聊天机器人靶场应用  通过实操探索AI系统的攻击面  完成首次AI系统侦察探测  基于MITRE ATLAS攻防分类体系记录实验漏洞与发现   环境架构1234567891011┌──────────────┐     ┌──────────────┐     ┌──────────────┐│   Jupyter     │     │   聊天机器人  │     │  ChromaDB向量库 ││  端口:8888    │────▶│   端口:5000   │────▶│   端口:8000   ││  (记事本环境)  │     │  (Flask服务)  │     │  (向量数据库)  │└──────────────┘     └─────...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/07/20/7.17-%E7%BB%BC%E8%BF%B0%E9%98%85%E8%AF%BB/" title="7.17-综述阅读">7.17-综述阅读</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-07-20T06:30:48.000Z" title="发表于 2026-07-20 14:30:48">2026-07-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Security/">AI Security</a></span></div><div class="content">A. Canary &#x2F; Exposure：测罕见秘密是否被记住  如果一个随机 secret 被模型赋予异常高概率，说明模型可能记住了它。  exposureB. Extraction &#x2F; Recollection：模型能不能把训练文本生成出来 给模型前缀，看它能不能生成真实后缀。  extractability C. Counterfactual Memorization：包含&#x2F;不包含某样本时模型行为差多少 同一条样本，训练集中有它 vs 没它，模型行为差多少。 full–ablation  D. Membership Inference &#x2F; Pretraining Data Detection：判断文本是否在训练集里 模型对训练样本通常更自信、loss 更低、低概率 token 更少。loss-drop  E. Contextual &#x2F; Prior-corrected Memorization：区分“真的记住”和“本来可预测” 不能只看模型能不能恢复文本，还要问：它是不是不用训练这条样本也能根据上下文&#x2F;语言规律恢复？...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/07/16/7.14-%E5%AE%9E%E9%AA%8C%E5%AE%A4/" title="7.14-实验室">7.14-实验室</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-07-16T03:55:51.000Z" title="发表于 2026-07-16 11:55:51">2026-07-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Security/">AI Security</a></span></div><div class="content">1.配置实验室(靶场)2了解garak，AI 红队，PyRIT 每次开机后的启动流程第一步：确认 OrbStack 在跑Spotlight（Cmd+空格）搜索 “OrbStack”，打开它，等菜单栏图标不再转圈。 （也可以跳过手动打开，直接跑下一步的docker命令，如果OrbStack没启动，命令会报错提醒你） 第二步：启动Ollama + Open WebUI容器123cd ~/ai-redteam-labdocker compose up -ddocker compose ps  确认ollama和open-webui两个都是Up状态。 第三步：确认模型还在（不用重新拉取）1docker exec ollama ollama list  应该能看到llama3.2:3b，模型数据存在Docker volume里，不会因为重启而丢失。  用 garak 时12cd ~/ai-redteam-labsource venv-garak/bin/activate  确认提示符变成 (venv-garak)，然后跑你的garak命令，例如： 1python -m garak --ta...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/07/16/7-14/" title="7.14">7.14</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-07-16T03:53:06.000Z" title="发表于 2026-07-16 11:53:06">2026-07-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="content">1.配置实验室(靶场)2了解garak，AI 红队，PyRIT 每次开机后的启动流程第一步：确认 OrbStack 在跑Spotlight（Cmd+空格）搜索 “OrbStack”，打开它，等菜单栏图标不再转圈。 （也可以跳过手动打开，直接跑下一步的docker命令，如果OrbStack没启动，命令会报错提醒你） 第二步：启动Ollama + Open WebUI容器123cd ~/ai-redteam-labdocker compose up -ddocker compose ps  确认ollama和open-webui两个都是Up状态。 第三步：确认模型还在（不用重新拉取）1docker exec ollama ollama list  应该能看到llama3.2:3b，模型数据存在Docker volume里，不会因为重启而丢失。  用 garak 时12cd ~/ai-redteam-labsource venv-garak/bin/activate  确认提示符变成 (venv-garak)，然后跑你的garak命令，例如： 1python -m garak --ta...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/4/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#content-inner">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/#content-inner">6</a><a class="extend next" rel="next" href="/page/6/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/05/test/" title="test">test</a><time datetime="2026-10-05T07:03:42.000Z" title="发表于 2026-10-05 15:03:42">2026-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/25/9.25_DP/" title="9.25_DP">9.25_DP</a><time datetime="2026-09-25T05:54:28.000Z" title="发表于 2026-09-25 13:54:28">2026-09-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/18/9-18-lora_lora%E6%A6%82%E5%BF%B5/" title="lora概念">lora概念</a><time datetime="2026-09-18T09:31:02.000Z" title="发表于 2026-09-18 17:31:02">2026-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/16/8.11-hongkong+MIA/" title="8.11-hongkong+MIA">8.11-hongkong+MIA</a><time datetime="2026-09-16T00:30:32.000Z" title="发表于 2026-09-16 08:30:32">2026-09-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/14/9-14Agent-MCP-API_%E5%8E%9F%E7%90%86+%E6%A6%82%E5%BF%B5/" title="原理+概念">原理+概念</a><time datetime="2026-09-14T11:24:55.000Z" title="发表于 2026-09-14 19:24:55">2026-09-14</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-Security/"><span class="card-category-list-name">AI Security</span><span class="card-category-list-count">44</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%9A%8F%E7%AC%94/"><span class="card-category-list-name">随笔</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/prompt-injection/" style="font-size: 1.3em; color: #99a1ac">prompt injection</a> <a href="/tags/RAG/" style="font-size: 1.1em; color: #999">RAG</a> <a href="/tags/promptfoo/" style="font-size: 1.1em; color: #999">promptfoo</a> <a href="/tags/garak/" style="font-size: 1.1em; color: #999">garak</a> <a href="/tags/agent-mcp-langchai/" style="font-size: 1.1em; color: #999">agent_mcp_langchai</a> <a href="/tags/RNN/" style="font-size: 1.1em; color: #999">RNN</a> <a href="/tags/prompt-and-injection-and-defense/" style="font-size: 1.1em; color: #999">prompt and injection and defense</a> <a href="/tags/write/" style="font-size: 1.1em; color: #999">write</a> <a href="/tags/ai-safety/" style="font-size: 1.5em; color: #99a9bf">ai-safety</a> <a href="/tags/ai-safety/" style="font-size: 1.3em; color: #99a1ac">ai safety</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/10/">
+            <span class="card-archive-list-date">
+              十月 2026
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/09/">
+            <span class="card-archive-list-date">
+              九月 2026
+            </span>
+            <span class="card-archive-list-count">35</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/08/">
+            <span class="card-archive-list-date">
+              八月 2026
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/07/">
+            <span class="card-archive-list-date">
+              七月 2026
+            </span>
+            <span class="card-archive-list-count">14</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">57</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-10-05T07:06:05.400Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

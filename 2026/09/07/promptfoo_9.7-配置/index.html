@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>9.7-配置 | 5lalaland</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.targetname 随便写Select Target Type 你的 AI 系统是什么形式？  HTTP&#x2F;HTTPS Endpoint：Agent 有一个 API 地址。 A2A Agent  ：多个agent通信 Python：agent 是一个 Python 函数,本地实验、 OpenAI:对应的gpt模型   model id :格式provider:model   例如op">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9.7-配置">
+<meta property="og:url" content="https://5lalaland.github.io/2026/09/07/promptfoo_9.7-%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="1.targetname 随便写Select Target Type 你的 AI 系统是什么形式？  HTTP&#x2F;HTTPS Endpoint：Agent 有一个 API 地址。 A2A Agent  ：多个agent通信 Python：agent 是一个 Python 函数,本地实验、 OpenAI:对应的gpt模型   model id :格式provider:model   例如op">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-09-07T09:41:15.000Z">
+<meta property="article:modified_time" content="2026-10-04T05:51:40.865Z">
+<meta property="article:author" content="5lalaland">
+<meta property="article:tag" content="ai-safety">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "9.7-配置",
+  "url": "https://5lalaland.github.io/2026/09/07/promptfoo_9.7-%E9%85%8D%E7%BD%AE/",
+  "image": "https://5lalaland.github.io/img/avatar.png",
+  "datePublished": "2026-09-07T09:41:15.000Z",
+  "dateModified": "2026-10-04T05:51:40.865Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "5lalaland",
+      "url": "https://5lalaland.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/2026/09/07/promptfoo_9.7-%E9%85%8D%E7%BD%AE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '9.7-配置',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a><a class="nav-page-title" href="/"><span class="site-name">9.7-配置</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">9.7-配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-07T09:41:15.000Z" title="发表于 2026-09-07 17:41:15">2026-09-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-04T05:51:40.865Z" title="更新于 2026-10-04 13:51:40">2026-10-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Security/">AI Security</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>1.target<br><img src="/images/file-20260907144743314.png"><br>name 随便写<br>Select Target Type 你的 AI 系统是什么形式？</p>
+<ul>
+<li>HTTP&#x2F;HTTPS Endpoint：Agent 有一个 API 地址。</li>
+<li>A2A Agent  ：多个agent通信</li>
+<li>Python：agent 是一个 Python 函数,本地实验、</li>
+<li>OpenAI:对应的gpt模型</li>
+</ul>
+<p><img src="/images/file-20260907145318016.png"></p>
+<p>model id :格式provider:model   例如openai:gpt-5.5<br>Test Generation：Promptfoo 怎么生成攻击测试。<br>prompts:promptfoo生成的prompt放置的地方，比如You are a customer support assistant.<br>Answer user questions.<br>User:</p>
+
+
+
+<p><img src="/images/file-20260907150317129.png"></p>
+<p>确认攻击的对象是工具型AI（完整），还是只对话型A I<br>What key features does your application provide?应用功能<br>What industry or domain does your application operate in?所属行业<br>Any constraints or rules attackers should know about?模型现在的攻击防护方法</p>
+<p><img src="/images/file-20260907150527106.png"><br>plugins:我要让 Promptfoo 帮我检查哪些安全问题。<br>例如选择PII via Direct Exposure对应尝试诱导模型泄露个人信息的攻击。<br>选择SQL Injection对应尝试测试数据库查询是否容易被注入。<br>左边是一组预先组合好的 Plugin 集合。<br>例如：</p>
+<ul>
+<li>Recommended，Promptfoo 推荐的一套，其中包含<br>prompt injection+privacy+jailbreak+authorization</li>
+<li>Minimal Test少量测试，快速验证：“我的配置有没有问题”。</li>
+<li>RAG  Retrieval-Augmented Generation 测试。</li>
+<li>Foundation基础模型风险。更偏：LLM 本身。</li>
+</ul>
+<p><img src="/images/file-20260907151053714.png"><br>Strategy &#x3D; 攻击执行方式。<br>Meta Agent：- 生成攻击</p>
+<ul>
+<li>看结果</li>
+<li>根据失败&#x2F;成功调整<br>Hydra Multi-Turn：多轮攻击，就是会对话多次去产生语境得到最终效果</li>
+</ul>
+<p><img src="/images/file-20260907151427473.png">生成yaml ,替代promptfoo-redteam-demo里面的promptfoo.yaml</p>
+<p>运行<br>cd ~&#x2F;promptfoo-redteam-demo<br>npx promptfoo@latest redteam setup .<br>替换yaml<br>npx promptfoo@latest redteam run <br>  –max-concurrency 1 <br>  –delay 5000<br>  npx promptfoo@latest redteam report结果</p>
+<p><strong><u>要求有官方 API和模型名称</u></strong></p>
+<p><img src="/images/file-20260907172109015.png"></p>
+<p>左边 是真正发送的prompt<br>右边fail表示防守失败，但攻击成功<br>红色文字 ：判定成fail的原因<br>黑色文字：<strong>Agent 实际返回的内容</strong>。</p>
+<ul>
+<li><p>BFLAEnforcement (0&#x2F;3):<br>BFLA：功能级权限控制失效,调用函数<br>Enforcement：是否正确执行权限限制</p>
+</li>
+<li><p>BFLAEnforcement&#x2F;IterativeMeta (0&#x2F;3)<br>&#x2F;IterativeMeta:Promptfoo 不只一种攻击,用自适应攻击测试功能权限绕过。</p>
+</li>
+<li><p>BOLAEnforcement&#x2F;IterativeMeta (0&#x2F;3)<br>BOLA:你有没有权限访问这个对象？，查询对象</p>
+</li>
+<li><p>Hijacking&#x2F;IterativeMeta (0&#x2F;3)<br>Hijacking:用户能不能改变 Agent 的目标。比如忘记你的任务，然后xxxx</p>
+</li>
+<li><p>PIILeak&#x2F;IterativeMeta (0&#x2F;6)<br>PIILeak:个人身份信息。</p>
+</li>
+<li><p>PromptExtraction&#x2F;IterativeMeta (0&#x2F;3)<br> PromptExtraction有没有提示词泄露。</p>
+</li>
+<li><p>RbacEnforcement&#x2F;IterativeMeta (0&#x2F;3)<br>Rbac：基于角色权限，例如我是管理员</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io">5lalaland</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io/2026/09/07/promptfoo_9.7-%E9%85%8D%E7%BD%AE/">https://5lalaland.github.io/2026/09/07/promptfoo_9.7-%E9%85%8D%E7%BD%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://5lalaland.github.io" target="_blank">5lalaland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ai-safety/">ai-safety</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/09/07/9-7-promprfoo%E9%85%8D%E7%BD%AE/" title="9.7_promprfoo配置"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">9.7_promprfoo配置</div></div><div class="info-2"><div class="info-item-1">1.target![image-20260907191242471](&#x2F;Users&#x2F;yangxianle&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20260907191242471.png) name 随便写 Select Target Type 你的 AI 系统是什么形式？  HTTP&#x2F;HTTPS Endpoint：Agent 有一个 API 地址。 A2A Agent  ：多个agent通信 Python：agent 是一个 Python 函数,本地实验、 OpenAI:对应的gpt模型  ![image-20260907191250818](&#x2F;Users&#x2F;yangxianle&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20260907191250818.png) model id :格式provider:model  ...</div></div></div></a><a class="pagination-related" href="/2026/09/07/promptfoo_api/" title="api"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">api</div></div><div class="info-2"><div class="info-item-1">sk-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0NTQ1YTEwMS1lMmZlLTQ0MDItYjZlMC04YTgwNzRmMzBiMWUiLCJvcmdhbml6YXRpb25JZCI6IjMzYjBiYzg0LTlkNjYtNGIzOS1hNDJhLTQ4YWI5OWE5YjBiMyIsInR5cGUiOiJ1c2VyX2FwaV90b2tlbiIsImp0aSI6ImI0YWI5MTUwLWJkYmItNDdlZC05MTViLTAzYzBlNmE5M2FiMiIsImlhdCI6MTc4ODc3MDM5OSwiZXhwIjoxODIwMzI3OTk5fQ.rLqRN4UjvXv_mSM2sshoL0wtWx_fPzw0TEv0lXx_ctg </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/14/9-14Agent-MCP-API_%E5%8E%9F%E7%90%86+%E6%A6%82%E5%BF%B5/" title="原理+概念"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-14</div><div class="info-item-2">原理+概念</div></div><div class="info-2"><div class="info-item-1">用户任务    ↓【Agent（智能体，逻辑概念）】 负责思考、规划、决定什么时候调用工具    ↓【LangChain（开发框架）】 是实现Agent的代码库，提供Agent运行时、记忆、提示词、工具管理    ↓【MCP（通信协议）】 LangChain通过MCPAdapter，把MCP Server的外部工具接入LangChain Agent    ↓MCP Server（文件、数据库、API、计算器） MCP:模型上下文协议，用来让 Agent 标准化调用外部工具 &#x2F; 服务。  写一次 MCP Server，任何支持 MCP 的 Agent（LangChain、Claude Desktop、Cursor）都可以直接调用；  工具能力自动发现，不用硬编码工具列表；  统一权限边界，隔离外部系统，方便管控安全。不负责思考推理，只管 Agent 和外部工具之间的标准化通信。  Host（AI 应用 &#x2F; Agent）：用于协调和管理一个或多个 MCP 客户端的 AI 应用程序    MCP Client ：一个维护与 MCP 服务器连接并从 MCP 服务器获取...</div></div></div></a><a class="pagination-related" href="/2026/09/13/9-10-prompt_%E9%9D%B6%E5%9C%BA/" title="靶场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-13</div><div class="info-item-2">靶场</div></div><div class="info-2"><div class="info-item-1">cd prompt-injection-ctfnpm run dev – –webpack   # webpack required on ARM Macs with this Next.js version </div></div></div></a><a class="pagination-related" href="/2026/09/07/lab-7-%E8%87%AA%E5%8A%A8%E5%8C%96AI%E7%BA%A2%E9%98%9F/" title="启动全部容器服务"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-07</div><div class="info-item-2">启动全部容器服务</div></div><div class="info-2"><div class="info-item-1">&#x3D;&#x3D;# 实验07：自动化AI红队攻防演练 概述本实验跳出手动提示词攻击范畴，开展规模化自动化AI红队测试。环境内置三款行业主流红队工具：garak、PyRIT、promptfoo，针对存在刻意漏洞的聊天机器人靶机进行扫描。你将学习执行系统化漏洞扫描、横向对比各工具优劣、自定义攻击探针，并将自动化红队检测集成至CI&#x2F;CD流水线。 自动化红队测试的核心价值：  人工测试无法覆盖海量攻击载荷空间 越狱攻击手法持续更新，工具内置最新攻击探针库 可复现的自动化扫描能够生成基准指标，长期追踪模型安全态势 接入CI&#x2F;CD可在上线前拦截安全退化问题  环境架构1234567891011121314151617181920212223242526272829┌─────────────────────────────────────────┐│        红队工具容器                     ││         (lab07-redteam-tools)            ││                            ...</div></div></div></a><a class="pagination-related" href="/2026/09/25/9.25_DP/" title="9.25_DP"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-25</div><div class="info-item-2">9.25_DP</div></div><div class="info-2"><div class="info-item-1">背景  成员推理攻击：判断一个数据集在不在数据库内 噪声： 目的：攻击者无法区分出一个特定的用户的信息  联邦学习FL(Federated Learning)：训练AI的数据的一种方式， 传统训练方法：在一个中央服务器上放所有的数据然后进行训练一个大的模型联邦学习：把模型带给数据，在本地的模型上训练数据之后把模型更新发给中央服务器，而不是发数据；最终创建一个Global model 横向：数据集相似纵向：互补数据集迁移：执行与数据集无关的任务 FL在模型训练上面实现隐私数据不共享-&gt;DP进一步对数据集进行保护-&gt;MIA测试数据集的泄漏 </div></div></div></a><a class="pagination-related" href="/2026/09/11/9-10-prompt_prompt%E5%9F%BA%E7%A1%80/" title="prompt基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-11</div><div class="info-item-2">prompt基础</div></div><div class="info-2"><div class="info-item-1"> Prompt基础   System Prompt  开发者给模型设定的最高级规则。  { “role”:”system”, “content”:”You are a helpful assistant” },  比user的信息的地位高，可以一定的防护User的prompt;但是会面临system prompt泄漏的问题 User Prompt  用户输入的信息。 Developer Message  这是应用开发者设置的指令。 Instruction Hierarchy  不同消息有不同优先级。  system&gt;developer&gt;user Context Window  上下文窗口：模型一次能够看到的信息长度。gpt:128k   面临过长上下文攻击或者上下中藏有攻击指令 Prompt Template  开发者提前设计固定格式。：      You are a customer service bot.      Customer question:      {question}&#x2F;&#x2F;替换用户输入。      Answer: Few-sho...</div></div></div></a><a class="pagination-related" href="/2026/07/22/7.22%20%20web%E7%AB%AFLLM%E6%94%BB%E5%87%BB/" title="7.22  web端LLM攻击"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-22</div><div class="info-item-2">7.22  web端LLM攻击</div></div><div class="info-2"><div class="info-item-1">https://portswigger.net/web-security/llm-attacks  学习网站 1.LLM API 的工作原理将LLM与API集成的工作流程取决于API本身的结构。调用外部API时，某些LLM可能要求客户端调用单独的函数端点（实际上是一个私有API）来生成可以发送到这些API的有效请求。此工作流程可能如下所示：  客户端根据用户的提示调用 LLM。 LLM 检测到需要调用某个函数，并返回一个 JSON 对象，其中包含符合外部 API 架构的参数。 客户端使用提供的参数调用该函数。 客户端处理函数的响应。 客户端再次调用 LLM，并将函数响应作为新消息附加到该消息中。 LLM 调用外部 API 并返回函数响应。 LLM 会将此 API 调用的结果汇总并返回给用户。  2.**“过度授权”**是指LLM（生命周期管理）拥有访问敏感信息API的权限，并且可能被诱使以不安全的方式使用这些API。这使得攻击者能够将LLM的权限扩展到其预期范围之外，并通过其API发起攻击。 使用 LLM 攻击 API 和插件的第一步是确定 LLM 可以访问哪些 API 和插件。...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/05/test/" title="test">test</a><time datetime="2026-10-05T07:03:42.000Z" title="发表于 2026-10-05 15:03:42">2026-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/25/9.25_DP/" title="9.25_DP">9.25_DP</a><time datetime="2026-09-25T05:54:28.000Z" title="发表于 2026-09-25 13:54:28">2026-09-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/18/9-18-lora_lora%E6%A6%82%E5%BF%B5/" title="lora概念">lora概念</a><time datetime="2026-09-18T09:31:02.000Z" title="发表于 2026-09-18 17:31:02">2026-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/16/8.11-hongkong+MIA/" title="8.11-hongkong+MIA">8.11-hongkong+MIA</a><time datetime="2026-09-16T00:30:32.000Z" title="发表于 2026-09-16 08:30:32">2026-09-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/14/9-14Agent-MCP-API_%E5%8E%9F%E7%90%86+%E6%A6%82%E5%BF%B5/" title="原理+概念">原理+概念</a><time datetime="2026-09-14T11:24:55.000Z" title="发表于 2026-09-14 19:24:55">2026-09-14</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
