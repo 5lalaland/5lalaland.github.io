@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2026-09-05｜RAG 原理与知识库投毒 | 5lalaland</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一：RAG原理准备：切片-&gt;索引回答：召回-重排-生成1.切片：按照字数，段落…..方式分2.索引：embedding将文本转换成向量再将向量存储在向量数据库（原文和向量）当中3.召回：返回与用户问题向量相似度最高的topk个文段；目前根据欧氏距离，点积,cos相似度等  成本低但准确率低4.重排：返回用cross-encoder计算出的刚刚的topk个文段中更相近的几个文段5.生成：AI根">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026-09-05｜RAG 原理与知识库投毒">
+<meta property="og:url" content="https://5lalaland.github.io/2026/09/05/2026.9.5-RAG/index.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="一：RAG原理准备：切片-&gt;索引回答：召回-重排-生成1.切片：按照字数，段落…..方式分2.索引：embedding将文本转换成向量再将向量存储在向量数据库（原文和向量）当中3.召回：返回与用户问题向量相似度最高的topk个文段；目前根据欧氏距离，点积,cos相似度等  成本低但准确率低4.重排：返回用cross-encoder计算出的刚刚的topk个文段中更相近的几个文段5.生成：AI根">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-09-05T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-08T06:58:37.119Z">
+<meta property="article:author" content="5lalaland">
+<meta property="article:tag" content="ai-safety">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2026-09-05｜RAG 原理与知识库投毒",
+  "url": "https://5lalaland.github.io/2026/09/05/2026.9.5-RAG/",
+  "image": "https://5lalaland.github.io/img/avatar.png",
+  "datePublished": "2026-09-05T02:00:00.000Z",
+  "dateModified": "2026-10-08T06:58:37.119Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "5lalaland",
+      "url": "https://5lalaland.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/2026/09/05/2026.9.5-RAG/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2026-09-05｜RAG 原理与知识库投毒',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a><a class="nav-page-title" href="/"><span class="site-name">2026-09-05｜RAG 原理与知识库投毒</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">2026-09-05｜RAG 原理与知识库投毒</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-05T02:00:00.000Z" title="发表于 2026-09-05 10:00:00">2026-09-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-08T06:58:37.119Z" title="更新于 2026-10-08 14:58:37">2026-10-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/RAG-Security/">RAG Security</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="一：RAG原理"><a href="#一：RAG原理" class="headerlink" title="一：RAG原理"></a>一：RAG原理</h1><p>准备：切片-&gt;索引<br>回答：召回-重排-生成<br>1.<strong>切片</strong>：按照字数，段落…..方式分<br>2.<strong>索引</strong>：embedding将文本转换成向量<br>再将向量存储在向量数据库（原文和向量）当中<br>3.<strong>召回</strong>：返回与用户问题向量相似度最高的topk个文段；目前根据欧氏距离，点积,cos相似度等  成本低但准确率低<br>4.<strong>重排</strong>：返回用cross-encoder计算出的刚刚的topk个文段中更相近的几个文段<br>5.<strong>生成</strong>：AI根据文段生成结果</p>
+<p>自测题&#x2F;概念辨析：</p>
+<ol>
+<li>为什么RAG比普通LLM更容易受到数据投毒？</li>
+</ol>
+<p><font color="#a5a5a5">RAG系统容易受到投毒攻击的主要原因是它引入了外部知识源，而这些数据通常被模型默认认为具有一定可信度。传统LLM主要依赖训练阶段固定的参数知识，而RAG系统会实时检索外部文档并拼接到Prompt中，因此攻击者可以通过影响检索结果间接影响模型输出。此外，向量数据库通常根据语义相似度进行检索，而不是根据真实性进行判断，因此攻击者可以构造与目标查询高度相关的恶意文档，提高其被召回的概率。同时，LLM本身缺乏可靠的事实验证能力，当恶意文档进入上下文后，模型可能会将其作为可信信息进行总结和生成。因此RAG系统需要额外考虑数据可信度、来源验证以及检索安全。</font><br>2. 什么是Embedding Poisoning？<br><font color="#a5a5a5">Embedding Poisoning是针对RAG检索阶段的一种攻击方式，攻击者通过修改文档内容或者优化文档表示，使恶意文档在向量空间中更容易匹配用户查询，从而提高被检索到的概率。RAG系统通常会将文档转换成Embedding向量，然后根据向量相似度进行召回，因此攻击者可以利用Embedding模型的语义表示特点，让恶意文档在向量空间中靠近目标查询。与普通文档投毒相比，Embedding Poisoning更加关注检索过程，而不仅仅是文档内容本身。防御这种攻击需要结合异常向量检测、检索结果验证、多模型交叉检查以及可信数据源管理。</font><br>3. RAG系统为什么会发生越权访问？<br><font color="#a5a5a5">RAG越权访问主要是由于检索层和权限控制层没有进行绑定。很多RAG系统只关注语义相关性，而忽略用户身份权限。例如用户A查询问题时，系统根据Embedding相似度直接返回Top-K文档，但没有检查这些文档是否属于用户A可访问范围，导致用户可能通过构造查询获取本不应该看到的信息。</font><br>4. RAG中的Embedding有哪些方法？<br><font color="#a5a5a5">RAG向量化的核心是使用Embedding模型将文本转换为高维向量，使语义相似的文本在向量空间中距离更近。常见方法包括基于Transformer的Embedding模型，例如OpenAI Embedding模型、BERT类模型，以及开源模型如BGE、E5、GTE等。实际系统通常采用Chunk级Embedding，因为完整文档过长会降低检索精度。</font><br>5. RAG检索有哪些方法？<br><font color="#a5a5a5"> RAG检索主要分为稠密检索、稀疏检索和混合检索。稠密检索通过Embedding计算语义相似度，例如Cosine Similarity，可以找到语义相关但关键词不同的文档；稀疏检索主要基于关键词匹配，例如BM25，更适合精确查询；混合检索则结合两者优势，提高召回率。此外，现代RAG系统还会加入Reranker模型，对初步召回结果进行二次排序，提高最终提供给LLM上下文的质量。</font><br>6. RAG中的Chunk是什么？为什么需要Chunk？<br><font color="#a5a5a5">Chunk是RAG系统中将长文档切分成多个较小文本片段的过程。由于大语言模型存在上下文窗口限制，同时检索系统需要精确定位相关信息，因此不能直接将完整文档输入模型，而需要先将文档拆分成多个语义单元，再分别进行Embedding并存入向量数据库。当用户查询时，系统通过向量相似度检索最相关的Chunk，并将这些片段作为上下文提供给LLM生成答案。Chunk划分的目标是在保持语义完整性的同时，提高检索准确率。</font></p>
+<h1 id="二：RAG-投毒"><a href="#二：RAG-投毒" class="headerlink" title="二：RAG 投毒"></a>二：RAG 投毒</h1><p><img src="/images/file-20260914083424583.png"></p>
+<h3 id="1-知识库投毒（Knowledge-Base-Poisoning）"><a href="#1-知识库投毒（Knowledge-Base-Poisoning）" class="headerlink" title="1. 知识库投毒（Knowledge Base Poisoning）"></a>1. 知识库投毒（Knowledge Base Poisoning）</h3><p>攻击者向 RAG 知识库中植入恶意内容，使其在后续检索和生成过程中影响模型输出。</p>
+<ul>
+<li><strong>直接投毒</strong>：直接上传包含错误信息或恶意指令的文档。</li>
+<li><strong>嵌入对齐攻击</strong>：构造文档，使其在嵌入空间中与目标查询高度相似，从而提高被检索到的概率。</li>
+<li><strong>靶向投毒</strong>：针对某个特定查询优化恶意文档，只在目标问题出现时触发攻击。</li>
+<li><strong>Poisoned-RA</strong>：同时满足两个条件：<ul>
+<li><strong>检索条件（Retrieval Condition）</strong>：恶意文本与目标问题在嵌入空间中足够接近，能够进入 Top-k 检索结果；</li>
+<li><strong>生成条件（Generation Condition）</strong>：恶意文本被加入上下文后，能够诱导 LLM 输出攻击者预设的内容。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-检索结果操纵（Retrieval-Manipulation）"><a href="#2-检索结果操纵（Retrieval-Manipulation）" class="headerlink" title="2. 检索结果操纵（Retrieval Manipulation）"></a>2. 检索结果操纵（Retrieval Manipulation）</h3><p>攻击者不一定直接修改模型，而是通过操纵检索排序，让恶意内容更容易排在正常文档之前。<br>常见方式包括：</p>
+<ul>
+<li><strong>关键词堆叠</strong>：大量加入与目标查询相关的关键词，提高检索排名；</li>
+<li><strong>元数据利用</strong>：伪造或操纵标题、标签、时间、来源等元数据，提高文档的检索优先级。</li>
+</ul>
+<h3 id="3-向量数据库攻击（Vector-Database-Attacks）"><a href="#3-向量数据库攻击（Vector-Database-Attacks）" class="headerlink" title="3. 向量数据库攻击（Vector Database Attacks）"></a>3. 向量数据库攻击（Vector Database Attacks）</h3><p>攻击者直接针对向量数据库，例如通过未授权访问、数据篡改或恶意向量插入，影响知识库中的 Embedding 和检索结果。</p>
+<h3 id="4-上下文窗口攻击（Context-Injection）"><a href="#4-上下文窗口攻击（Context-Injection）" class="headerlink" title="4. 上下文窗口攻击（Context Injection）"></a>4. 上下文窗口攻击（Context Injection）</h3><p>RAG 会将检索到的文档加入 LLM 的上下文窗口。攻击者可以利用这一机制，在文档中植入恶意指令，使模型把“不可信文档内容”误认为系统指令，从而影响最终生成结果。</p>
+<h3 id="5-RAG-安全防护"><a href="#5-RAG-安全防护" class="headerlink" title="5. RAG 安全防护"></a>5. RAG 安全防护</h3><p>防护可以按照 RAG 的处理流程分层进行：<br><strong>知识库摄入层</strong></p>
+<ol>
+<li>验证文档来源和上传者身份；</li>
+<li>扫描恶意内容和隐藏指令；</li>
+<li>过滤敏感信息；</li>
+<li>高风险文档审核后再入库。</li>
+</ol>
+<p><strong>检索层</strong></p>
+<ul>
+<li><strong>来源可信度标记</strong>：对不同来源设置可信等级；</li>
+<li><strong>相似度阈值</strong>：过滤相关性过低的文档；</li>
+<li><strong>检索多样性控制</strong>：避免单一文档或单一来源主导 Top-k；</li>
+<li><strong>异常检索检测</strong>：识别异常查询和异常文档召回模式。<br><strong>生成层</strong></li>
+<li>明确区分“系统指令”和“检索到的外部数据”，避免模型直接执行文档中的指令；</li>
+<li>对最终生成结果进行安全检查和敏感信息过滤。</li>
+</ul>
+<p>自测题&#x2F;概念辨析：</p>
+<ol>
+<li>什么是 Embedding 对齐攻击</li>
+</ol>
+<p><font color="#a5a5a5">   Embedding 对齐攻击的核心思想是，攻击者不只是让恶意文档在文字表面看起来相关，而是让它在向量空间中尽可能接近目标查询。RAG 检索通常会把用户 Query 和知识库中的 Chunk 都转换成向量，然后根据余弦相似度或者其他距离度量选出 Top-k。因此攻击者可以构造一些包含目标关键词、语义改写或者特定文本模式的恶意 Chunk，使其 Embedding 与目标问题高度相似。这样即使恶意内容本身质量很差，也可能在检索排名中超过正常文档。它说明 RAG 的攻击目标并不一定是 LLM 本身，也可以是前面的向量检索机制。</font><br>2. 关键词堆叠和 Embedding 攻击有什么区别<br><font color="#a5a5a5">   关键词堆叠主要利用传统检索或者混合检索中的关键词匹配机制，比如在恶意文档中重复加入用户可能搜索的关键词，从而提高 BM25 或搜索引擎排名；而 Embedding 攻击针对的是语义向量检索，它通过修改文本语义，让恶意文档的向量与目标 Query 的向量更加接近。两者攻击的层面不同，但在实际 RAG 中往往可以组合使用，因为很多系统采用 Hybrid Search，也就是同时使用关键词检索和向量检索。因此更现实的攻击者可能同时优化关键词匹配分数和向量相似度，以提高恶意文档进入 Top-k 的概率。</font><br>3. 相似度阈值能不能完全防止 RAG 投毒<br><font color="#a5a5a5">   不能。相似度阈值只能过滤与用户问题明显无关的文档，但很多投毒攻击本身就是专门优化相似度的。攻击者甚至可能让恶意文档与目标问题比正常文档更加相似，这时提高阈值不仅无法阻止攻击，反而可能把一些正常文档过滤掉。因此相似度阈值更适合作为基础防御措施，而不能单独使用。更完整的方法应该同时考虑来源可信度、内容安全扫描、检索多样性、异常检测、Reranker、安全上下文构造以及生成后的输出检查。</font><br>4. 为什么检索多样性可以缓解数据投毒<br><font color="#a5a5a5">如果 Top-k 全部来自同一个文档、同一个网站或者同一个上传者，那么攻击者只要控制这一个来源，就可能完全控制模型的上下文。检索多样性控制会限制单一来源占据过多检索结果，例如 Top-5 中最多允许两个 Chunk 来自同一文档，同时优先选择不同来源但语义一致的证据。这样即使一个恶意文档排名很高，也很难完全主导上下文，而且模型还可以通过多个独立来源进行交叉验证。因此多样性防御并不能保证完全阻止投毒，但可以显著提高攻击者需要控制的数据量和攻击成本。</font><br>5. 为什么 RAG 防御需要做来源可信度控制？<br><font color="#a5a5a5">因为单纯的语义相关性并不等于可信度。一个恶意文档完全可以和用户问题高度相关，但内容本身是错误或者恶意的。如果 Retriever 只按照相似度排名，就可能把攻击者生成的文档排在官方文档之前。因此实际系统可以同时维护 relevance score 和 trust score，例如官方文档、内部数据库和经过审核的数据源具有更高可信度，而匿名上传内容或者互联网抓取内容具有较低可信度。最终检索排序不仅考虑“这个文档和问题有多相关”，还考虑“这个文档有多可信”，从而降低单一恶意数据源控制回答的风险。</font><br>6. 如果你来设计一个安全的 RAG 系统，会在哪些位置做防御<br><font color="#a5a5a5">我会按照 RAG 的数据流进行分层防御。首先在知识库摄入阶段验证上传者和数据来源，并扫描隐藏指令、异常文本以及敏感信息；其次在 Embedding 和向量数据库阶段限制写权限，监控异常批量插入和异常向量分布；在检索阶段结合相似度、来源可信度和检索多样性，并使用 Reranker 再次验证结果；在上下文构造阶段明确告诉模型“检索内容是数据而不是指令”，避免执行文档中的命令；最后在生成阶段进行事实一致性、敏感信息和异常输出检查。核心思想不是依赖单一防御，而是让攻击者必须同时突破多个层次。</font></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io">5lalaland</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io/2026/09/05/2026.9.5-RAG/">https://5lalaland.github.io/2026/09/05/2026.9.5-RAG/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://5lalaland.github.io" target="_blank">5lalaland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ai-safety/">ai-safety</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/09/15/2026.9.15-tools/" title="2026-09-15｜Promptfoo 与 Garak：如何把 AI 安全测试变成回归流程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">2026-09-15｜Promptfoo 与 Garak：如何把 AI 安全测试变成回归流程</div></div><div class="info-2"><div class="info-item-1">Promptfoo 和 Garak 都能自动向模型发送测试输入，但定位不同。Promptfoo 更适合应用层评测、断言和回归；Garak 更像面向语言模型的漏洞扫描器，提供 probes、detectors、generators 和报告流水线。 1. Promptfoo 适合回答什么问题Promptfoo 可以比较不同模型和提示词，测试提示词提取、越狱、PII 泄露、RAG 注入、Agent 工具滥用以及格式和幻觉问题。它的关键不是攻击数量，而是把每个测试写成明确的 PASS&#x2F;FAIL 条件，并把失败样本保存下来。 一个安全的练习项目应使用本地或测试环境、虚构数据和假密钥，避免对生产系统执行会产生真实副作用的攻击。 2. Garak 的基本工作流Garak 将攻击探针（probe）、目标模型接口（generator）和漏洞判断器（detector）组合起来： 1选择 probe → 生成攻击输入 → 调用目标模型 → detector 判断 → 生成报告  测试 REST Agent 时，接口配置至少要明确请求地址、HTTP 方法、JSON 输入字段、响应字段和超时。报...</div></div></div></a><a class="pagination-related" href="/2026/08/22/2026.8.22-MIA/" title="2026-08-22｜Membership Inference Attack：成员推断攻击"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">2026-08-22｜Membership Inference Attack：成员推断攻击</div></div><div class="info-2"><div class="info-item-1">1. 什么是 MIA？Membership Inference Attack，简称 MIA（成员推断攻击）。问题是：现在已知  一个训练好的目标模型 M； 一个候选样本 x； 但不知道 x 是否参加过模型训练。  攻击者希望在下面两个假设之间进行判断：$$H_{\mathrm{in}}:x\in D_{\mathrm{train}}$$$$H_{\mathrm{out}}:x\notin D_{\mathrm{train}}$$MIA 通常不会让模型直接回答“成员 &#x2F; 非成员”，而是首先计算一个成员分数：$$s(x;M)$$然后设置阈值：$$s(x;M)\geq\tau\Rightarrow x\text{ 被预测为成员}$$因此，不同 MIA 方法之间最核心的区别其实就是：  我们应该使用什么统计量，去衡量目标模型是否对样本 x 表现出了异常的熟悉或记忆？   2. 为什么语言模型可以做 MIA？设文本：$$x&#x3D;(x_1,x_2,\dots,x_T)$$自回归语言模型对完整文本分配的联合概率为：$$\prod_{t&#x3D;1}^{T}P_M(x_t\mi...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/07/13/2026.7.13-ai_safety_route/" title="2026-07-13｜AI Safety 学习路线"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-13</div><div class="info-item-2">2026-07-13｜AI Safety 学习路线</div></div><div class="info-2"><div class="info-item-1">一：学习路线LLM基础↓OWASP LLM Top10↓Prompt Injection↓MIA↓RAG Security↓Agent Security↓Promptfoo↓Garak↓Privacy Attack 二：技术栈要求   技术栈 需要掌握内容 达到标准（结果）    LLM 基础 Transformer、Attention、Decoder-only LLM、Tokenization、Inference流程 能解释 LLM 为什么会产生幻觉、泄露、越狱；能读懂安全论文   Prompt Engineering System&#x2F;User Prompt、Instruction hierarchy、Few-shot、CoT、Role Prompt 能设计攻击 prompt 和防御 prompt   Prompt Injection Direct Injection、Indirect Injection、Context Injection、Instruction Override 能针对 RAG&#x2F;Agent 设计攻击案例，并分析攻击链   Jailbreak...</div></div></div></a><a class="pagination-related" href="/2026/07/07/2026.7.7-knowledge_before_start/" title="2026-07-07｜开始学习 LLM 安全前需要掌握的知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-07</div><div class="info-item-2">2026-07-07｜开始学习 LLM 安全前需要掌握的知识</div></div><div class="info-2"><div class="info-item-1">1. 预训练阶段 Pre-training1.1 数据准备大语言模型首先需要收集大规模文本数据，常见来源包括 Common Crawl 网页数据、Wikipedia、Books、GitHub &#x2F; Stack Overflow 等代码数据，以及新闻、论文、论坛和其他公开文本。实际训练前还需要进行数据清洗、去重、质量过滤、敏感信息过滤等处理。 1.2 文本 → Token模型不能直接理解自然语言文字，因此首先需要通过 Tokenizer（分词器） 将文本转换为 Token。例如： 12345I love ChatGPT↓ Tokenizer[&quot;I&quot;, &quot; love&quot;, &quot; Chat&quot;, &quot;GPT&quot;]↓[40, 3021, 16837, 38...] 注意：Token 并不等于一个完整的单词。 Token 可能是一个单词、一个词的一部分、一个汉字、多个汉字、标点符号或空格。现代 LLM 常用 BPE、Byte-level BPE、SentencePiece 等 Tokenizer。 1.3 UTF...</div></div></div></a><a class="pagination-related" href="/2026/08/22/2026.8.22-MIA/" title="2026-08-22｜Membership Inference Attack：成员推断攻击"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">2026-08-22｜Membership Inference Attack：成员推断攻击</div></div><div class="info-2"><div class="info-item-1">1. 什么是 MIA？Membership Inference Attack，简称 MIA（成员推断攻击）。问题是：现在已知  一个训练好的目标模型 M； 一个候选样本 x； 但不知道 x 是否参加过模型训练。  攻击者希望在下面两个假设之间进行判断：$$H_{\mathrm{in}}:x\in D_{\mathrm{train}}$$$$H_{\mathrm{out}}:x\notin D_{\mathrm{train}}$$MIA 通常不会让模型直接回答“成员 &#x2F; 非成员”，而是首先计算一个成员分数：$$s(x;M)$$然后设置阈值：$$s(x;M)\geq\tau\Rightarrow x\text{ 被预测为成员}$$因此，不同 MIA 方法之间最核心的区别其实就是：  我们应该使用什么统计量，去衡量目标模型是否对样本 x 表现出了异常的熟悉或记忆？   2. 为什么语言模型可以做 MIA？设文本：$$x&#x3D;(x_1,x_2,\dots,x_T)$$自回归语言模型对完整文本分配的联合概率为：$$\prod_{t&#x3D;1}^{T}P_M(x_t\mi...</div></div></div></a><a class="pagination-related" href="/2026/10/05/self/" title="关于我｜AI Safety 学习档案"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-05</div><div class="info-item-2">关于我｜AI Safety 学习档案</div></div><div class="info-2"><div class="info-item-1">👋 欢迎来到我的博客📌 关于我 本科大三 联系方式：1442427183@qq.com 学校：CUMT  🔍 目前已有研究 AI Safety  MIA memorization privacy audit  📝 博客的主要内容这个博客将是一份学习日志，包括但不限于：  每日学习笔记 —— 涵盖论文阅读、实验记录、代码实现等。 踩坑与复盘 —— 作为代码能力尚在成长中的学习者，我会记录从零调试、遇到 bug、以及最终解决的全过程。 论文写作—— MIA、Extractability 等课题的最新心得与实验成果。 资源整理 —— 我遇到的好论文、好工具、好教程，也会分享出来。  内容上可能略显杂乱🌱,更多是留给自己复盘使用，但也希望能帮助到他人 🎯 博客的愿景我希望这里能成为：  一份 真诚且持续更新的学习档案； 一个 AI Safety 入门者的成长样本； 一个 与同路人交流分享的小社区。   如果你对我的研究或笔记有任何问题，欢迎通过邮件联系我。感谢你的阅读与包容！ 🌟  </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%EF%BC%9ARAG%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">一：RAG原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%EF%BC%9ARAG-%E6%8A%95%E6%AF%92"><span class="toc-number">2.</span> <span class="toc-text">二：RAG 投毒</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%9F%A5%E8%AF%86%E5%BA%93%E6%8A%95%E6%AF%92%EF%BC%88Knowledge-Base-Poisoning%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">1. 知识库投毒（Knowledge Base Poisoning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A3%80%E7%B4%A2%E7%BB%93%E6%9E%9C%E6%93%8D%E7%BA%B5%EF%BC%88Retrieval-Manipulation%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">2. 检索结果操纵（Retrieval Manipulation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E5%87%BB%EF%BC%88Vector-Database-Attacks%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">3. 向量数据库攻击（Vector Database Attacks）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AA%97%E5%8F%A3%E6%94%BB%E5%87%BB%EF%BC%88Context-Injection%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">4. 上下文窗口攻击（Context Injection）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-RAG-%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="toc-number">2.5.</span> <span class="toc-text">5. RAG 安全防护</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/05/self/" title="关于我｜AI Safety 学习档案">关于我｜AI Safety 学习档案</a><time datetime="2026-10-05T02:00:00.000Z" title="发表于 2026-10-05 10:00:00">2026-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/23/2026.9.23-DP+machine_unlearning/" title="2026-09-23｜差分隐私与机器遗忘：训练数据删除后的两个问题">2026-09-23｜差分隐私与机器遗忘：训练数据删除后的两个问题</a><time datetime="2026-09-23T02:00:00.000Z" title="发表于 2026-09-23 10:00:00">2026-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/15/2026.9.15-tools/" title="2026-09-15｜Promptfoo 与 Garak：如何把 AI 安全测试变成回归流程">2026-09-15｜Promptfoo 与 Garak：如何把 AI 安全测试变成回归流程</a><time datetime="2026-09-15T02:00:00.000Z" title="发表于 2026-09-15 10:00:00">2026-09-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/05/2026.9.5-RAG/" title="2026-09-05｜RAG 原理与知识库投毒">2026-09-05｜RAG 原理与知识库投毒</a><time datetime="2026-09-05T02:00:00.000Z" title="发表于 2026-09-05 10:00:00">2026-09-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/22/2026.8.22-MIA/" title="2026-08-22｜Membership Inference Attack：成员推断攻击">2026-08-22｜Membership Inference Attack：成员推断攻击</a><time datetime="2026-08-22T02:00:00.000Z" title="发表于 2026-08-22 10:00:00">2026-08-22</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

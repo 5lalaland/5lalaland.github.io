@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2026-08-22｜Membership Inference Attack：成员推断攻击 | 5lalaland</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 什么是 MIA？Membership Inference Attack，简称 MIA（成员推断攻击）。问题是：现在已知  一个训练好的目标模型 M； 一个候选样本 x； 但不知道 x 是否参加过模型训练。  攻击者希望在下面两个假设之间进行判断：$$H_{\mathrm{in}}:x\in D_{\mathrm{train}}$$$$H_{\mathrm{out}}:x\notin D_{\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026-08-22｜Membership Inference Attack：成员推断攻击">
+<meta property="og:url" content="https://5lalaland.github.io/2026/08/22/2026.8.22-MIA/index.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="1. 什么是 MIA？Membership Inference Attack，简称 MIA（成员推断攻击）。问题是：现在已知  一个训练好的目标模型 M； 一个候选样本 x； 但不知道 x 是否参加过模型训练。  攻击者希望在下面两个假设之间进行判断：$$H_{\mathrm{in}}:x\in D_{\mathrm{train}}$$$$H_{\mathrm{out}}:x\notin D_{\">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-08-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-08T06:58:37.123Z">
+<meta property="article:author" content="5lalaland">
+<meta property="article:tag" content="ai-safety">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2026-08-22｜Membership Inference Attack：成员推断攻击",
+  "url": "https://5lalaland.github.io/2026/08/22/2026.8.22-MIA/",
+  "image": "https://5lalaland.github.io/img/avatar.png",
+  "datePublished": "2026-08-22T02:00:00.000Z",
+  "dateModified": "2026-10-08T06:58:37.123Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "5lalaland",
+      "url": "https://5lalaland.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/2026/08/22/2026.8.22-MIA/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2026-08-22｜Membership Inference Attack：成员推断攻击',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a><a class="nav-page-title" href="/"><span class="site-name">2026-08-22｜Membership Inference Attack：成员推断攻击</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">2026-08-22｜Membership Inference Attack：成员推断攻击</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-22T02:00:00.000Z" title="发表于 2026-08-22 10:00:00">2026-08-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-08T06:58:37.123Z" title="更新于 2026-10-08 14:58:37">2026-10-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Privacy/">Privacy</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="1-什么是-MIA？"><a href="#1-什么是-MIA？" class="headerlink" title="1. 什么是 MIA？"></a>1. 什么是 MIA？</h2><p>Membership Inference Attack，简称 <strong>MIA（成员推断攻击）</strong>。<br>问题是：现在已知</p>
+<ul>
+<li>一个训练好的目标模型 <code>M</code>；</li>
+<li>一个候选样本 <code>x</code>；</li>
+<li>但不知道 <code>x</code> 是否参加过模型训练。</li>
+</ul>
+<p>攻击者希望在下面两个假设之间进行判断：<br>$$<br>H_{\mathrm{in}}:x\in D_{\mathrm{train}}<br>$$<br>$$<br>H_{\mathrm{out}}:x\notin D_{\mathrm{train}}<br>$$<br>MIA 通常不会让模型直接回答“成员 &#x2F; 非成员”，而是首先计算一个成员分数：<br>$$<br>s(x;M)<br>$$<br>然后设置阈值：<br>$$<br>s(x;M)\geq\tau\Rightarrow x\text{ 被预测为成员}<br>$$<br>因此，不同 MIA 方法之间最核心的区别其实就是：</p>
+<blockquote>
+<p><strong>我们应该使用什么统计量，去衡量目标模型是否对样本</strong> x <strong>表现出了异常的熟悉或记忆？</strong></p>
+</blockquote>
+<hr>
+<h1 id="2-为什么语言模型可以做-MIA？"><a href="#2-为什么语言模型可以做-MIA？" class="headerlink" title="2. 为什么语言模型可以做 MIA？"></a>2. 为什么语言模型可以做 MIA？</h1><p>设文本：<br>$$<br>x&#x3D;(x_1,x_2,\dots,x_T)<br>$$<br>自回归语言模型对完整文本分配的联合概率为：<br>$$<br>\prod_{t&#x3D;1}^{T}P_M(x_t\mid x_{&lt;t})<br>$$<br>其中：<br>$$<br>x_{&lt;t}&#x3D;(x_1,\dots,x_{t-1})<br>$$<br>表示第 <code>t</code> 个 token 前面的上下文。<br>由于整个序列的概率连乘后会非常小，所以通常不直接使用序列概率，而是使用平均对数似然：<br>$$<br>\frac{1}{T}\sum_{t&#x3D;1}^{T}\log P_M(x_t\mid x_{&lt;t})<br>$$<br>或者使用平均负对数似然，也就是 Loss：<br>$$<br>-\mathrm{LL}<em>M(x)<br>$$<br>进一步展开：<br>$$<br>-\frac{1}{T}\sum</em>{t&#x3D;1}^{T}\log P_M(x_t\mid x_{&lt;t})<br>$$<br>MIA 最基本的直觉就是：</p>
+<blockquote>
+<p>如果模型训练时见过某段文本，它可能会对该文本拟合得更好，因此表现出更低的 Loss 或更高的概率。</p>
+</blockquote>
+<p>但问题在于：</p>
+<blockquote>
+<p><strong>低 Loss 不一定来自训练记忆，也可能只是因为这段文本本身非常容易预测。</strong></p>
+</blockquote>
+<p>后面很多 MIA 方法，其实都在尝试解决这个问题。</p>
+<hr>
+<h1 id="3-Loss-Attack"><a href="#3-Loss-Attack" class="headerlink" title="3. Loss Attack"></a>3. Loss Attack</h1><p>最简单的方法就是直接使用目标模型在样本上的 Loss：<br>$$<br>\mathcal{L}_M(x)<br>$$<br>例如：<br>$$<br>\mathcal{L}_M(x)&lt;\tau\Rightarrow x\text{ 更可能是成员}<br>$$</p>
+<h3 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h3><p>如果一个样本参加过训练，模型可能会对它拟合得更加充分：<br>$$<br>\text{Member}\Rightarrow\text{Lower Loss}<br>$$</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>实现非常简单；</li>
+<li>不需要额外模型；</li>
+<li>不需要额外数据；</li>
+<li>只需要目标模型本身。</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>Loss 最大的问题在于：</p>
+<blockquote>
+<p><strong>Loss 同时包含了“模型是否见过文本”和“文本本身是否容易预测”两个因素。</strong></p>
+</blockquote>
+<p>例如：</p>
+<blockquote>
+<p>ha ha ha ha ha</p>
+</blockquote>
+<p>即使这句话从来没有参加训练，由于高度重复，模型仍然可能给它非常低的 Loss。<br>因此：<br>$$<br>\text{Low Loss}\not\Rightarrow\text{Membership}<br>$$<br>这就是后续方法不断进行校正的原因。</p>
+<hr>
+<h1 id="4-Zlib-Attack"><a href="#4-Zlib-Attack" class="headerlink" title="4. Zlib Attack"></a>4. Zlib Attack</h1><p>Zlib Attack 尝试使用文本的压缩复杂度，对文本本身的难度进行校正。<br>定义：<br>$$<br>Z(x)&#x3D;\text{文本 }x\text{ 使用 Zlib 压缩后的长度}<br>$$<br>可以构造类似：<br>$$<br>\frac{\mathcal{L}_M(x)}{Z(x)}<br>$$<br>这样的统计量。<br>具体实现中也可以对分数方向进行调整，只要最终统一规定“高分代表成员”或者“低分代表成员”即可。</p>
+<h3 id="为什么这么做？"><a href="#为什么这么做？" class="headerlink" title="为什么这么做？"></a>为什么这么做？</h3><p>例如：</p>
+<blockquote>
+<p>ha ha ha ha ha ha</p>
+</blockquote>
+<p>它具有两个特点：</p>
+<ol>
+<li>LLM 很容易预测，所以 Loss 很低；</li>
+<li>Zlib 也很容易压缩，所以压缩后长度很短。</li>
+</ol>
+<p>Zlib Attack 希望识别：</p>
+<blockquote>
+<p>这个文本的低 Loss，是因为模型记住了它，还是因为文本本身就非常简单？</p>
+</blockquote>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>不需要额外模型；</li>
+<li>可以粗略校正重复和模板化文本。</li>
+</ul>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><p>Zlib 只是字符或字节级压缩算法，它并不理解：</p>
+<ul>
+<li>语义；</li>
+<li>上下文；</li>
+<li>tokenization；</li>
+<li>模型预测的不确定程度。</li>
+</ul>
+<p>所以 Zlib 提供的只是非常粗糙的文本复杂度校正。</p>
+<hr>
+<h1 id="5-Min-K-Attack"><a href="#5-Min-K-Attack" class="headerlink" title="5. Min-K% Attack"></a>5. Min-K% Attack</h1><p>普通 Loss 会平均整段文本中的所有 token。<br>假设：<br>$$<br>q_t&#x3D;\log P_M(x_t\mid x_{&lt;t})<br>$$<br>那么普通 Log-Likelihood 实际上会利用所有：<br>$$<br>q_1,q_2,\dots,q_T<br>$$<br>Min-K% 认为：</p>
+<blockquote>
+<p>大量普通、容易预测的 token 可能淹没真正有价值的成员信号。</p>
+</blockquote>
+<p>例如：</p>
+<blockquote>
+<p>The company announced its <strong>XZQ-1749-B</strong> experimental device yesterday.</p>
+</blockquote>
+<p>其中：</p>
+<ul>
+<li><code>The</code></li>
+<li><code>company</code></li>
+<li><code>announced</code></li>
+<li><code>its</code></li>
+</ul>
+<p>这些 token 本身都很普通。<br>真正可能体现“模型是否见过这句话”的，反而可能是罕见实体或特殊表达。<br>因此 Min-K% 只选择模型最“不确定”的那部分 token。<br>首先计算：<br>$$<br>q_t&#x3D;\log P_M(x_t\mid x_{&lt;t})<br>$$<br>选择最低的 <code>k%</code>：<br>$$<br>K(x)&#x3D;\mathrm{BottomK}{q_1,\dots,q_T}<br>$$<br>然后计算：<br>$$<br>\frac{1}{|K(x)|}\sum_{t\in K(x)}q_t<br>$$<br>如果连模型最不确定的这些 token 都具有较高概率，那么样本更可能参加过训练。</p>
+<h3 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h3><p>相比普通 Loss：</p>
+<blockquote>
+<p>Min-K% 避免了大量普通 token 主导最终结果。</p>
+</blockquote>
+<h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><p>它依然使用：</p>
+<blockquote>
+<p><strong>绝对 token 概率。</strong></p>
+</blockquote>
+<p>但一个 token 的概率究竟算高还是低，实际上取决于当前上下文中整个词表的概率分布。<br>这就引出了 Min-K%++。</p>
+<hr>
+<h1 id="6-Min-K"><a href="#6-Min-K" class="headerlink" title="6. Min-K%++"></a>6. Min-K%++</h1><p>考虑两个情况。</p>
+<h3 id="情况-A：模型本身很不确定"><a href="#情况-A：模型本身很不确定" class="headerlink" title="情况 A：模型本身很不确定"></a>情况 A：模型本身很不确定</h3><p>$$<br>(0.20,0.18,0.17,0.15,\dots)<br>$$<br>真实 token 概率：<br>$$<br>P(x_t)&#x3D;0.20<br>$$<br>这里虽然只有 <code>0.20</code>，但它其实已经是模型最认可的候选之一。</p>
+<hr>
+<h3 id="情况-B：模型非常确信另一个-token"><a href="#情况-B：模型非常确信另一个-token" class="headerlink" title="情况 B：模型非常确信另一个 token"></a>情况 B：模型非常确信另一个 token</h3><p>$$<br>(0.70,0.20,0.03,0.02,\dots)<br>$$<br>真实 token 仍然是：<br>$$<br>P(x_t)&#x3D;0.20<br>$$<br>但这一次模型明显更倾向于概率为 <code>0.70</code> 的另一个 token。</p>
+<hr>
+<p>Min-K% 只看到：<br>$$<br>P(x_t)&#x3D;0.20<br>$$<br>所以无法区分这两种情况。<br>Min-K%++ 因此不再只看真实 token 的绝对概率，而是：</p>
+<blockquote>
+<p><strong>看真实 token 相对于当前位置整个词表预测分布有多异常。</strong></p>
+</blockquote>
+<p>模型在位置 <code>t</code> 输出：<br>$$<br>P_M(v\mid x_{&lt;t}),\qquad v\in V<br>$$<br>首先计算对数概率的期望：<br>$$<br>\mu_t&#x3D;\mathbb E_{v\sim P_M(\cdot\mid x_{&lt;t})}\left[\log P_M(v\mid x_{&lt;t})\right]<br>$$<br>再计算标准差：<br>$$<br>\sigma_t&#x3D;\sqrt{\mathbb E_{v\sim P_M(\cdot\mid x_{&lt;t})}\left[(\log P_M(v\mid x_{&lt;t})-\mu_t)^2\right]}<br>$$<br>真实 token 的标准化分数：<br>$$<br>z_t&#x3D;\frac{\log P_M(x_t\mid x_{&lt;t})-\mu_t}{\sigma_t}<br>$$<br>然后同样选择最低的 <code>k%</code>：<br>$$<br>\frac{1}{|K^{++}(x)|}\sum_{t\in K^{++}(x)}z_t<br>$$</p>
+<h3 id="Min-K-与-Min-K-最核心的区别"><a href="#Min-K-与-Min-K-最核心的区别" class="headerlink" title="Min-K 与 Min-K++ 最核心的区别"></a>Min-K 与 Min-K++ 最核心的区别</h3><p>Min-K 问：</p>
+<blockquote>
+<p>真实 token 的概率是多少？</p>
+</blockquote>
+<p>Min-K++ 问：</p>
+<blockquote>
+<p><strong>真实 token 相对于模型当前位置的整个预测分布表现得怎么样？</strong></p>
+</blockquote>
+<h3 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h3><p>能够校正：</p>
+<blockquote>
+<p>不同上下文下，模型自身预测不确定程度不同的问题。</p>
+</blockquote>
+<h3 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h3><p>Min-K++ 仍然只观察目标模型。<br>例如目标模型本来就非常擅长医学文本，那么医学文本即使不是训练成员，也可能获得很强的分数。<br>换句话说，它没有回答：</p>
+<blockquote>
+<p>如果这个样本没有参加目标模型训练，一个正常模型会怎样看待它？</p>
+</blockquote>
+<p>于是就产生了 Reference Attack。</p>
+<hr>
+<h1 id="7-Reference-Attack"><a href="#7-Reference-Attack" class="headerlink" title="7. Reference Attack"></a>7. Reference Attack</h1><p>假设存在：</p>
+<ul>
+<li>目标模型 <code>M</code>；</li>
+<li>参考模型 <code>M_ref</code>。</li>
+</ul>
+<p>参考模型没有目标训练集中的成员信息。<br>分别计算：<br>$$<br>\mathcal L_M(x)<br>$$<br>以及：<br>$$<br>\mathcal L_{M_{\mathrm{ref}}}(x)<br>$$<br>一种简单的 Reference 分数是：<br>$$<br>\mathcal L_{M_{\mathrm{ref}}}(x)-\mathcal L_M(x)<br>$$<br>如果：<br>$$<br>\mathcal L_M(x)\ll\mathcal L_{M_{\mathrm{ref}}}(x)<br>$$<br>说明：</p>
+<blockquote>
+<p>两个模型面对的是完全相同的文本，但目标模型对它表现得异常熟悉。</p>
+</blockquote>
+<p>因此更可能存在训练成员效应。</p>
+<h3 id="Reference-在校正什么？"><a href="#Reference-在校正什么？" class="headerlink" title="Reference 在校正什么？"></a>Reference 在校正什么？</h3><p>它尝试消除：</p>
+<blockquote>
+<p>文本本身的普遍难度。</p>
+</blockquote>
+<p>保留：</p>
+<blockquote>
+<p>目标模型特有的额外拟合。</p>
+</blockquote>
+<h3 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h3><p>Reference Attack 强烈依赖参考模型。<br>例如参考模型和目标模型在以下方面差异太大：</p>
+<ul>
+<li>架构；</li>
+<li>模型规模；</li>
+<li>预训练语料；</li>
+<li>tokenizer；</li>
+<li>训练方法；</li>
+<li>文本领域；</li>
+</ul>
+<p>那么：<br>$$<br>\mathcal L_M(x)<br>$$<br>可能反映的是模型能力差异，而不是 Membership。<br>因此：</p>
+<blockquote>
+<p><strong>单个参考模型的 Loss 差不能直接等同于完整的 LiRA。</strong></p>
+</blockquote>
+<hr>
+<h1 id="8-Neighbor-Attack"><a href="#8-Neighbor-Attack" class="headerlink" title="8. Neighbor Attack"></a>8. Neighbor Attack</h1><p>Reference Attack 的思想是：</p>
+<blockquote>
+<p>找一个模型作为参照。</p>
+</blockquote>
+<p>Neighbor Attack 换了一种思路：</p>
+<blockquote>
+<p>找和 <code>x</code> 非常相似的文本作为参照。</p>
+</blockquote>
+<p>对目标文本 <code>x</code> 构造：<br>$$<br>\tilde{x}_1,\dots,\tilde{x}_n<br>$$<br>例如原文：</p>
+<blockquote>
+<p>Stocks fell sharply on Monday.</p>
+</blockquote>
+<p>邻居：</p>
+<blockquote>
+<p>Shares declined sharply on Monday.</p>
+</blockquote>
+<p>或者：</p>
+<blockquote>
+<p>Stocks dropped sharply on Tuesday.</p>
+</blockquote>
+<p>然后比较：<br>$$<br>\mathcal L_M(x)<br>$$<br>和：<br>$$<br>\frac{1}{n}\sum_{i&#x3D;1}^{n}\mathcal L_M(\tilde{x}<em>i)<br>$$<br>例如定义：<br>$$<br>\frac{1}{n}\sum</em>{i&#x3D;1}^{n}\mathcal L_M(\tilde{x}_i)-\mathcal L_M(x)<br>$$<br>如果：<br>$$<br>\mathcal L_M(x)\ll\frac{1}{n}\sum_i\mathcal L_M(\tilde{x}_i)<br>$$<br>说明：</p>
+<blockquote>
+<p>模型不是单纯擅长这种类型的句子，而是异常地擅长原始的这一句话。</p>
+</blockquote>
+<p>因此原文本更可能是成员。</p>
+<h3 id="最大问题"><a href="#最大问题" class="headerlink" title="最大问题"></a>最大问题</h3><p>Neighbor Attack 建立在一个强假设上：</p>
+<blockquote>
+<p>Neighbor 与原始样本具有相似的内在难度。</p>
+</blockquote>
+<p>但实际上改变几个词就可能改变：</p>
+<ul>
+<li>语义；</li>
+<li>流畅程度；</li>
+<li>tokenization；</li>
+<li>领域；</li>
+<li>模型预测难度。</li>
+</ul>
+<p>因此 Neighbor 的质量会直接影响攻击效果。</p>
+<hr>
+<h1 id="9-LiRA"><a href="#9-LiRA" class="headerlink" title="9. LiRA"></a>9. LiRA</h1><p>LiRA，即：<br><strong>Likelihood Ratio Attack</strong>。<br>前面的 Loss Attack 使用一个全局阈值：<br>$$<br>\mathcal L_M(x)&lt;\tau<br>$$<br>问题在于：</p>
+<blockquote>
+<p>每个样本本身难度不同，为什么所有样本都要使用同一个阈值？</p>
+</blockquote>
+<p>LiRA 的解决思路是：</p>
+<blockquote>
+<p><strong>为每个候选样本建立自己的 IN 和 OUT 参考分布。</strong></p>
+</blockquote>
+<p>假设对于目标样本 <code>x</code>，训练很多 Shadow Models。<br>一部分 Shadow Model 的训练集包含 <code>x</code>：<br>$$<br>x\in D_{\mathrm{shadow}}<br>$$<br>这些模型产生：<br>$$<br>q_{\mathrm{in}}^{(1)}(x),\dots,q_{\mathrm{in}}^{(m)}(x)<br>$$<br>另一部分 Shadow Model 不包含 <code>x</code>：<br>$$<br>x\notin D_{\mathrm{shadow}}<br>$$<br>产生：<br>$$<br>q_{\mathrm{out}}^{(1)}(x),\dots,q_{\mathrm{out}}^{(m)}(x)<br>$$<br>例如分别拟合：<br>$$<br>q_{\mathrm{in}}(x)\sim\mathcal N\left(\mu_{\mathrm{in}},\sigma_{\mathrm{in}}^2\right)<br>$$<br>以及：<br>$$<br>q_{\mathrm{out}}(x)\sim\mathcal N\left(\mu_{\mathrm{out}},\sigma_{\mathrm{out}}^2\right)<br>$$<br>目标模型产生：<br>$$<br>q_{\mathrm{obs}}(x)<br>$$<br>然后计算似然比：<br>$$<br>\frac{p\left(q_{\mathrm{obs}}(x)\mid H_{\mathrm{in}}\right)}{p\left(q_{\mathrm{obs}}(x)\mid H_{\mathrm{out}}\right)}<br>$$<br>如果：<br>$$<br>\Lambda(x)\gg1<br>$$<br>说明：</p>
+<blockquote>
+<p>目标模型当前的行为更像“训练过 <code>x</code> 的模型”，而不是“没有训练过 <code>x</code> 的模型”。</p>
+</blockquote>
+<p>因此倾向于：<br>$$<br>H_{\mathrm{in}}<br>$$</p>
+<h3 id="为什么-LiRA-很重要？"><a href="#为什么-LiRA-很重要？" class="headerlink" title="为什么 LiRA 很重要？"></a>为什么 LiRA 很重要？</h3><p>普通 Loss：</p>
+<blockquote>
+<p>所有样本使用同一个阈值。</p>
+</blockquote>
+<p>LiRA：</p>
+<blockquote>
+<p>每一个样本都有自己的 IN &#x2F; OUT 参照。</p>
+</blockquote>
+<p>因此，即使一个样本本身非常困难，只要：</p>
+<blockquote>
+<p>目标模型在它身上的行为，比同类型 OUT 模型异常得多，</p>
+</blockquote>
+<p>LiRA 仍然可能识别它。</p>
+<h3 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h3><p>最大的缺点是：</p>
+<blockquote>
+<p><strong>Shadow Model 成本非常高。</strong></p>
+</blockquote>
+<p>需要构造接近目标模型训练过程的多个 IN &#x2F; OUT 世界。</p>
+<hr>
+<h1 id="10-RMIA"><a href="#10-RMIA" class="headerlink" title="10. RMIA"></a>10. RMIA</h1><p>RMIA 进一步思考：</p>
+<blockquote>
+<p><code>x</code> 不是成员这个 OUT 假设，实际上过于笼统。</p>
+</blockquote>
+<p>如果 <code>x</code> 没有进入训练集，那么训练集位置可能被其他总体样本占据。<br>设：<br>$$<br>z\sim\pi<br>$$<br>其中 <code>π</code> 是总体数据分布。<br>因此 RMIA 的思路不是单独判断：</p>
+<blockquote>
+<p>x 的 Loss 低不低？</p>
+</blockquote>
+<p>而是：</p>
+<blockquote>
+<p><strong>和总体中的其他普通样本相比，目标模型是否对 x 表现出了异常强的拟合？</strong></p>
+</blockquote>
+<h2 id="10-1-先校正样本难度"><a href="#10-1-先校正样本难度" class="headerlink" title="10.1 先校正样本难度"></a>10.1 先校正样本难度</h2><p>定义：<br>$$<br>r_\theta(u)&#x3D;\frac{P(u\mid\theta)}{P(u)}<br>$$<br>其中：<br><code>P(u|θ)</code> 表示目标模型对样本 <code>u</code> 的拟合程度。<br><code>P(u)</code> 表示：</p>
+<blockquote>
+<p>一般模型对 <code>u</code> 的正常拟合水平。</p>
+</blockquote>
+<p>实际中可以利用参考模型进行估计。<br>因此 $r_\theta(u)$ 代表：</p>
+<blockquote>
+<p>目标模型对 <code>u</code> 的拟合，相对于普通情况到底异常了多少。</p>
+</blockquote>
+<h2 id="10-2-x-与随机样本-z-比较"><a href="#10-2-x-与随机样本-z-比较" class="headerlink" title="10.2 x 与随机样本 z 比较"></a>10.2 x 与随机样本 z 比较</h2><p>构造：<br>$$<br>\frac{r_\theta(x)}{r_\theta(z)}<br>$$<br>展开：<br>$$<br>\frac{P(x\mid\theta)&#x2F;P(x)}{P(z\mid\theta)&#x2F;P(z)}<br>$$<br>如果：<br>$$<br>LR_\theta(x,z)\geq\gamma<br>$$<br>说明：</p>
+<blockquote>
+<p>目标模型对 <code>x</code> 的异常拟合程度高于随机总体样本 <code>z</code>。</p>
+</blockquote>
+<h2 id="10-3-让大量-z-和-x-比较"><a href="#10-3-让大量-z-和-x-比较" class="headerlink" title="10.3 让大量 z 和 x 比较"></a>10.3 让大量 z 和 x 比较</h2><p>采样：<br>$$<br>z_1,\dots,z_m\sim\pi<br>$$<br>计算：<br>$$<br>s_{\mathrm{RMIA}}(x)&#x3D;\frac{1}{m}\sum_{j&#x3D;1}^{m}\mathbf{1}\left[LR_\theta(x,z_j)\geq\gamma\right]<br>$$<br>如果大量随机样本都满足：<br>$$<br>LR_\theta(x,z_j)\geq\gamma<br>$$<br>那么说明 <code>x</code> 相比总体样本表现出了异常强的目标模型拟合。<br>因此 $s_{\mathrm{RMIA}}(x)$ 较高时，更倾向于认为 <code>x</code> 是训练成员。</p>
+<h3 id="RMIA-的思想"><a href="#RMIA-的思想" class="headerlink" title="RMIA 的思想"></a>RMIA 的思想</h3><p>普通 Loss 问：</p>
+<blockquote>
+<p>模型是不是很会预测 x？</p>
+</blockquote>
+<p>Reference 问：</p>
+<blockquote>
+<p>目标模型是不是比参考模型更会预测 x？</p>
+</blockquote>
+<p>RMIA 进一步问：</p>
+<blockquote>
+<p><strong>目标模型对 x 的异常拟合程度，是否还显著超过大量普通总体样本？</strong></p>
+</blockquote>
+<hr>
+<h1 id="11-MIA-方法演进主线"><a href="#11-MIA-方法演进主线" class="headerlink" title="11. MIA 方法演进主线"></a>11. MIA 方法演进主线</h1><h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><blockquote>
+<p>模型是不是特别会预测这句话</p>
+</blockquote>
+<h3 id="Zlib"><a href="#Zlib" class="headerlink" title="Zlib"></a>Zlib</h3><blockquote>
+<p>Loss 很低，会不会只是因为文本本身特别简单？</p>
+</blockquote>
+<h3 id="Min-K"><a href="#Min-K" class="headerlink" title="Min-K%"></a>Min-K%</h3><blockquote>
+<p>不看大量普通 token，只看最难 token，模型还熟悉吗？</p>
+</blockquote>
+<h3 id="Min-K-1"><a href="#Min-K-1" class="headerlink" title="Min-K%++"></a>Min-K%++</h3><blockquote>
+<p>某个 token 概率低，到底是真的低，还是当前位置模型本来就不确定？</p>
+</blockquote>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><blockquote>
+<p>目标模型是否比普通模型异常地更熟悉 x？</p>
+</blockquote>
+<h3 id="Neighbor"><a href="#Neighbor" class="headerlink" title="Neighbor"></a>Neighbor</h3><blockquote>
+<p>为什么模型只特别熟悉原句，而不是同样容易的相似句子？</p>
+</blockquote>
+<h3 id="LiRA"><a href="#LiRA" class="headerlink" title="LiRA"></a>LiRA</h3><blockquote>
+<p>对于 x 这个具体样本，目标模型的行为更像 IN 世界还是 OUT 世界？</p>
+</blockquote>
+<h3 id="RMIA"><a href="#RMIA" class="headerlink" title="RMIA"></a>RMIA</h3><blockquote>
+<p>相比总体中的大量其他样本，目标模型是否对 x 表现出了异常强的训练效应？</p>
+</blockquote>
+<h1 id="12-方法对比"><a href="#12-方法对比" class="headerlink" title="12. 方法对比"></a>12. 方法对比</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>核心成员信号</th>
+<th>难度校正方式</th>
+<th>额外资源</th>
+<th>主要问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Loss</td>
+<td>成员 Loss 更低</td>
+<td>无</td>
+<td>无</td>
+<td>简单非成员也可能 Loss 很低</td>
+</tr>
+<tr>
+<td>Zlib</td>
+<td>Loss 相对压缩复杂度异常</td>
+<td>压缩长度</td>
+<td>无</td>
+<td>不理解语义</td>
+</tr>
+<tr>
+<td>Min-K%</td>
+<td>最难 token 也具有较高概率</td>
+<td>忽略普通 token</td>
+<td>Token 概率</td>
+<td>仍使用绝对概率</td>
+</tr>
+<tr>
+<td>Min-K%++</td>
+<td>最难 token 的标准化分数较高</td>
+<td>当前词表分布</td>
+<td>完整 Logits</td>
+<td>仍只观察目标模型</td>
+</tr>
+<tr>
+<td>Reference</td>
+<td>目标模型比参考模型更熟悉 x</td>
+<td>Reference Model</td>
+<td>参考模型</td>
+<td>对参考模型匹配敏感</td>
+</tr>
+<tr>
+<td>Neighbor</td>
+<td>原文比邻居 Loss 更低</td>
+<td>相似样本</td>
+<td>Neighbor + 多次推理</td>
+<td>邻居不一定等难</td>
+</tr>
+<tr>
+<td>LiRA</td>
+<td>目标行为更符合 IN 分布</td>
+<td>样本级 IN&#x2F;OUT 分布</td>
+<td>大量 Shadow Models</td>
+<td>成本非常高</td>
+</tr>
+<tr>
+<td>RMIA</td>
+<td>x 的异常拟合超过总体样本</td>
+<td>Reference + Population</td>
+<td>Reference + Population</td>
+<td>实现复杂、依赖参考分布</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="13-面试自测题"><a href="#13-面试自测题" class="headerlink" title="13. 面试自测题"></a>13. 面试自测题</h1><ol>
+<li>什么是 Membership Inference Attack？为什么语言模型会存在这种攻击？</li>
+</ol>
+<p><font color="#a5a5a5">Membership Inference Attack 的目标是判断一个候选样本是否参加过目标模型训练，形式化来说就是在  和  两种假设之间进行判断；语言模型之所以可能受到 MIA，是因为机器学习训练过程本质上是在最小化训练数据上的 Loss，如果模型对某些训练样本产生了额外拟合甚至记忆，那么这些样本在模型上的统计行为就可能和未见过的样本不同，比如训练成员可能具有更低的 Loss、更高的 token probability，或者某些罕见 token 被异常准确地预测。最简单的 MIA 因此直接用 Loss 作为成员分数，但低 Loss 并不能直接说明 Membership，因为一段文本也可能只是本身很简单，所以后续的 Min-K%、Reference、LiRA、RMIA 本质上都在解决同一个问题：如何把“样本本身容易预测”和“模型因为训练而异常熟悉这个样本”区分开。从隐私角度来说，MIA 暴露的是训练数据参与信息，例如在医疗模型中，如果攻击者可以判断某个人的病例是否参加过模型训练，那么即使模型没有直接输出病历本身，也可能泄露敏感的 Membership 信息。</font></p>
+<p> 2.为什么简单的 Loss Attack 不可靠？Min-K% 和 Min-K%++ 分别解决了什么问题？<br><font color="#a5a5a5">Loss Attack 最大的问题是混淆了 Membership 和样本本身的难度，例如 <code>ha ha ha ha</code> 这种文本即使没有参加训练，由于高度重复也可能得到非常低的 Loss，如果只使用 Loss 阈值，就可能把这种简单的非成员误判成成员；Min-K% 的改进是，不再平均所有 token，而只观察模型最不确定的 <code>k%</code> token，它的直觉是大量 <code>the</code>、<code>is</code>、标点之类非常普通的 token 对 Membership 判断价值较低，而罕见实体、特殊数字或者不常见表达可能更能够体现模型是否真的见过这段文本。但是 Min-K% 仍然只看绝对 token probability，问题在于同样一个 <code>0.2</code> 的概率在不同预测分布中含义不同：如果整个词表的最高概率也只有 <code>0.2</code>，那这个 token 实际上预测得很好；如果另一个 token 的概率是 <code>0.8</code>，那么 <code>0.2</code> 就说明真实 token 并不是模型首选。Min-K%++ 因此进一步使用当前整个词表分布，对真实 token 的 log probability 做标准化，也就是说它关注的不只是 token probability 本身，而是这个 token 在当前位置的预测分布中到底有多突出。所以三者可以总结成：Loss 看整句话平均表现，Min-K 看最难 token，Min-K++ 看最难 token 相对于当前位置预测分布的异常程度。</font></p>
+<p>面试官可能追问</p>
+<p>Min-K++ 并没有完全解决文本难度问题，因为它解决的是 token-level uncertainty，也就是不同位置词表分布不同的问题，但它仍然只观察目标模型；如果目标模型天然特别擅长某一领域，那么该领域的非成员样本也可能得到很强的 Min-K++ 分数，所以它并没有真正构造一个“如果没有 Membership，模型应该怎样表现”的反事实基线。</p>
+<ol start="3">
+<li>Reference Attack 和 LiRA 有什么本质区别？为什么 Reference Attack 不能直接叫 LiRA？</li>
+</ol>
+<p><font color="#a5a5a5">Reference Attack 和 LiRA 都试图解决样本本身难度不同的问题，但两者构造基线的方法差别很大：Reference Attack 通常使用一个参考模型，对于同一个样本 <code>x</code> 比较目标模型和参考模型的 Loss，如果两个模型面对完全相同的文本而目标模型表现得异常好，那么这种额外拟合可能来自 Membership，所以它的参照对象是“另一个模型”；而 LiRA 的核心是模拟 <code>x</code> 参加训练和不参加训练两种世界，它需要训练多个 Shadow Models，一部分模型包含 <code>x</code>、另一部分不包含 <code>x</code>，然后分别建立 IN 和 OUT 分布，之后观察目标模型在 <code>x</code> 上产生的分数，看这个观测值在 IN 分布下更可能还是在 OUT 分布下更可能，所以 LiRA 实际上是在进行一种样本级 Likelihood Ratio Test。因此，一个简单的  只是在做参考模型校正，它没有建立完整的样本级 IN &#x2F; OUT 分布，所以不能严格地称为完整 LiRA。</font></p>
+<p><font color="#a5a5a5">LiRA 通常比简单 Loss Threshold 更强，是因为全局 Loss Threshold 假设所有样本具有相同的基线难度，但实际上样本差异很大，而 LiRA 为每一个样本建立自己的 IN 和 OUT 分布，相当于为每个样本制定一个自己的判断标准，所以一个非常困难但被目标模型记住的样本，不需要和一个非常简单的非成员使用相同的 Loss 阈值，它真正判断的是“对于这个具体的 <code>x</code>，目标模型当前的行为是否异常地像一个训练过 <code>x</code> 的模型”。</font></p>
+<ol start="4">
+<li>如果让你比较 LiRA 和 RMIA，你会怎么解释两者的思想差异？</li>
+</ol>
+<p><font color="#a5a5a5">两者都属于比简单 Loss Attack 更精细的 Membership Inference 方法，而且它们都在试图构造更合理的非成员基线。LiRA 的核心是显式模拟“<code>x</code> 在训练集里”和“<code>x</code> 不在训练集里”两个假设，它通过 Shadow Models 建立 IN distribution 和 OUT distribution，再对目标模型观测值做 likelihood ratio test，因此 LiRA 的核心参照是同一个样本 <code>x</code> 在 IN 和 OUT 两个训练世界里的行为差异；RMIA 的思路则更加偏向相对比较，它认为单纯的 OUT 假设过于宽泛，所以从总体分布中抽取大量样本 <code>z</code>，然后比较目标模型对 <code>x</code> 和随机总体样本 <code>z</code> 的异常拟合程度，同时通常还会利用 Reference Model 对样本固有难度进行校正。因此可以概括为：LiRA 问的是“当前模型对 <code>x</code> 的表现，更像训练过 <code>x</code> 还是没训练过 <code>x</code>”，而 RMIA 问的是“相比大量普通总体样本，模型是不是对 <code>x</code> 表现出了异常强的训练效应”。LiRA 的主要问题是大量 Shadow Model 带来的训练成本，而 RMIA 希望通过总体样本比较和参考统计构造更实用的成员判断，但它自身也依赖参考分布和 Population Distribution 的质量。</font></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io">5lalaland</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io/2026/08/22/2026.8.22-MIA/">https://5lalaland.github.io/2026/08/22/2026.8.22-MIA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://5lalaland.github.io" target="_blank">5lalaland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ai-safety/">ai-safety</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/09/05/2026.9.5-RAG/" title="2026-09-05｜RAG 原理与知识库投毒"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">2026-09-05｜RAG 原理与知识库投毒</div></div><div class="info-2"><div class="info-item-1">一：RAG原理准备：切片-&gt;索引回答：召回-重排-生成1.切片：按照字数，段落…..方式分2.索引：embedding将文本转换成向量再将向量存储在向量数据库（原文和向量）当中3.召回：返回与用户问题向量相似度最高的topk个文段；目前根据欧氏距离，点积,cos相似度等  成本低但准确率低4.重排：返回用cross-encoder计算出的刚刚的topk个文段中更相近的几个文段5.生成：AI根据文段生成结果 自测题&#x2F;概念辨析：  为什么RAG比普通LLM更容易受到数据投毒？  RAG系统容易受到投毒攻击的主要原因是它引入了外部知识源，而这些数据通常被模型默认认为具有一定可信度。传统LLM主要依赖训练阶段固定的参数知识，而RAG系统会实时检索外部文档并拼接到Prompt中，因此攻击者可以通过影响检索结果间接影响模型输出。此外，向量数据库通常根据语义相似度进行检索，而不是根据真实性进行判断，因此攻击者可以构造与目标查询高度相关的恶意文档，提高其被召回的概率。同时，LLM本身缺乏可靠的事实验证能力，当恶意文档进入上下文后，模型可能会将其作为可信信息进行总结和生成。因此RA...</div></div></div></a><a class="pagination-related" href="/2026/08/21/2026.8.21-Agent_security/" title="2026-08-21｜Agent Security：从模型决策到工具权限"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">2026-08-21｜Agent Security：从模型决策到工具权限</div></div><div class="info-2"><div class="info-item-1">Agent 与普通聊天模型的差别，在于它可以根据模型输出继续规划并调用外部工具。风险因此从“生成了什么文本”扩展到“系统实际执行了什么动作”。 1. Agent、LangChain、MCP 和 API 的关系Agent 是负责理解任务、规划步骤和决定是否行动的系统概念。LangChain 等框架提供运行时、记忆、工具和流程编排。MCP 是连接 Agent 与外部工具的标准化协议，负责发现和传递上下文，不负责替 Agent 做安全决策。API 则是具体服务之间约定请求和响应格式的接口。 一个典型链路是： 1用户任务 → Agent/LLM → 工具选择 → MCP Client → MCP Server → 外部系统  每一跳都可能改变权限和数据边界，因此不能把“模型答应了”视为授权。 2. Agent 的主要攻击面 工具投毒：工具描述中隐藏改变行为的指令； 间接 Prompt Injection：网页或文档诱导 Agent 执行额外步骤； 越权访问：检索或工具层没有绑定用户身份； 记忆投毒：攻击者把恶意内容写入长期记忆； 循环与资源滥用：Agent 不断调用工具，造成费用或服务压...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/07/07/2026.7.7-knowledge_before_start/" title="2026-07-07｜开始学习 LLM 安全前需要掌握的知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-07</div><div class="info-item-2">2026-07-07｜开始学习 LLM 安全前需要掌握的知识</div></div><div class="info-2"><div class="info-item-1">1. 预训练阶段 Pre-training1.1 数据准备大语言模型首先需要收集大规模文本数据，常见来源包括 Common Crawl 网页数据、Wikipedia、Books、GitHub &#x2F; Stack Overflow 等代码数据，以及新闻、论文、论坛和其他公开文本。实际训练前还需要进行数据清洗、去重、质量过滤、敏感信息过滤等处理。 1.2 文本 → Token模型不能直接理解自然语言文字，因此首先需要通过 Tokenizer（分词器） 将文本转换为 Token。例如： 12345I love ChatGPT↓ Tokenizer[&quot;I&quot;, &quot; love&quot;, &quot; Chat&quot;, &quot;GPT&quot;]↓[40, 3021, 16837, 38...] 注意：Token 并不等于一个完整的单词。 Token 可能是一个单词、一个词的一部分、一个汉字、多个汉字、标点符号或空格。现代 LLM 常用 BPE、Byte-level BPE、SentencePiece 等 Tokenizer。 1.3 UTF...</div></div></div></a><a class="pagination-related" href="/2026/10/05/self/" title="关于我｜AI Safety 学习档案"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-05</div><div class="info-item-2">关于我｜AI Safety 学习档案</div></div><div class="info-2"><div class="info-item-1">👋 欢迎来到我的博客📌 关于我 本科大三 联系方式：1442427183@qq.com 学校：CUMT  🔍 目前已有研究 AI Safety  MIA memorization privacy audit  📝 博客的主要内容这个博客将是一份学习日志，包括但不限于：  每日学习笔记 —— 涵盖论文阅读、实验记录、代码实现等。 踩坑与复盘 —— 作为代码能力尚在成长中的学习者，我会记录从零调试、遇到 bug、以及最终解决的全过程。 论文写作—— MIA、Extractability 等课题的最新心得与实验成果。 资源整理 —— 我遇到的好论文、好工具、好教程，也会分享出来。  内容上可能略显杂乱🌱,更多是留给自己复盘使用，但也希望能帮助到他人 🎯 博客的愿景我希望这里能成为：  一份 真诚且持续更新的学习档案； 一个 AI Safety 入门者的成长样本； 一个 与同路人交流分享的小社区。   如果你对我的研究或笔记有任何问题，欢迎通过邮件联系我。感谢你的阅读与包容！ 🌟  </div></div></div></a><a class="pagination-related" href="/2026/09/05/2026.9.5-RAG/" title="2026-09-05｜RAG 原理与知识库投毒"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-05</div><div class="info-item-2">2026-09-05｜RAG 原理与知识库投毒</div></div><div class="info-2"><div class="info-item-1">一：RAG原理准备：切片-&gt;索引回答：召回-重排-生成1.切片：按照字数，段落…..方式分2.索引：embedding将文本转换成向量再将向量存储在向量数据库（原文和向量）当中3.召回：返回与用户问题向量相似度最高的topk个文段；目前根据欧氏距离，点积,cos相似度等  成本低但准确率低4.重排：返回用cross-encoder计算出的刚刚的topk个文段中更相近的几个文段5.生成：AI根据文段生成结果 自测题&#x2F;概念辨析：  为什么RAG比普通LLM更容易受到数据投毒？  RAG系统容易受到投毒攻击的主要原因是它引入了外部知识源，而这些数据通常被模型默认认为具有一定可信度。传统LLM主要依赖训练阶段固定的参数知识，而RAG系统会实时检索外部文档并拼接到Prompt中，因此攻击者可以通过影响检索结果间接影响模型输出。此外，向量数据库通常根据语义相似度进行检索，而不是根据真实性进行判断，因此攻击者可以构造与目标查询高度相关的恶意文档，提高其被召回的概率。同时，LLM本身缺乏可靠的事实验证能力，当恶意文档进入上下文后，模型可能会将其作为可信信息进行总结和生成。因此RA...</div></div></div></a><a class="pagination-related" href="/2026/07/13/2026.7.13-ai_safety_route/" title="2026-07-13｜AI Safety 学习路线"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-13</div><div class="info-item-2">2026-07-13｜AI Safety 学习路线</div></div><div class="info-2"><div class="info-item-1">一：学习路线LLM基础↓OWASP LLM Top10↓Prompt Injection↓MIA↓RAG Security↓Agent Security↓Promptfoo↓Garak↓Privacy Attack 二：技术栈要求   技术栈 需要掌握内容 达到标准（结果）    LLM 基础 Transformer、Attention、Decoder-only LLM、Tokenization、Inference流程 能解释 LLM 为什么会产生幻觉、泄露、越狱；能读懂安全论文   Prompt Engineering System&#x2F;User Prompt、Instruction hierarchy、Few-shot、CoT、Role Prompt 能设计攻击 prompt 和防御 prompt   Prompt Injection Direct Injection、Indirect Injection、Context Injection、Instruction Override 能针对 RAG&#x2F;Agent 设计攻击案例，并分析攻击链   Jailbreak...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-MIA%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是 MIA？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E5%81%9A-MIA%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">2. 为什么语言模型可以做 MIA？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Loss-Attack"><span class="toc-number">3.</span> <span class="toc-text">3. Loss Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">3.1.</span> <span class="toc-text">核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">3.2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">3.3.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Zlib-Attack"><span class="toc-number">4.</span> <span class="toc-text">4. Zlib Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%81%9A%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">为什么这么做？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9-1"><span class="toc-number">4.2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="toc-number">4.3.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Min-K-Attack"><span class="toc-number">5.</span> <span class="toc-text">5. Min-K% Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9-2"><span class="toc-number">5.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9-2"><span class="toc-number">5.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Min-K"><span class="toc-number">6.</span> <span class="toc-text">6. Min-K%++</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-A%EF%BC%9A%E6%A8%A1%E5%9E%8B%E6%9C%AC%E8%BA%AB%E5%BE%88%E4%B8%8D%E7%A1%AE%E5%AE%9A"><span class="toc-number">6.1.</span> <span class="toc-text">情况 A：模型本身很不确定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-B%EF%BC%9A%E6%A8%A1%E5%9E%8B%E9%9D%9E%E5%B8%B8%E7%A1%AE%E4%BF%A1%E5%8F%A6%E4%B8%80%E4%B8%AA-token"><span class="toc-number">6.2.</span> <span class="toc-text">情况 B：模型非常确信另一个 token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Min-K-%E4%B8%8E-Min-K-%E6%9C%80%E6%A0%B8%E5%BF%83%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">6.3.</span> <span class="toc-text">Min-K 与 Min-K++ 最核心的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9-3"><span class="toc-number">6.4.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9-3"><span class="toc-number">6.5.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-Reference-Attack"><span class="toc-number">7.</span> <span class="toc-text">7. Reference Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference-%E5%9C%A8%E6%A0%A1%E6%AD%A3%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">7.1.</span> <span class="toc-text">Reference 在校正什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9-4"><span class="toc-number">7.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-Neighbor-Attack"><span class="toc-number">8.</span> <span class="toc-text">8. Neighbor Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E9%97%AE%E9%A2%98"><span class="toc-number">8.1.</span> <span class="toc-text">最大问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-LiRA"><span class="toc-number">9.</span> <span class="toc-text">9. LiRA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-LiRA-%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="toc-number">9.1.</span> <span class="toc-text">为什么 LiRA 很重要？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9-5"><span class="toc-number">9.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-RMIA"><span class="toc-number">10.</span> <span class="toc-text">10. RMIA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#10-1-%E5%85%88%E6%A0%A1%E6%AD%A3%E6%A0%B7%E6%9C%AC%E9%9A%BE%E5%BA%A6"><span class="toc-number">10.1.</span> <span class="toc-text">10.1 先校正样本难度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-2-x-%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A0%B7%E6%9C%AC-z-%E6%AF%94%E8%BE%83"><span class="toc-number">10.2.</span> <span class="toc-text">10.2 x 与随机样本 z 比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-3-%E8%AE%A9%E5%A4%A7%E9%87%8F-z-%E5%92%8C-x-%E6%AF%94%E8%BE%83"><span class="toc-number">10.3.</span> <span class="toc-text">10.3 让大量 z 和 x 比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMIA-%E7%9A%84%E6%80%9D%E6%83%B3"><span class="toc-number">10.3.1.</span> <span class="toc-text">RMIA 的思想</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11-MIA-%E6%96%B9%E6%B3%95%E6%BC%94%E8%BF%9B%E4%B8%BB%E7%BA%BF"><span class="toc-number">11.</span> <span class="toc-text">11. MIA 方法演进主线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss"><span class="toc-number">11.1.</span> <span class="toc-text">Loss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zlib"><span class="toc-number">11.2.</span> <span class="toc-text">Zlib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Min-K"><span class="toc-number">11.3.</span> <span class="toc-text">Min-K%</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Min-K-1"><span class="toc-number">11.4.</span> <span class="toc-text">Min-K%++</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-number">11.5.</span> <span class="toc-text">Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neighbor"><span class="toc-number">11.6.</span> <span class="toc-text">Neighbor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LiRA"><span class="toc-number">11.7.</span> <span class="toc-text">LiRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMIA"><span class="toc-number">11.8.</span> <span class="toc-text">RMIA</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12-%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="toc-number">12.</span> <span class="toc-text">12. 方法对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#13-%E9%9D%A2%E8%AF%95%E8%87%AA%E6%B5%8B%E9%A2%98"><span class="toc-number">13.</span> <span class="toc-text">13. 面试自测题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/05/self/" title="关于我｜AI Safety 学习档案">关于我｜AI Safety 学习档案</a><time datetime="2026-10-05T02:00:00.000Z" title="发表于 2026-10-05 10:00:00">2026-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/23/2026.9.23-DP+machine_unlearning/" title="2026-09-23｜差分隐私与机器遗忘：训练数据删除后的两个问题">2026-09-23｜差分隐私与机器遗忘：训练数据删除后的两个问题</a><time datetime="2026-09-23T02:00:00.000Z" title="发表于 2026-09-23 10:00:00">2026-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/15/2026.9.15-tools/" title="2026-09-15｜Promptfoo 与 Garak：如何把 AI 安全测试变成回归流程">2026-09-15｜Promptfoo 与 Garak：如何把 AI 安全测试变成回归流程</a><time datetime="2026-09-15T02:00:00.000Z" title="发表于 2026-09-15 10:00:00">2026-09-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/05/2026.9.5-RAG/" title="2026-09-05｜RAG 原理与知识库投毒">2026-09-05｜RAG 原理与知识库投毒</a><time datetime="2026-09-05T02:00:00.000Z" title="发表于 2026-09-05 10:00:00">2026-09-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/22/2026.8.22-MIA/" title="2026-08-22｜Membership Inference Attack：成员推断攻击">2026-08-22｜Membership Inference Attack：成员推断攻击</a><time datetime="2026-08-22T02:00:00.000Z" title="发表于 2026-08-22 10:00:00">2026-08-22</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
