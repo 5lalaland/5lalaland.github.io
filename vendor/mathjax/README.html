@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>5lalaland | 5lalaland</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MathJaxBeautiful math in all browsersNote:  MathJax code development is performed in the MathJax-src repository.  This repository holds the packaged version of MathJax, along with the main issue track">
+<meta property="og:type" content="website">
+<meta property="og:title" content="5lalaland">
+<meta property="og:url" content="https://5lalaland.github.io/vendor/mathjax/README.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="MathJaxBeautiful math in all browsersNote:  MathJax code development is performed in the MathJax-src repository.  This repository holds the packaged version of MathJax, along with the main issue track">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-10-10T07:34:19.921Z">
+<meta property="article:modified_time" content="2026-10-10T07:34:06.005Z">
+<meta property="article:author" content="5lalaland">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/vendor/mathjax/README.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '5lalaland',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a></span><div id="menus"></div></nav><div id="page-site-info"><h1 id="site-title"></h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="MathJax"><a href="#MathJax" class="headerlink" title="MathJax"></a>MathJax</h1><h2 id="Beautiful-math-in-all-browsers"><a href="#Beautiful-math-in-all-browsers" class="headerlink" title="Beautiful math in all browsers"></a>Beautiful math in all browsers</h2><p><strong>Note:</strong>  MathJax code development is performed in the <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-src">MathJax-src</a> repository.  This repository holds the packaged version of MathJax, along with the main issue tracker for MathJax bugs.</p>
+<p><img src="https://img.shields.io/github/v/release/mathjax/MathJax-src.svg?sort=semver" alt="GitHub release version"><br><img src="https://img.shields.io/github/package-json/v/mathjax/MathJax/legacy-v3.svg?label=release-v3" alt="GitHub release version (v3)"><br><img src="https://img.shields.io/github/package-json/v/mathjax/MathJax/legacy-v2.svg?label=release-v2" alt="GitHub release version (v2)"><br><img src="https://img.shields.io/npm/v/mathjax.svg?style=flat" alt="NPM version"><br><img src="https://flat.badgen.net/jsdelivr/rank/npm/mathjax?color=green" alt="jsdelivr rank"><br><img src="https://img.shields.io/jsdelivr/npm/hm/mathjax" alt="jsDelivr hits (npm)"><br><img src="https://img.shields.io/npm/dm/mathjax?label=npm" alt="npm monthly downloads (full)"><br><img src="https://img.shields.io/npm/dt/mathjax.svg?style=flat&label=npm%20total" alt="npm total downloads"></p>
+<p>MathJax is an open-source JavaScript display engine for LaTeX, MathML,<br>and AsciiMath notation that works in all modern browsers, with<br>built-in support for assistive technology like screen readers,<br>including automatic speech generation and an expression explorer that<br>can be used to investigate typeset mathematics on a more granular<br>level than the complete expression.  It requires no setup on the part<br>of the user (no plugins to download or software to install), so the<br>page author can write web documents that include mathematics and be<br>confident that users will be able to view it naturally and easily.<br>Simply include MathJax and some mathematics in a web page, and MathJax<br>does the rest.</p>
+<p>Some of the main features of MathJax include:</p>
+<ul>
+<li><p>High-quality display of LaTeX, MathML, and AsciiMath notation in HTML pages</p>
+</li>
+<li><p>Supported in most browsers with no plug-ins, extra fonts, or special<br>setup for the reader</p>
+</li>
+<li><p>Easy for authors, flexible for publishers, extensible for developers</p>
+</li>
+<li><p>Supports math accessibility, cut-and-paste interoperability, and other<br>advanced functionality</p>
+</li>
+<li><p>Powerful API for integration with other web applications</p>
+</li>
+</ul>
+<p>See <a target="_blank" rel="noopener" href="http://www.mathjax.org/">http://www.mathjax.org/</a> for additional details about MathJax,<br>and <a target="_blank" rel="noopener" href="https://docs.mathjax.org/">https://docs.mathjax.org</a> for the MathJax documentation.</p>
+<h2 id="MathJax-Components"><a href="#MathJax-Components" class="headerlink" title="MathJax Components"></a>MathJax Components</h2><p>MathJax uses files called <em>components</em> that contain the<br>various MathJax modules that you can include in your web pages or<br>access on a server through NodeJS.  Some components combine all the<br>pieces you need to run MathJax with one or more input formats and a<br>particular output format, while other components are pieces that can<br>be loaded on demand when needed, or by a configuration that specifies<br>the pieces you want to combine in a custom way.  For usage<br>instructions, see the <a target="_blank" rel="noopener" href="https://docs.mathjax.org/">MathJax documentation</a>.</p>
+<p>Components provide a convenient packaging of MathJax’s modules, but it<br>is possible for you to form your own custom components, or to use<br>MathJax’s modules directly in a node application on a server.  There<br>are <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-demos-web">web examples</a><br>showing how to use MathJax in web pages and how to build your own<br>components, and <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-demos-node">node<br>examples</a> illustrating<br>how to use components in node applications or call MathJax modules<br>directly.</p>
+<h2 id="What’s-in-this-Repository"><a href="#What’s-in-this-Repository" class="headerlink" title="What’s in this Repository"></a>What’s in this Repository</h2><p>This repository contains only the component files for MathJax, not the<br>source code for MathJax (which are available in a separate <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-src/">MathJax<br>source repository</a>).  These<br>component files are the ones served by the CDNs that offer MathJax to<br>the web.  In version 2, the files used on the web were also the source<br>files for MathJax, but in version 3 and above, the source files are no<br>longer on the CDN, as they are not what are run in the browser.</p>
+<p>The components are ES6 format as CommonJS modules.</p>
+<h2 id="Installation-and-Use"><a href="#Installation-and-Use" class="headerlink" title="Installation and Use"></a>Installation and Use</h2><h3 id="Using-MathJax-components-from-a-CDN-on-the-web"><a href="#Using-MathJax-components-from-a-CDN-on-the-web" class="headerlink" title="Using MathJax components from a CDN on the web"></a>Using MathJax components from a CDN on the web</h3><p>If you are loading MathJax from a CDN into a web page, there is no<br>need to install anything.  Simply use a <code>script</code> tag that loads<br>MathJax from the CDN.  E.g.,</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js&quot;</span> <span class="attr">defer</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>See the <a target="_blank" rel="noopener" href="https://docs.mathjax.org/en/latest/index.html#browser-components">MathJax<br>documentation</a><br>and the <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-demos-web">MathJax Web Demos</a>, and the <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-demos-node">MathJax<br>Node Demos</a> for more<br>information.</p>
+<h3 id="Hosting-your-own-copy-of-the-MathJax-Components"><a href="#Hosting-your-own-copy-of-the-MathJax-Components" class="headerlink" title="Hosting your own copy of the MathJax Components"></a>Hosting your own copy of the MathJax Components</h3><p>If you want to host MathJax from your own server, you can do so by<br>installing the <code>mathjax</code> package using <code>npm</code> and moving the contents<br>to an appropriate location on your server:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install mathjax@4</span><br><span class="line">mv node_modules/mathjax &lt;path-to-server-location&gt;/mathjax</span><br></pre></td></tr></table></figure>
+
+<p>Alternatively, you can get the files via GitHub:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/mathjax/MathJax.git mathjax</span><br><span class="line">mv mathjax &lt;path-to-server-location&gt;/mathjax</span><br></pre></td></tr></table></figure>
+
+<p>Then (in either case) you can use a script tag like the following:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;&lt;url-to-your-site&gt;/mathjax/tex-chtml.js&quot;</span> <span class="attr">defer</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>where <code>&lt;url-to-your-site&gt;</code> is replaced by the URL to the location<br>where you moved the MathJax files above.</p>
+<p>See the<br><a target="_blank" rel="noopener" href="https://docs.mathjax.org/en/latest/web/hosting.html">documentation</a><br>for details.</p>
+<h3 id="Using-MathJax-components-in-a-node-application"><a href="#Using-MathJax-components-in-a-node-application" class="headerlink" title="Using MathJax components in a node application"></a>Using MathJax components in a node application</h3><p>To use MathJax components in a node application, install the <code>mathjax</code><br>package:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mathjax@4</span><br></pre></td></tr></table></figure>
+
+<p>Then import <code>mathjax</code> within your application and initialize it:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">MathJax</span> <span class="keyword">from</span> <span class="string">&#x27;mathjax&#x27;</span>;</span><br><span class="line"><span class="keyword">await</span> <span class="title class_">MathJax</span>.<span class="title function_">init</span>(&#123; ... &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>where <code>{ ... }</code> is the MathJax configuration you want to use.  E.g., </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">MathJax</span> <span class="keyword">from</span> <span class="string">&#x27;mathjax&#x27;</span>;</span><br><span class="line"><span class="keyword">await</span> <span class="title class_">MathJax</span>.<span class="title function_">init</span>(&#123;</span><br><span class="line">  <span class="attr">loader</span>: &#123;<span class="attr">load</span>: [<span class="string">&#x27;input/tex&#x27;</span>, <span class="string">&#x27;output/svg&#x27;</span>]&#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">const</span> svg = <span class="keyword">await</span> <span class="title class_">MathJax</span>.<span class="title function_">tex2svgPromise</span>(<span class="string">&#x27;\\frac&#123;1&#125;&#123;x^2-1&#125;&#x27;</span>, &#123;<span class="attr">display</span>: <span class="literal">true</span>&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">MathJax</span>.<span class="property">startup</span>.<span class="property">adaptor</span>.<span class="title function_">serializeXML</span>(svg));</span><br></pre></td></tr></table></figure>
+
+
+<p>Alternatively, in an ES5 node application, you can use</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MathJax</span> = <span class="built_in">require</span>(<span class="string">&#x27;mathjax&#x27;</span>);</span><br><span class="line"><span class="title class_">MathJax</span>.<span class="title function_">init</span>(&#123; ... &#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123; ... &#125;);</span><br></pre></td></tr></table></figure>
+<p>where the first <code>{ ... }</code> is a MathJax configuration, and the second<br><code>{ ... }</code> is the code to run after MathJax has been loaded.  E.g.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MathJax</span> = <span class="built_in">require</span>(<span class="string">&#x27;mathjax&#x27;</span>);</span><br><span class="line"><span class="title class_">MathJax</span>.<span class="title function_">init</span>(&#123;</span><br><span class="line">  <span class="attr">loader</span>: &#123;<span class="attr">load</span>: [<span class="string">&#x27;input/tex&#x27;</span>, <span class="string">&#x27;output/svg&#x27;</span>]&#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> svg = <span class="title class_">MathJax</span>.<span class="title function_">tex2svg</span>(<span class="string">&#x27;\\frac&#123;1&#125;&#123;x^2-1&#125;&#x27;</span>, &#123;<span class="attr">display</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">MathJax</span>.<span class="property">startup</span>.<span class="property">adaptor</span>.<span class="title function_">serializeXML</span>(svg));</span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>));</span><br></pre></td></tr></table></figure>
+
+<p><strong>Note:</strong> the technique in the two examples above is for node-based<br>application only, not for browser applications.  This method sets up<br>an alternative DOM implementation, which you don’t need in the<br>browser, and it depends on node and the local file system in other<br>ways.  This setup will not work properly in the browser, even if you<br>webpack it or use some other bundler.</p>
+<p>See the<br><a target="_blank" rel="noopener" href="https://docs.mathjax.org/en/latest/index.html#server-nodejs">documentation</a><br>and the <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-demos-node">MathJax Node<br>Repository</a> for more details.</p>
+<h2 id="Reducing-the-Size-of-the-Components-Directory"><a href="#Reducing-the-Size-of-the-Components-Directory" class="headerlink" title="Reducing the Size of the Components Directory"></a>Reducing the Size of the Components Directory</h2><p>Since the MathJax package contains <em>all</em> the component files, so if<br>you are only planning one use one configuration, you can reduce the<br>size of the MathJax directory by removing unused components. For<br>example, if you are using the <code>tex-chtml.js</code> component, then you can<br>remove the <code>tex-mml-chtml.js</code>, <code>tex-svg.js</code>, <code>tex-mml-svg.js</code>, and the<br>files ending in <code>-nofont.js</code>, which will save considerable space.<br>Indeed, you should be able to remove everything other than<br><code>tex-chtml.js</code>, and the <code>input/tex/extensions</code>, <code>adaptors</code>, <code>a11y</code>,<br>and <code>sre</code> directories.  If you are using the results only on the web,<br>you can remove <code>adaptors</code> as well.  If you are using MathML input<br>rather than TeX (e.g., <code>mml-chtml.js</code> rather than <code>tex-chtml.js</code>),<br>then you can remove <code>input/tex/extensions</code> as well.</p>
+<p>If you are using a font other than the default <code>mathjax-newcm</code> font in<br>a node application, then you will need to install that font as well.<br>E.g.,</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @mathjax/mathjax-stix2-font@4</span><br></pre></td></tr></table></figure>
+
+<p>to install the <code>mathjax-stix2</code> font locally.  On the web, MathJax will<br>look for the font and its dynamic ranges on the <code>cdn.jsdelivr.net</code> CDN<br>service, so if you want to use the font from your own server, you will<br>need to configure the path to the font.  For example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">MathJax</span> = &#123;</span><br><span class="line">  <span class="attr">loader</span>: &#123;</span><br><span class="line">    <span class="attr">paths</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;mathjax-stix2&#x27;</span>: <span class="string">&#x27;&lt;url-to-your-server&gt;/mathjax-stix2-font&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>to set the location for the <code>mathjax-stix2</code> font to a URL on your server.</p>
+<h2 id="The-Component-Files-and-Pull-Requests"><a href="#The-Component-Files-and-Pull-Requests" class="headerlink" title="The Component Files and Pull Requests"></a>The Component Files and Pull Requests</h2><p>The contents of this repository are generated automatically, so you<br>should not submit pull requests that modify this repository.  If you<br>wish to submit a modification to MathJax, you should make a pull<br>request in the <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-src">MathJax source<br>repository</a>.</p>
+<h2 id="MathJax-Community"><a href="#MathJax-Community" class="headerlink" title="MathJax Community"></a>MathJax Community</h2><p>The main MathJax website is <a target="_blank" rel="noopener" href="http://www.mathjax.org/">http://www.mathjax.org</a>, and it includes<br>announcements and other important information.  A <a target="_blank" rel="noopener" href="http://groups.google.com/group/mathjax-users">MathJax user<br>forum</a> for asking<br>questions and getting assistance is hosted at Google, and the <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax/issues">MathJax<br>bug tracker</a> is hosted<br>at GitHub.</p>
+<p>Before reporting a bug, please check that it has not already been<br>reported.  Also, please use the bug tracker (rather than the help<br>forum) for reporting bugs, and use the user’s forum (rather than the<br>bug tracker) for questions about how to use MathJax.</p>
+<h2 id="MathJax-Resources"><a href="#MathJax-Resources" class="headerlink" title="MathJax Resources"></a>MathJax Resources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.mathjax.org/">MathJax Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax">MathJax Components</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-src">MathJax Source Code</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-demos-web">MathJax Web Examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax-demos-node">MathJax Node Examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax/issues">MathJax Bug Tracker</a></li>
+<li><a target="_blank" rel="noopener" href="http://groups.google.com/group/mathjax-users">MathJax Users’ Group</a></li>
+</ul>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/05/self/" title="关于我｜AI Safety 学习档案">关于我｜AI Safety 学习档案</a><time datetime="2026-10-05T02:00:00.000Z" title="发表于 2026-10-05 10:00:00">2026-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/02/2026.10.2_DP+FL+machine_unlearning/" title="2026-10-02｜DP、FL 与 Machine Unlearning：训练数据隐私保护的三条路径">2026-10-02｜DP、FL 与 Machine Unlearning：训练数据隐私保护的三条路径</a><time datetime="2026-10-02T02:00:00.000Z" title="发表于 2026-10-02 10:00:00">2026-10-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/23/2026.9.23-TPR@FPR_metrics/" title="2026-09-23｜TPR@FPR：如何衡量成员推断攻击的有效性">2026-09-23｜TPR@FPR：如何衡量成员推断攻击的有效性</a><time datetime="2026-09-23T02:00:00.000Z" title="发表于 2026-09-23 10:00:00">2026-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/15/2026.9.15-tools/" title="2026-09-15｜Promptfoo 与 Garak：自动化流程">2026-09-15｜Promptfoo 与 Garak：自动化流程</a><time datetime="2026-09-15T02:00:00.000Z" title="发表于 2026-09-15 10:00:00">2026-09-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/05/2026.9.5-RAG/" title="2026-09-05｜RAG 原理与知识库投毒">2026-09-05｜RAG 原理与知识库投毒</a><time datetime="2026-09-05T02:00:00.000Z" title="发表于 2026-09-05 10:00:00">2026-09-05</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-Safety/"><span class="card-category-list-name">AI Safety</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/About/"><span class="card-category-list-name">About</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Agent-Security/"><span class="card-category-list-name">Agent Security</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM-Fundamentals/"><span class="card-category-list-name">LLM Fundamentals</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Privacy/"><span class="card-category-list-name">Privacy</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Prompt-Injection/"><span class="card-category-list-name">Prompt Injection</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/RAG-Security/"><span class="card-category-list-name">RAG Security</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Red-Team/"><span class="card-category-list-name">Red Team</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/llm-security/" style="font-size: 1.1em; color: #999">llm-security</a> <a href="/tags/owasp/" style="font-size: 1.1em; color: #999">owasp</a> <a href="/tags/learning-roadmap/" style="font-size: 1.1em; color: #999">learning-roadmap</a> <a href="/tags/rag/" style="font-size: 1.1em; color: #999">rag</a> <a href="/tags/research-interests/" style="font-size: 1.1em; color: #999">research-interests</a> <a href="/tags/machine-unlearning/" style="font-size: 1.1em; color: #999">machine-unlearning</a> <a href="/tags/evaluation/" style="font-size: 1.3em; color: #99a1ac">evaluation</a> <a href="/tags/tpr-at-fpr/" style="font-size: 1.1em; color: #999">tpr-at-fpr</a> <a href="/tags/mcp/" style="font-size: 1.1em; color: #999">mcp</a> <a href="/tags/roc-auc/" style="font-size: 1.1em; color: #999">roc-auc</a> <a href="/tags/differential-privacy/" style="font-size: 1.1em; color: #999">differential-privacy</a> <a href="/tags/garak/" style="font-size: 1.1em; color: #999">garak</a> <a href="/tags/privacy-audit/" style="font-size: 1.1em; color: #999">privacy-audit</a> <a href="/tags/memorization/" style="font-size: 1.1em; color: #999">memorization</a> <a href="/tags/mia/" style="font-size: 1.3em; color: #99a1ac">mia</a> <a href="/tags/llm/" style="font-size: 1.1em; color: #999">llm</a> <a href="/tags/federated-learning/" style="font-size: 1.1em; color: #999">federated-learning</a> <a href="/tags/fine-tuning/" style="font-size: 1.1em; color: #999">fine-tuning</a> <a href="/tags/prompt-injection/" style="font-size: 1.5em; color: #99a9bf">prompt-injection</a> <a href="/tags/ai-safety/" style="font-size: 1.1em; color: #999">ai-safety</a> <a href="/tags/agent/" style="font-size: 1.1em; color: #999">agent</a> <a href="/tags/promptfoo/" style="font-size: 1.1em; color: #999">promptfoo</a> <a href="/tags/tool-calling/" style="font-size: 1.1em; color: #999">tool-calling</a> <a href="/tags/access-control/" style="font-size: 1.3em; color: #99a1ac">access-control</a> <a href="/tags/prompt-engineering/" style="font-size: 1.1em; color: #999">prompt-engineering</a> <a href="/tags/about-me/" style="font-size: 1.1em; color: #999">about-me</a> <a href="/tags/pre-training/" style="font-size: 1.1em; color: #999">pre-training</a> <a href="/tags/red-team/" style="font-size: 1.3em; color: #99a1ac">red-team</a> <a href="/tags/jailbreak/" style="font-size: 1.3em; color: #99a1ac">jailbreak</a> <a href="/tags/reinforcement-learning/" style="font-size: 1.1em; color: #999">reinforcement-learning</a> <a href="/tags/data-poisoning/" style="font-size: 1.1em; color: #999">data-poisoning</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/10/">
+            <span class="card-archive-list-date">
+              十月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/09/">
+            <span class="card-archive-list-date">
+              九月 2026
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/08/">
+            <span class="card-archive-list-date">
+              八月 2026
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/07/">
+            <span class="card-archive-list-date">
+              七月 2026
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">12</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-10-10T07:34:27.136Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = '/vendor/mathjax/tex-mml-chtml.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
