@@ -1,0 +1,392 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MIA 性能可靠性： | 5lalaland</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MIA 性能可靠性：1. Background目前，LLM 上的 Membership Inference Attack（MIA，成员推断攻击）研究主要有两个方向：方向一：提升 MIA 的攻击性能。研究者希望设计更有效的攻击方法，使成员（Member）与非成员（Non-member）更容易区分。代表性方法包括：  loss,zlib,neighbor,lira,rmia….. 方向二：验证 MIA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIA 性能可靠性：">
+<meta property="og:url" content="https://5lalaland.github.io/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/index.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="MIA 性能可靠性：1. Background目前，LLM 上的 Membership Inference Attack（MIA，成员推断攻击）研究主要有两个方向：方向一：提升 MIA 的攻击性能。研究者希望设计更有效的攻击方法，使成员（Member）与非成员（Non-member）更容易区分。代表性方法包括：  loss,zlib,neighbor,lira,rmia….. 方向二：验证 MIA">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-11-18T08:30:23.000Z">
+<meta property="article:modified_time" content="2026-11-18T09:42:29.220Z">
+<meta property="article:author" content="5lalaland">
+<meta property="article:tag" content="mia">
+<meta property="article:tag" content="privacy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MIA 性能可靠性：",
+  "url": "https://5lalaland.github.io/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/",
+  "image": "https://5lalaland.github.io/img/avatar.png",
+  "datePublished": "2026-11-18T08:30:23.000Z",
+  "dateModified": "2026-11-18T09:42:29.220Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "5lalaland",
+      "url": "https://5lalaland.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MIA 性能可靠性：',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a><a class="nav-page-title" href="/"><span class="site-name">MIA 性能可靠性：</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">MIA 性能可靠性：</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-18T08:30:23.000Z" title="发表于 2026-11-18 16:30:23">2026-11-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-18T09:42:29.220Z" title="更新于 2026-11-18 17:42:29">2026-11-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MIA/">MIA</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="MIA-性能可靠性："><a href="#MIA-性能可靠性：" class="headerlink" title="MIA 性能可靠性："></a>MIA 性能可靠性：</h1><h2 id="1-Background"><a href="#1-Background" class="headerlink" title="1. Background"></a>1. Background</h2><p>目前，LLM 上的 Membership Inference Attack（MIA，成员推断攻击）研究主要有两个方向：<br><strong>方向一：提升 MIA 的攻击性能。</strong><br>研究者希望设计更有效的攻击方法，使成员（Member）与非成员（Non-member）更容易区分。代表性方法包括：  loss,zlib,neighbor,lira,rmia…..</p>
+<p><strong>方向二：验证 MIA 性能的真实性。</strong>  -&gt;这篇文章的重点<br>相比不断提出新的攻击方法，这一方向更关注：MIA 在 Benchmark 上获得的高 AUC，究竟来自模型真实的成员信息泄露，还是数据集本身存在的问题？</p>
+<p>所以为MIA发明一个benchmark十分重要</p>
+<h2 id="2-MIA-Benchmark-的发展"><a href="#2-MIA-Benchmark-的发展" class="headerlink" title="2. MIA Benchmark 的发展"></a>2. MIA Benchmark 的发展</h2><p>为什么发明一个Benchmark是困难的<br>开源模型上的结论无法迁移至闭源模型<br>但闭源模型无法构造出可靠的member&#x2F;nonmber数据</p>
+<p><strong>WikiMIA [1]：利用时间构造事后数据集。</strong><br>利用 Wikipedia 页面的发布时间构造成员和非成员。例如，将模型训练时间之前的文章作为候选成员，将训练时间之后的文章作为非成员。这种方法不需要掌握模型完整的训练数据，但可能引入时间相关的 Distribution Shift（数据分布偏移）。<br><strong>MIMIR [2]：关注大规模预训练模型中的模糊成员关系和内容重叠。</strong><br>Duan 等人利用 The Pile 和 Pythia 等公开资源评估 MIA，发现大部分攻击在预训练 LLM 上接近随机猜测。作者发现，即使非成员文本没有精确参与训练，也可能与训练数据存在大量 n-gram 重叠（连续 n 个词组成的文本片段），导致成员和非成员之间的界限变得模糊。<br><strong>Das 等人 [3]：发现数据集本身可能存在严重的分布偏差。</strong><br>作者提出 Blind Baseline（无模型基线），即完全不访问目标 LLM，仅利用文本特征预测成员标签。例如，使用 Bag of Words（词袋表示，即统计文本中出现的词及其频率），再通过逻辑回归或随机森林进行分类。结果发现，这种不访问目标模型的方法，在多个 MIA Benchmark 上都能超过已有攻击方法。CheckMIABench [4] 对其结果进行了总结：在 WikiMIA 上，简单的词袋分类器甚至能够达到 94.7% 的 TPR@5%FPR。这意味着模型可能根本没有参与判断，分类器就已经能够通过文本本身的差异识别成员标签。<br><strong>CheckMIABench [4]：进一步改进数据构造。</strong><br>CheckMIABench 指出，单独对非成员进行去重或过滤，可能制造新的分布差异。理想情况下，应该先对完整语料进行联合去重（Joint Deduplication），再随机划分成员与非成员，但对于已经训练完成的模型，这一过程通常无法事后完成。<br>因此，作者利用公开模型的训练顺序和中间 Checkpoint 构造数据集：Checkpoint 之前已经参与训练的样本作为 Member，之后才参与训练的样本作为 Non-member。由于两者来自同一训练语料和训练顺序，可以更好地控制分布差异。在其 Pythia 实验中，词袋无模型基线 AUC 为 0.505，已有攻击方法也没有表现出统计显著高于随机基线的性能。</p>
+<h2 id="3-MIA-的性能究竟受到哪些因素影响？"><a href="#3-MIA-的性能究竟受到哪些因素影响？" class="headerlink" title="3. MIA 的性能究竟受到哪些因素影响？"></a>3. MIA 的性能究竟受到哪些因素影响？</h2><p><strong>3.1 Distribution Shift（数据分布偏移）</strong><br>成员和非成员之间是否存在与成员身份无关的区别？<br>例如：</p>
+<ul>
+<li>时间差异；&#x2F;&#x2F;Wikimia</li>
+<li>领域差异；</li>
+<li>文本长度、词汇及表达习惯差异；&#x2F;&#x2F;词频，文本长度等</li>
+<li>文本质量与难度差异。<br>  Das 等人 [3] 已经证明，仅通过文本特征就可能识别成员标签。因此，数据分布偏移可能导致 MIA 的 AUC 被高估。</li>
+</ul>
+<p><strong>3.2 Content Overlap（内容重叠）</strong><br>    非成员文本是否已经通过其他训练样本被模型部分接触？例如，目标文本没有参与训练，但其转载、改写或近重复版本已经参与训练。这可能使模型对 Non-member 同样具有较低 Loss，削弱成员与非成员之间的可区分性。<br>    MIMIR [2] 发现，The Pile 中部分非成员与训练数据具有较高的<font color="#ff0000"> n-gram 重叠</font>；降低重叠程度后，部分攻击的 AUC 明显上升。但作者也指出，这种过滤可能引入新的分布偏移。<br>    2026 年的 <em>Near-Duplicate Families Break Exact-Record Membership Inference</em> [7] 进一步研究了这一问题：精确文本是否参与训练，与模型是否接触过其<font color="#ff0000">近重复文本</font>，是两个不同的问题。作者在 CC-News 的实验中发现，在名义 FPR 为 1% 的条件下，LiRA 将 99.70% 的存在近重复训练文本、但精确记录未参与训练的样本误判为成员。  </p>
+<p><strong>3.3 模型与训练因素</strong></p>
+<ul>
+<li><strong>模型规模（Model Scale）</strong>：模型参数量是否影响成员信号的可检测性？Chen 等人 [5] 的统计实验发现，MIA 性能总体上随模型规模增加而提高，但不同领域存在差异。</li>
+<li><strong>训练数据量（Training Data Size）</strong>：MIMIR [2] 在特定实验中观察到，MIA 性能可能先升高后降低。</li>
+<li><strong>Epoch</strong>：同一数据被重复训练的次数。重复训练可能增强模型对成员样本的记忆，但具体效果取决于训练设置。</li>
+<li><strong>Checkpoint</strong>：模型处于不同训练阶段时，MIA 的性能是否一致？</li>
+</ul>
+<p><strong>3.4 攻击方法与阈值</strong><br>    不同攻击利用的成员信号不同，因此不能预设它们对相同数据偏移具有相同的敏感性。例如，Loss 依赖预测损失，Neighbor 依赖相对比较，LiRA 则依赖参考模型的统计分布。<br>    此外，还需要考虑 Threshold（分类阈值）。AUC 只反映整体排序能力，并不直接告诉我们如何判断某一条文本是否为成员。TPR@1%FPR 表示：将非成员的误报率控制在 1% 时，能够识别出多少比例的真实成员。Chen 等人 [5] 也将阈值选择列为目前 MIA 研究中容易被忽略的问题。</p>
+<h2 id="4-为什么-MIA-的-AUC-过高和过低都可能存在问题？"><a href="#4-为什么-MIA-的-AUC-过高和过低都可能存在问题？" class="headerlink" title="4. 为什么 MIA 的 AUC 过高和过低都可能存在问题？"></a>4. 为什么 MIA 的 AUC 过高和过低都可能存在问题？</h2><p><strong>AUC 过高：</strong> 可能是因为成员和非成员之间存在明显的分布偏移。例如，Das 等人 [3] 发现，不访问目标模型的无模型基线也能取得很高的分类性能，因此高 AUC 不一定意味着模型记住了训练数据。<br><strong>AUC 过低：</strong> 可能是因为成员和非成员之间存在大量内容重叠。例如，Non-member 虽然没有精确参与训练，但其近重复文本已经存在于训练集中，导致两类文本都具有较低 Loss，使成员信号难以区分 [2][7]。<br>当然，低 AUC 也可能来自攻击方法本身较弱、模型泛化能力较强或标签不准确，不能全部归因于内容重叠。</p>
+<h2 id="5-MIA-的实际作用是什么？"><a href="#5-MIA-的实际作用是什么？" class="headerlink" title="5. MIA 的实际作用是什么？"></a>5. MIA 的实际作用是什么？</h2><p><strong>5.1 隐私审计（Privacy Auditing）</strong><br>MIA 可以用于评估机器学习模型的隐私泄露，尤其是 Differential Privacy（差分隐私，DP）的实际保护效果。<br>其中一个重要实验工具是 Canary（哨兵样本）：研究者自己生成一批文本，随机选择一部分加入训练集，另一部分不加入。由于两组文本来自相同的生成过程，成员与非成员之间的分布偏差可以得到较好的控制。随后利用 MIA 判断哪些 Canary 参与了训练，评估模型是否泄露成员信息。<br><strong>5.2 真实训练数据检测</strong><br>例如，某位作者希望知道自己的书籍是否被某个大模型用于训练，但无法访问目标模型的真实训练数据。<br>这里有一个问题：这种情况下还需要 Member 和 Non-member 的区分吗？<br>需要区分两个过程：</p>
+<ul>
+<li><strong>实际攻击</strong>：可以直接对待检测文本计算 Loss 或其他 MIA Score，不一定需要提前知道其真实成员身份。</li>
+<li><strong>攻击性能评估</strong>：必须拥有真实的 Member 和 Non-member 标签，才能计算 AUC、TPR 和 FPR。<br>也就是说，实际检测时可以没有标签，但要证明检测方法有效，就需要可靠的标签作为验证依据。<br>另外，不能简单认为 Loss 越低就一定是 Member。因为文本本身的难度不同，常见表达可能天然具有较低 Loss，而罕见词汇和复杂文本即使参与训练，也可能具有较高 Loss。</li>
+</ul>
+<p>这里还需要区分 MIA 与 Data Extraction（训练数据提取）：MIA 判断某条数据是否参与训练，Data Extraction 则尝试直接从模型中恢复训练文本。两者都与模型记忆有关，但不能相互替代。一个值得探索的问题是：MIA Score 与模型对指定文本的实际提取能力之间是否存在关联？</p>
+<h1 id="6-Questions"><a href="#6-Questions" class="headerlink" title="6.Questions"></a>6.Questions</h1><ol>
+<li><p>不同 MIA 对 Distribution Shift 的敏感程度是否相同？<br>已经有充分证据表明，不同 MIA 对分布偏移的敏感性不同，而且这种差异在 LLM 上也已经得到实验验证。<br>A Statistical and Multi-Perspective Revisiting…（ACL 2025）：在 Pythia、OLMo 上进行数千组实验，比较不同领域、文本长度、文本相似性下的 MIA 表现。发现不同攻击与文本特征的相关程度明显不同，例如 Min-K%++ 的 AUC 与文本长度、相似性的相关性较强，而 SaMIA 对长度的相关性甚至为负。不同攻击检测出的高可区分样本也存在明显差异。</p>
+</li>
+<li><p>不同 MIA 对 Content Overlap 的敏感程度是否相同？<br>   Near-Duplicate Families Break Exact-Record Membership Inference（arXiv 2026）：设计四世界实验，分别控制精确文本是否进入训练集、近重复内容家族是否进入训练集。在 CC-News 上，近重复家族存在时，clean-reference LiRA 将 99.70% 的精确非成员误判为成员，而名义 FPR 仅为 1%。这种问题在不同评分方法、模型架构及去重重训练之后仍然存在。</p>
+</li>
+<li><p>更换 Checkpoint、训练数据量或数据集后，攻击方法的性能排名是否发生变化？</p>
+<ul>
+<li>在 OLMo 的 100k、200k、300k、400k 四个 checkpoint 上进行实验。作者原本预期训练较早阶段的成员更难检测，但没有发现 checkpoint 之间存在显著的 MIA 性能差异，因此报告四个 checkpoint 的平均结果。</li>
+<li>A Statistical and Multi-Perspective Revisiting攻击性能随领域和模型规模变化</li>
+<li>Exploring the Limits of Strong Membership Inference Attacks发现模型规模与 MIA 性能并非简单单调关系；</li>
+<li>较预训练、中期训练和后训练阶段，以及不同模型规模。发现 MIA 在中期训练表现较好</li>
+</ul>
+</li>
+<li><p>AUC 的变化是否会影响实际阈值下的 TPR 和 FPR？<br>阈值不仅随领域变化，在同一领域的不同实验中也可能变化，并且会随模型规模变化。<br>发现即使整体攻击 AUC 高于随机水平，部分样本的成员判断仍可能因训练随机性而接近随机猜测</p>
+</li>
+<li><p>MIA 的成员判断与 Data Extraction 能力之间是否存在关联？<br> 无必然关联</p>
+</li>
+<li><p>DP 审计和ML下的MIA为什么不会受到数据偏移的影响</p>
+<ul>
+<li>DP： 利用人工构造的 Canary，控制样本生成机制，并通过相邻数据集（加入或不加入 Canary）进行对照实验。</li>
+<li>ML：通常从同一个原始数据集随机划分 Member 和 Non-member，使两组数据尽可能满足 IID（独立同分布）条件，减少领域、词汇和数据来源差异。</li>
+</ul>
+</li>
+<li><p>为什么不能直接用MIA的loss结果进行高低排序分类成员和非成员<br>Loss 较低可能意味着模型记住了文本，也可能是因为文本本身简单、词汇常见、语义熟悉或者存在近重复内容。<br>无法保证FPR和TPR</p>
+</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Shi et al. (ICLR 2024). <a target="_blank" rel="noopener" href="https://proceedings.iclr.cc/paper_files/paper/2024/hash/e32ad85fa27be4a9868d55703f01323e-Abstract-Conference.html">Detecting Pretraining Data from Large Language Models</a>.<br>[2] Duan et al. (COLM 2024). <a target="_blank" rel="noopener" href="https://openreview.net/forum?id=av0D19pSkU">Do Membership Inference Attacks Work on Large Language Models?</a>.<br>[3] Das et al. (IEEE SPW 2025). <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2406.16201">Blind Baselines Beat Membership Inference Attacks for Foundation Models</a>.<br>[4] Wang et al. (ACL 2026). <a target="_blank" rel="noopener" href="https://aclanthology.org/2026.acl-short.30/">CheckMIABench: Firm Foundations For Membership Inference Attacks on Language Models</a>.<br>[5] Chen et al. (ACL 2025). <a target="_blank" rel="noopener" href="https://aclanthology.org/2025.acl-long.1114/">A Statistical and Multi-Perspective Revisiting of the Membership Inference Attack in Large Language Models</a>.<br>[6] Kim et al. (EACL 2026). <a target="_blank" rel="noopener" href="https://aclanthology.org/2026.eacl-long.49/">Detecting Training Data of Large Language Models via Expectation Maximization</a>.<br>[7] Liu et al. (2026, preprint). <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2609.33909">Near-Duplicate Families Break Exact-Record Membership Inference</a>.<br>[8] Carlini et al. (IEEE S&amp;P 2022). <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/9833649/">Membership Inference Attacks From First Principles</a>.<br>[9] Zarifzadeh et al. (ICML 2024). <a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v235/zarifzadeh24a.html">Low-Cost High-Power Membership Inference Attacks</a>.</p>
+<table>
+<thead>
+<tr>
+<th>影响因素</th>
+<th>具体表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>训练阶段</td>
+<td>Pre-training、Mid-training、Fine-tuning（全量微调、LoRA、提示类微调）</td>
+</tr>
+<tr>
+<td>Checkpoint</td>
+<td>Epoch 数、Step、训练进度、是否取验证集最优 checkpoint、学习率调度</td>
+</tr>
+<tr>
+<td>数据训练顺序</td>
+<td>Early、Middle、Tail；近因效应与遗忘；训练批顺序</td>
+</tr>
+<tr>
+<td>训练数据量与重复</td>
+<td>训练集规模、迭代次数、样本在训练集中的重复次数、是否去重</td>
+</tr>
+<tr>
+<td>数据类型</td>
+<td>Medical、News、Math、Code、Wiki、法律等领域；语言（英、日等）、分词粒度</td>
+</tr>
+<tr>
+<td>数据质量</td>
+<td>文本难度、质量、词汇稀有度、token 多样性</td>
+</tr>
+<tr>
+<td>文本长度与划分方式</td>
+<td>样本长度；截断划分、完整划分、按相对长度划分；长度分层</td>
+</tr>
+<tr>
+<td>Member&#x2F;Non-member 分布</td>
+<td>来源、时间、词汇、文本质量；盲基线（BoW、TF-IDF、日期检测）能否区分</td>
+</tr>
+<tr>
+<td>数据重叠</td>
+<td>Exact、n-gram 重叠率、Near-duplicate 家族、预训练语料重叠、验证集与评估集重叠</td>
+</tr>
+<tr>
+<td>成员标签有效性</td>
+<td>训练清单是否保存、被标成员是否真在训练集、成员纯度、非成员是否被用于验证或校准、”模糊成员”定义</td>
+</tr>
+<tr>
+<td>基座预训练暴露</td>
+<td>成员与非成员是否已被基座模型见过、参考模型是否已熟悉文本</td>
+</tr>
+<tr>
+<td>模型规模与架构</td>
+<td>GPT-2、Qwen、Mistral、Pythia 等；参数规模（规模与训练量同比放大或固定训练量）</td>
+</tr>
+<tr>
+<td>微调参数</td>
+<td>Epoch、Learning Rate、LoRA Rank 与 Alpha、Dropout、Weight Decay、批大小、是否使用 DP</td>
+</tr>
+<tr>
+<td>随机性</td>
+<td>训练 Seed、批顺序、样本划分 Seed、单样本判定翻转</td>
+</tr>
+<tr>
+<td>评估时的数值设置</td>
+<td>FP16、BF16、INT8、4-bit 量化；最大序列长度；截断策略</td>
+</tr>
+<tr>
+<td>攻击方法</td>
+<td>Loss、Zlib、Min-K%、Min-K%++、Reference、Neighbor、ReCaLL、LiRA&#x2F;RMIA、学习型攻击；Min-K% 的 k；信号选择（loss 或 logits）</td>
+</tr>
+<tr>
+<td>参考模型</td>
+<td>数量；来源（预训练基座、同领域微调模型、自提示生成）；与目标分布的匹配度</td>
+</tr>
+<tr>
+<td>阈值与校准</td>
+<td>阈值来源（评估集内校准、oracle、隔离校准集、跨域迁移）；跨领域与跨模型规模的可迁移性；校准集与评估集是否重叠</td>
+</tr>
+<tr>
+<td>评价指标</td>
+<td>AUC、TPR@1%FPR、<a href="mailto:&#x54;&#80;&#x52;&#x40;&#48;&#46;&#49;">TPR@0.1</a>%FPR、固定阈值下的实际 FPR、FIR 或 FDR、置信区间</td>
+</tr>
+<tr>
+<td>评估设计</td>
+<td>事后划分与随机化划分；一次训练与多次训练；是否拼接多个模型的分数</td>
+</tr>
+<tr>
+<td>成员先验与样本量</td>
+<td>成员占比、评估样本数、低 FPR 所需样本量、bootstrap 与重采样</td>
+</tr>
+<tr>
+<td>方法间一致性</td>
+<td>多设置下攻击排名是否稳定；各方法可区分离群样本的重叠度</td>
+</tr>
+<tr>
+<td>评价目标</td>
+<td>MIA 与数据提取并不等价，两者成功与否不一定相关</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io">5lalaland</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/">https://5lalaland.github.io/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://5lalaland.github.io" target="_blank">5lalaland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/mia/">mia</a><a class="post-meta__tags" href="/tags/privacy/">privacy</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" title="机器学习基础知识及常见算法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">机器学习基础知识及常见算法</div></div><div class="info-2"><div class="info-item-1">机器学习基础知识及常见算法一、机器学习基础1. 机器学习（Machine Learning，ML）定义： 机器学习是人工智能的一个分支，主要研究如何让计算机从数据中学习规律，而不是由程序员为每种情况编写明确的判断规则。 核心思想： 通过大量数据寻找输入与输出之间的关系，或发现数据内部的结构，再利用学习到的规律处理新数据。 基本流程： 数据收集 → 数据预处理 → 特征选择 → 模型训练 → 模型验证 → 结果分析。 核心概念：  样本（Sample）： 一条观测数据。例如，一个纳米压痕测量点。  特征（Feature）： 描述样本的变量。例如硬度 H、约化模量 Er、载荷 P。  标签（Label）： 样本的已知类别。例如 Fiber、Epoxy、Interface。  模型（Model）： 从数据中学习得到的数学关系或统计结构。  参数（Parameter）： 模型通过训练估计的数值，例如高斯分布的均值。  超参数（Hyperparameter）： 训练前需要设置或选择的参数，例如 K-means 的聚类数量 K。   例子： 在 CFRP 纳米压痕分析中，可以将硬度、模量和载...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/23/2026.9.23-TPR@FPR_metrics/" title="2026-09-23｜TPR@FPR：如何衡量成员推断攻击的有效性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-23</div><div class="info-item-2">2026-09-23｜TPR@FPR：如何衡量成员推断攻击的有效性</div></div><div class="info-2"><div class="info-item-1">1. 攻击首先给每个样本一个分数在 Membership Inference Attack（MIA，成员推断攻击）中，攻击者想判断一个候选样本 x 是否参加过目标模型的训练。攻击通常不会直接让模型回答“是成员”还是“不是成员”，而是先为每个样本计算一个成员分数： $$s(x)$$ 这里的分数可以来自 Loss、Log-Likelihood、Min-K% 或其他攻击方法。为了方便说明，假设： 分数越高，样本越可能是训练成员。 例如：    样本 攻击分数    $x_1$ 8.7   $x_2$ 6.2   $x_3$ 3.1   $x_4$ 0.8   只有分数还不够，还需要设置一个阈值 $\tau$： $$s(x)\geq \tau \Rightarrow x\text{ 被预测为成员}$$ $$s(x)&lt;\tau \Rightarrow x\text{ 被预测为非成员}$$ 如果把阈值从 8.7 降到 3.1，更多样本会被判断为成员。阈值越低，攻击越激进：可能抓住更多真正成员，也可能误伤更多非成员。因此，MIA 的效果不是只看某个样本的分数，而是要看在不同阈值下，攻击能...</div></div></div></a><a class="pagination-related" href="/2026/08/22/2026.8.22-MIA/" title="2026-08-22｜Membership Inference Attack：成员推断攻击"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">2026-08-22｜Membership Inference Attack：成员推断攻击</div></div><div class="info-2"><div class="info-item-1">1. MIA定义Membership Inference Attack，简称 MIA（成员推断攻击）。问题是：现在已知  一个训练好的目标模型 M； 一个候选样本 x； 但不知道 x 是否参加过模型训练。  攻击者希望在下面两个假设之间进行判断： $$H_{\mathrm{in}}:x\in D_{\mathrm{train}}$$ $$H_{\mathrm{out}}:x\notin D_{\mathrm{train}}$$ MIA 通常不会让模型直接回答“成员 &#x2F; 非成员”，而是首先计算一个成员分数： $$s(x;M)$$ 然后设置阈值： $$s(x;M)\geq\tau\Rightarrow x\text{ 被预测为成员}$$ 因此，不同 MIA 方法之间最核心的区别其实就是：  我们应该使用什么统计量，去衡量目标模型是否对样本 x 表现出了异常的熟悉或记忆？   2. 为什么语言模型可以做 MIA？设文本： $$x&#x3D;(x_1,x_2,\dots,x_T)$$ 自回归语言模型对完整文本分配的联合概率为： $$\prod_{t&#x3D;1}^{T}P_M...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MIA-%E6%80%A7%E8%83%BD%E5%8F%AF%E9%9D%A0%E6%80%A7%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">MIA 性能可靠性：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Background"><span class="toc-number">1.1.</span> <span class="toc-text">1. Background</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-MIA-Benchmark-%E7%9A%84%E5%8F%91%E5%B1%95"><span class="toc-number">1.2.</span> <span class="toc-text">2. MIA Benchmark 的发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-MIA-%E7%9A%84%E6%80%A7%E8%83%BD%E7%A9%B6%E7%AB%9F%E5%8F%97%E5%88%B0%E5%93%AA%E4%BA%9B%E5%9B%A0%E7%B4%A0%E5%BD%B1%E5%93%8D%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3. MIA 的性能究竟受到哪些因素影响？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%B8%BA%E4%BB%80%E4%B9%88-MIA-%E7%9A%84-AUC-%E8%BF%87%E9%AB%98%E5%92%8C%E8%BF%87%E4%BD%8E%E9%83%BD%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">4. 为什么 MIA 的 AUC 过高和过低都可能存在问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-MIA-%E7%9A%84%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">5. MIA 的实际作用是什么？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Questions"><span class="toc-number">2.</span> <span class="toc-text">6.Questions</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">2.1.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/" title="MIA 性能可靠性：">MIA 性能可靠性：</a><time datetime="2026-11-18T08:30:23.000Z" title="发表于 2026-11-18 16:30:23">2026-11-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" title="机器学习基础知识及常见算法">机器学习基础知识及常见算法</a><time datetime="2026-11-02T13:18:51.000Z" title="发表于 2026-11-02 21:18:51">2026-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/02/2026.10.30-%E8%A1%A5*%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A02/" title="2026.10.30-补*动手学深度学习2">2026.10.30-补*动手学深度学习2</a><time datetime="2026-11-02T13:16:10.000Z" title="发表于 2026-11-02 21:16:10">2026-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/02/2026.10.21-%E8%A1%A5*%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A01/" title="+ - * / 都会按照元素对应位置计算">+ - * / 都会按照元素对应位置计算</a><time datetime="2026-11-02T12:32:00.000Z" title="发表于 2026-11-02 20:32:00">2026-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/21/2026.10.17-%E8%A1%A5*AI/" title="1. AI 安全常用术语">1. AI 安全常用术语</a><time datetime="2026-10-21T12:33:29.000Z" title="发表于 2026-10-21 20:33:29">2026-10-21</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = '/vendor/mathjax/tex-mml-chtml.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

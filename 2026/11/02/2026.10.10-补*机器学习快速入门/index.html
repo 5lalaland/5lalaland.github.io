@@ -1,0 +1,722 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>机器学习基础知识及常见算法 | 5lalaland</title><meta name="author" content="5lalaland"><meta name="copyright" content="5lalaland"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="机器学习基础知识及常见算法一、机器学习基础1. 机器学习（Machine Learning，ML）定义： 机器学习是人工智能的一个分支，主要研究如何让计算机从数据中学习规律，而不是由程序员为每种情况编写明确的判断规则。 核心思想： 通过大量数据寻找输入与输出之间的关系，或发现数据内部的结构，再利用学习到的规律处理新数据。 基本流程： 数据收集 → 数据预处理 → 特征选择 → 模型训练 → 模型验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习基础知识及常见算法">
+<meta property="og:url" content="https://5lalaland.github.io/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="5lalaland">
+<meta property="og:description" content="机器学习基础知识及常见算法一、机器学习基础1. 机器学习（Machine Learning，ML）定义： 机器学习是人工智能的一个分支，主要研究如何让计算机从数据中学习规律，而不是由程序员为每种情况编写明确的判断规则。 核心思想： 通过大量数据寻找输入与输出之间的关系，或发现数据内部的结构，再利用学习到的规律处理新数据。 基本流程： 数据收集 → 数据预处理 → 特征选择 → 模型训练 → 模型验">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://5lalaland.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-11-02T13:18:51.000Z">
+<meta property="article:modified_time" content="2026-11-18T09:42:29.255Z">
+<meta property="article:author" content="5lalaland">
+<meta property="article:tag" content="ai-safety">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://5lalaland.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机器学习基础知识及常见算法",
+  "url": "https://5lalaland.github.io/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/",
+  "image": "https://5lalaland.github.io/img/avatar.png",
+  "datePublished": "2026-11-02T13:18:51.000Z",
+  "dateModified": "2026-11-18T09:42:29.255Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "5lalaland",
+      "url": "https://5lalaland.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://5lalaland.github.io/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '机器学习基础知识及常见算法',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/site-bg.jpg));"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/home-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">5lalaland</span></a><a class="nav-page-title" href="/"><span class="site-name">机器学习基础知识及常见算法</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">机器学习基础知识及常见算法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-02T13:18:51.000Z" title="发表于 2026-11-02 21:18:51">2026-11-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-18T09:42:29.255Z" title="更新于 2026-11-18 17:42:29">2026-11-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Safety/">AI Safety</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="机器学习基础知识及常见算法"><a href="#机器学习基础知识及常见算法" class="headerlink" title="机器学习基础知识及常见算法"></a>机器学习基础知识及常见算法</h1><h2 id="一、机器学习基础"><a href="#一、机器学习基础" class="headerlink" title="一、机器学习基础"></a>一、机器学习基础</h2><h3 id="1-机器学习（Machine-Learning，ML）"><a href="#1-机器学习（Machine-Learning，ML）" class="headerlink" title="1. 机器学习（Machine Learning，ML）"></a>1. 机器学习（Machine Learning，ML）</h3><p><strong>定义：</strong> 机器学习是人工智能的一个分支，主要研究如何让计算机从数据中学习规律，而不是由程序员为每种情况编写明确的判断规则。</p>
+<p><strong>核心思想：</strong> 通过大量数据寻找输入与输出之间的关系，或发现数据内部的结构，再利用学习到的规律处理新数据。</p>
+<p><strong>基本流程：</strong></p>
+<p>数据收集 → 数据预处理 → 特征选择 → 模型训练 → 模型验证 → 结果分析。</p>
+<p><strong>核心概念：</strong></p>
+<ul>
+<li><p><strong>样本（Sample）：</strong> 一条观测数据。例如，一个纳米压痕测量点。</p>
+</li>
+<li><p><strong>特征（Feature）：</strong> 描述样本的变量。例如硬度 H、约化模量 Er、载荷 P。</p>
+</li>
+<li><p><strong>标签（Label）：</strong> 样本的已知类别。例如 Fiber、Epoxy、Interface。</p>
+</li>
+<li><p><strong>模型（Model）：</strong> 从数据中学习得到的数学关系或统计结构。</p>
+</li>
+<li><p><strong>参数（Parameter）：</strong> 模型通过训练估计的数值，例如高斯分布的均值。</p>
+</li>
+<li><p><strong>超参数（Hyperparameter）：</strong> 训练前需要设置或选择的参数，例如 K-means 的聚类数量 K。</p>
+</li>
+</ul>
+<p><strong>例子：</strong> 在 CFRP 纳米压痕分析中，可以将硬度、模量和载荷作为输入特征，使用机器学习识别不同材料区域，或者分析测量数据中存在的统计群体。</p>
+<h3 id="2-机器学习的分类"><a href="#2-机器学习的分类" class="headerlink" title="2. 机器学习的分类"></a>2. 机器学习的分类</h3><p><strong>监督学习（Supervised Learning）</strong></p>
+<p>利用带标签的数据进行训练，学习输入特征与输出标签之间的关系。</p>
+<p>主要任务包括：</p>
+<ul>
+<li><p>分类（Classification）：预测离散类别，例如识别树脂、界面和碳纤维。</p>
+</li>
+<li><p>回归（Regression）：预测连续数值，例如预测材料的弹性模量。</p>
+</li>
+</ul>
+<p>常见算法：LR、SVM、kNN、RF、GNB、QDA。</p>
+<p><strong>无监督学习（Unsupervised Learning）</strong></p>
+<p>利用没有标签的数据发现隐藏规律，不需要提前知道每个样本属于哪一类。</p>
+<p>主要任务包括聚类、降维和概率密度估计。</p>
+<p>常见算法：K-means、GMM、Ward、HDBSCAN、谱聚类。</p>
+<p><strong>半监督学习（Semi-supervised Learning）</strong></p>
+<p>同时利用少量带标签数据和大量无标签数据进行学习。</p>
+<p><strong>强化学习（Reinforcement Learning）</strong></p>
+<p>智能体通过与环境交互，根据奖励和惩罚不断调整决策策略。</p>
+<h3 id="3-机器学习的训练与验证"><a href="#3-机器学习的训练与验证" class="headerlink" title="3. 机器学习的训练与验证"></a>3. 机器学习的训练与验证</h3><p><strong>训练集（Training Set）：</strong> 用于学习模型参数的数据。</p>
+<p><strong>验证集（Validation Set）：</strong> 用于比较模型配置和选择超参数的数据。</p>
+<p><strong>测试集（Test Set）：</strong> 用于评价最终模型在未参与训练和选择的数据上的表现。</p>
+<p><strong>过拟合（Overfitting）：</strong> 模型过度记住训练数据，导致训练表现很好，但面对新数据时效果较差。</p>
+<p><strong>欠拟合（Underfitting）：</strong> 模型过于简单，无法充分学习数据规律。</p>
+<p><strong>交叉验证（Cross-validation）：</strong> 将数据划分为多个部分，反复进行训练与验证，评估模型表现。</p>
+<p><strong>数据泄漏（Data Leakage）：</strong> 在训练或参数选择阶段不恰当地使用了测试数据的信息，导致评价结果过于乐观。</p>
+<p><strong>例子：</strong> 对不同载荷条件的压痕数据进行分类时，可以将某个完整载荷的数据留作测试，利用其他载荷数据训练模型，从而研究模型面对未参与训练的载荷条件时的表现。</p>
+<h3 id="4-常见评价指标"><a href="#4-常见评价指标" class="headerlink" title="4. 常见评价指标"></a>4. 常见评价指标</h3><p><strong>Accuracy（准确率）</strong></p>
+<p>全部预测样本中，预测正确的比例。</p>
+<p>$$<br>Accuracy&#x3D;\frac{TP+TN}{TP+TN+FP+FN}<br>$$</p>
+<p><strong>Precision（精确率）</strong></p>
+<p>预测为某类别的样本中，真正属于该类别的比例。</p>
+<p>$$<br>Precision&#x3D;\frac{TP}{TP+FP}<br>$$</p>
+<p><strong>Recall（召回率）</strong></p>
+<p>真实属于某类别的样本中，被正确识别的比例。</p>
+<p>$$<br>Recall&#x3D;\frac{TP}{TP+FN}<br>$$</p>
+<p><strong>F1-score</strong></p>
+<p>精确率和召回率的调和平均值。</p>
+<p>$$<br>F_1&#x3D;\frac{2PR}{P+R}<br>$$</p>
+<p><strong>Balanced Accuracy（平衡准确率）</strong></p>
+<p>各类别召回率的平均值，适合类别数量不均衡的分类任务。</p>
+<p>$$<br>BA&#x3D;\frac{1}{K}\sum_{k&#x3D;1}^{K}Recall_k<br>$$</p>
+<p><strong>ARI（Adjusted Rand Index，调整兰德指数）</strong></p>
+<p>比较聚类结果与参考类别划分的一致程度，考虑了随机分组可能产生的一致性。完全一致时为 1，随机水平通常接近 0，也可能为负数。</p>
+<p><strong>Silhouette Score（轮廓系数）</strong></p>
+<p>评价聚类群体内部是否紧凑，以及不同群体之间是否分离。</p>
+<p>$$<br>s(i)&#x3D;\frac{b(i)-a(i)}{\max(a(i),b(i))}<br>$$</p>
+<p>其中，a(i) 表示样本与同一群体内其他样本的平均距离，b(i) 表示它到最近其他群体的平均距离。</p>
+<p><strong>Log Loss（对数损失）</strong></p>
+<p>评价分类模型预测概率的质量。模型对真实类别给出的概率越低，受到的惩罚通常越大。</p>
+<p><strong>Density Loss（密度损失）</strong></p>
+<p>评价概率密度模型描述观测数据分布的能力。常使用留出数据的平均负对数似然，越低越好。</p>
+<p><strong>Repeatability（重复性）</strong></p>
+<p>衡量相同数据在不同计算运行或实验重复条件下，结果是否接近。其具体评价方式需要根据研究任务定义。</p>
+<hr>
+<h2 id="二、监督学习算法"><a href="#二、监督学习算法" class="headerlink" title="二、监督学习算法"></a>二、监督学习算法</h2><h3 id="5-LR（Logistic-Regression，逻辑回归）"><a href="#5-LR（Logistic-Regression，逻辑回归）" class="headerlink" title="5. LR（Logistic Regression，逻辑回归）"></a>5. LR（Logistic Regression，逻辑回归）</h3><p><strong>定义：</strong> LR 是一种用于分类的统计模型，通过建立输入特征与类别概率之间的关系进行预测。</p>
+<p><strong>核心思想：</strong> 将输入特征进行线性组合，再通过特定函数转化为类别概率。</p>
+<p>对于二分类问题，经典逻辑回归使用 Sigmoid 函数：</p>
+<p>$$<br>P(y&#x3D;1\mid x)&#x3D;\frac{1}{1+e^{-(w^Tx+b)}}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><p>x：输入特征。</p>
+</li>
+<li><p>w：模型学习的特征权重。</p>
+</li>
+<li><p>b：偏置。</p>
+</li>
+<li><p>P：预测属于某一类别的概率。</p>
+</li>
+</ul>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>输入带标签的训练数据。</p>
+</li>
+<li><p>通过优化损失函数学习权重和偏置。</p>
+</li>
+<li><p>计算新样本属于各类别的概率。</p>
+</li>
+<li><p>根据概率确定预测类别。</p>
+</li>
+</ol>
+<p>多分类时可以采用 Softmax 逻辑回归等方式。</p>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">model = LogisticRegression(max_iter=1000)</span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_pred = model.predict(X_test)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 模型简单、训练效率高，能够提供可解释的特征系数，但标准 LR 对复杂非线性边界的表达能力有限。</p>
+<p><strong>论文中的作用：</strong> 作为基础分类模型，用于比较更复杂分类方法是否具有实际优势。</p>
+<h3 id="6-SVM（Support-Vector-Machine，支持向量机）"><a href="#6-SVM（Support-Vector-Machine，支持向量机）" class="headerlink" title="6. SVM（Support Vector Machine，支持向量机）"></a>6. SVM（Support Vector Machine，支持向量机）</h3><p><strong>定义：</strong> SVM 是一种通过构建分类决策边界来区分不同类别的监督学习算法。</p>
+<p><strong>核心思想：</strong> 在控制分类错误的同时，寻找具有较大分类间隔的决策边界。</p>
+<p><strong>支持向量（Support Vector）：</strong> 对最终分类边界有重要影响的训练样本。</p>
+<p><strong>核函数（Kernel Function）：</strong> 通过计算样本之间的核相似度，使 SVM 能够构建非线性分类边界。</p>
+<p>常见的 RBF 核函数：</p>
+<p>$$<br>K(x_i,x_j)&#x3D;\exp\left(-\gamma\lVert x_i-x_j\rVert^2\right)<br>$$</p>
+<p>其中，γ 控制核函数对样本距离的敏感程度。</p>
+<p><strong>主要超参数：</strong></p>
+<ul>
+<li><p>C：控制分类错误惩罚与间隔大小之间的权衡。</p>
+</li>
+<li><p>gamma：控制 RBF 核的作用范围。</p>
+</li>
+</ul>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>根据训练数据建立分类优化问题。</p>
+</li>
+<li><p>通过优化确定支持向量和决策边界。</p>
+</li>
+<li><p>使用决策函数判断新样本属于哪个类别。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.svm import SVC</span><br><span class="line"></span><br><span class="line">model = SVC(</span><br><span class="line">    kernel=&quot;rbf&quot;,</span><br><span class="line">    C=1.0,</span><br><span class="line">    gamma=&quot;scale&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line">y_pred = model.predict(X_test)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 能够处理非线性分类问题，但对特征标准化、核函数及超参数较敏感。</p>
+<p><strong>论文中的作用：</strong> 用于识别不同材料区域，并研究特征增加、训练数据和参数选择对界面识别结果的影响。</p>
+<h3 id="7-kNN（K-Nearest-Neighbors，K近邻）"><a href="#7-kNN（K-Nearest-Neighbors，K近邻）" class="headerlink" title="7. kNN（K-Nearest Neighbors，K近邻）"></a>7. kNN（K-Nearest Neighbors，K近邻）</h3><p><strong>定义：</strong> kNN 根据新样本附近 K 个最相似训练样本的类别进行预测。</p>
+<p><strong>核心思想：</strong> 特征空间中距离接近的样本，可能属于相同类别。</p>
+<p>常见距离为欧氏距离：</p>
+<p>$$<br>d(x_i,x_j)&#x3D;\sqrt{\sum_{m&#x3D;1}^{p}(x_{im}-x_{jm})^2}<br>$$</p>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>计算新样本与训练样本之间的距离。</p>
+</li>
+<li><p>选取距离最近的 K 个样本。</p>
+</li>
+<li><p>根据这些邻居的类别进行投票。</p>
+</li>
+<li><p>输出最终预测类别。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">model = KNeighborsClassifier(n_neighbors=5)</span><br><span class="line"></span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line">y_pred = model.predict(X_test)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 方法直观、实现简单，但对特征尺度、K 值和局部数据分布敏感。</p>
+<p><strong>论文中的作用：</strong> 作为局部相似性分类方法，用来比较不同材料区域是否能够通过相邻特征点识别。</p>
+<h3 id="8-RF（Random-Forest，随机森林）"><a href="#8-RF（Random-Forest，随机森林）" class="headerlink" title="8. RF（Random Forest，随机森林）"></a>8. RF（Random Forest，随机森林）</h3><p><strong>定义：</strong> 随机森林是一种集成学习方法，由多棵决策树组成，通过综合各棵树的结果进行预测。</p>
+<p><strong>核心思想：</strong> 一棵决策树可能不稳定，因此通过多棵具有差异的决策树共同判断，提高预测的稳健性。</p>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>从训练数据中进行有放回抽样。</p>
+</li>
+<li><p>使用不同样本及随机选择的特征构建决策树。</p>
+</li>
+<li><p>每棵树独立进行分类。</p>
+</li>
+<li><p>综合多棵树的投票结果得到预测类别。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line">model = RandomForestClassifier(</span><br><span class="line">    n_estimators=100,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line">y_pred = model.predict(X_test)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 能够处理复杂非线性关系，适应性较强，但模型整体不如简单分类器容易解释。</p>
+<p><strong>论文中的作用：</strong> 用于比较基于多棵决策树的非线性分类方法与其他算法的识别表现。</p>
+<h3 id="9-GNB（Gaussian-Naive-Bayes，高斯朴素贝叶斯）"><a href="#9-GNB（Gaussian-Naive-Bayes，高斯朴素贝叶斯）" class="headerlink" title="9. GNB（Gaussian Naive Bayes，高斯朴素贝叶斯）"></a>9. GNB（Gaussian Naive Bayes，高斯朴素贝叶斯）</h3><p><strong>定义：</strong> GNB 是基于贝叶斯定理的概率分类算法，假设每个类别下的各个特征条件独立，并且各特征分别服从高斯分布。</p>
+<p><strong>核心思想：</strong> 分别计算样本在不同类别下出现的概率，再根据贝叶斯定理确定类别。</p>
+<p>贝叶斯定理：</p>
+<p>$$<br>P(C\mid X)&#x3D;\frac{P(X\mid C)P(C)}{P(X)}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><p>P(C)：类别先验概率。</p>
+</li>
+<li><p>P(X|C)：该类别下观察到特征 X 的似然。</p>
+</li>
+<li><p>P(C|X)：观察到 X 后属于类别 C 的后验概率。</p>
+</li>
+</ul>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">model = GaussianNB()</span><br><span class="line"></span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line">y_pred = model.predict(X_test)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 计算简单、速度快，但特征条件独立的假设可能不符合真实数据。</p>
+<p><strong>论文中的作用：</strong> 作为低复杂度的概率分类模型，用于与允许特征相关的 QDA 进行比较。</p>
+<h3 id="10-QDA（Quadratic-Discriminant-Analysis，二次判别分析）"><a href="#10-QDA（Quadratic-Discriminant-Analysis，二次判别分析）" class="headerlink" title="10. QDA（Quadratic Discriminant Analysis，二次判别分析）"></a>10. QDA（Quadratic Discriminant Analysis，二次判别分析）</h3><p><strong>定义：</strong> QDA 是一种概率分类算法，假设每个已知类别的数据分别服从多元高斯分布，且不同类别可以具有不同的协方差矩阵。</p>
+<p><strong>核心思想：</strong> 利用带标签的训练数据，分别估计每个类别的均值和协方差，再根据新样本在各类别中的后验概率进行分类。</p>
+<p>QDA 的判别函数可以写为：</p>
+<p>$$<br>\delta_k(x)&#x3D;<br>-\frac{1}{2}\ln|\Sigma_k|<br>-\frac{1}{2}(x-\mu_k)^T\Sigma_k^{-1}(x-\mu_k)<br>+\ln P(C_k)<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><p>μ：类别的均值向量。</p>
+</li>
+<li><p>Σ：类别的协方差矩阵。</p>
+</li>
+<li><p>P(C)：类别的先验概率。</p>
+</li>
+</ul>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>根据真实标签，将训练样本分成不同类别。</p>
+</li>
+<li><p>分别估计各类别的均值、协方差和先验概率。</p>
+</li>
+<li><p>对新样本计算各类别的判别分数。</p>
+</li>
+<li><p>选择分数最高的类别。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.discriminant_analysis import (</span><br><span class="line">    QuadraticDiscriminantAnalysis</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model = QuadraticDiscriminantAnalysis(</span><br><span class="line">    reg_param=0.1</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line">y_pred = model.predict(X_test)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 能够考虑特征之间的相关性，允许各类别具有不同的分布形状，但当样本数量较少时，协方差估计可能不稳定。</p>
+<p><strong>与 GMM 的区别：</strong></p>
+<p>QDA 利用已知类别标签分别拟合各类分布，然后进行分类。</p>
+<p>GMM 不需要预先知道类别标签，而是直接拟合总体的混合概率分布，再识别统计分量。</p>
+<p><strong>论文中的作用：</strong> 用于材料区域识别，特别关注其对界面区域的识别能力，以及协方差结构和输入特征的影响。</p>
+<hr>
+<h2 id="三、无监督学习与聚类算法"><a href="#三、无监督学习与聚类算法" class="headerlink" title="三、无监督学习与聚类算法"></a>三、无监督学习与聚类算法</h2><h3 id="11-K-means（K均值聚类）"><a href="#11-K-means（K均值聚类）" class="headerlink" title="11. K-means（K均值聚类）"></a>11. K-means（K均值聚类）</h3><p><strong>定义：</strong> K-means 将数据划分为 K 个群体，通过优化各样本与所属群体中心之间的距离进行聚类。</p>
+<p><strong>核心思想：</strong> 同一个群体内部的样本应尽可能接近。</p>
+<p>目标函数：</p>
+<p>$$<br>J&#x3D;\sum_{k&#x3D;1}^{K}\sum_{x_i\in C_k}<br>\lVert x_i-\mu_k\rVert^2<br>$$</p>
+<p>其中，μ 表示聚类中心。</p>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>设置聚类数量 K。</p>
+</li>
+<li><p>初始化 K 个聚类中心。</p>
+</li>
+<li><p>将每个样本分配给最近的中心。</p>
+</li>
+<li><p>重新计算各群体中心。</p>
+</li>
+<li><p>重复迭代，直到满足停止条件。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cluster import KMeans</span><br><span class="line"></span><br><span class="line">model = KMeans(</span><br><span class="line">    n_clusters=3,</span><br><span class="line">    n_init=10,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">labels = model.fit_predict(X)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 简单高效，但需要预先指定聚类数量，对初始化、异常值及数据尺度敏感。</p>
+<p><strong>论文中的作用：</strong> 作为基础聚类方法，与 GMM 等方法比较统计分组结果。</p>
+<h3 id="12-GMM（Gaussian-Mixture-Model，高斯混合模型）"><a href="#12-GMM（Gaussian-Mixture-Model，高斯混合模型）" class="headerlink" title="12. GMM（Gaussian Mixture Model，高斯混合模型）"></a>12. GMM（Gaussian Mixture Model，高斯混合模型）</h3><p><strong>定义：</strong> GMM 假设总体数据由多个高斯概率分布按照不同权重混合形成。</p>
+<p><strong>核心思想：</strong> 使用多个高斯分量描述数据中不同的统计响应群体。</p>
+<p>概率密度函数：</p>
+<p>$$<br>p(x)&#x3D;\sum_{k&#x3D;1}^{K}\pi_k<br>\mathcal{N}(x\mid\mu_k,\Sigma_k)<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><p>K：高斯分量数量。</p>
+</li>
+<li><p>π：分量权重。</p>
+</li>
+<li><p>μ：分量均值。</p>
+</li>
+<li><p>Σ：分量协方差矩阵。</p>
+</li>
+<li><p>N：高斯概率密度函数。</p>
+</li>
+</ul>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>确定或选择高斯分量数量。</p>
+</li>
+<li><p>初始化各分量的均值、协方差和权重。</p>
+</li>
+<li><p>使用 EM 算法迭代估计参数。</p>
+</li>
+<li><p>得到总体概率密度及各分量参数。</p>
+</li>
+<li><p>计算每个样本属于不同分量的后验概率，并可据此进行分组。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.mixture import GaussianMixture</span><br><span class="line"></span><br><span class="line">model = GaussianMixture(</span><br><span class="line">    n_components=3,</span><br><span class="line">    covariance_type=&quot;full&quot;,</span><br><span class="line">    n_init=10,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model.fit(X)</span><br><span class="line"></span><br><span class="line">labels = model.predict(X)</span><br><span class="line">probabilities = model.predict_proba(X)</span><br></pre></td></tr></table></figure>
+
+<p><strong>常见协方差类型：</strong></p>
+<ul>
+<li><p>Full：完整协方差，允许特征相关。</p>
+</li>
+<li><p>Diagonal：对角协方差，不包含特征之间的协方差项。</p>
+</li>
+<li><p>Spherical：各分量采用球形协方差。</p>
+</li>
+<li><p>Tied：不同分量共享同一个协方差矩阵。</p>
+</li>
+</ul>
+<p><strong>特点：</strong> 能够描述重叠的概率分布，但对分量数量、初始化和协方差结构敏感。</p>
+<p><strong>论文中的作用：</strong> 核心统计分解方法，研究不同初始化和协方差设置是否影响最终提取的硬度、模量及测量点比例。</p>
+<h3 id="13-Fuzzy-C-means（模糊C均值）"><a href="#13-Fuzzy-C-means（模糊C均值）" class="headerlink" title="13. Fuzzy C-means（模糊C均值）"></a>13. Fuzzy C-means（模糊C均值）</h3><p><strong>定义：</strong> FCM 是一种软聚类方法，允许每个样本以不同的隶属度同时属于多个群体。</p>
+<p><strong>核心思想：</strong> 对于位于不同群体之间的样本，不强制进行完全确定的分组，而是使用隶属度描述其归属程度。</p>
+<p>目标函数：</p>
+<p>$$<br>J_m&#x3D;\sum_{i&#x3D;1}^{N}\sum_{k&#x3D;1}^{K}<br>u_{ik}^{m}\lVert x_i-c_k\rVert^2<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><p>u：样本对某群体的隶属度。</p>
+</li>
+<li><p>c：聚类中心。</p>
+</li>
+<li><p>m：模糊系数，通常大于 1。</p>
+</li>
+</ul>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>初始化聚类中心或隶属度。</p>
+</li>
+<li><p>根据距离更新各样本的隶属度。</p>
+</li>
+<li><p>根据隶属度更新聚类中心。</p>
+</li>
+<li><p>重复迭代，直到满足停止条件。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import skfuzzy as fuzz</span><br><span class="line"></span><br><span class="line">centers, membership, *_ = fuzz.cluster.cmeans(</span><br><span class="line">    X.T,</span><br><span class="line">    c=3,</span><br><span class="line">    m=2,</span><br><span class="line">    error=0.00001,</span><br><span class="line">    maxiter=1000</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 适合存在重叠和过渡的群体，但依赖聚类数量、初始化和模糊系数。隶属度不一定是经过概率校准的类别概率。</p>
+<p><strong>与 GMM 的区别：</strong> FCM 主要通过距离优化得到隶属度，而 GMM 根据概率分布计算后验归属概率。</p>
+<h3 id="14-Ward（Ward层次聚类）"><a href="#14-Ward（Ward层次聚类）" class="headerlink" title="14. Ward（Ward层次聚类）"></a>14. Ward（Ward层次聚类）</h3><p><strong>定义：</strong> Ward 是一种自底向上的层次聚类方法，每次合并使群体内部平方误差增加最少的两个群体。</p>
+<p><strong>核心思想：</strong> 从单独的样本开始，逐步合并相似群体，并尽量保持组内紧凑。</p>
+<p>两个群体合并造成的误差增加量可表示为：</p>
+<p>$$<br>\Delta(A,B)&#x3D;<br>\frac{|A||B|}{|A|+|B|}<br>\lVert\mu_A-\mu_B\rVert^2<br>$$</p>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>将每个样本视为单独的群体。</p>
+</li>
+<li><p>计算不同群体合并后的误差变化。</p>
+</li>
+<li><p>选择误差增加最小的两个群体进行合并。</p>
+</li>
+<li><p>重复合并，形成层次聚类树。</p>
+</li>
+<li><p>根据需要选择切分层次和最终群体数量。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cluster import AgglomerativeClustering</span><br><span class="line"></span><br><span class="line">model = AgglomerativeClustering(</span><br><span class="line">    n_clusters=3,</span><br><span class="line">    linkage=&quot;ward&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">labels = model.fit_predict(X)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 能展示数据的层次结构，但已经合并的群体无法重新拆开，对距离尺度敏感。</p>
+<h3 id="15-Spectral-Clustering（谱聚类）"><a href="#15-Spectral-Clustering（谱聚类）" class="headerlink" title="15. Spectral Clustering（谱聚类）"></a>15. Spectral Clustering（谱聚类）</h3><p><strong>定义：</strong> 谱聚类是一种基于图论的聚类方法，通过构建样本相似度图，利用图矩阵的特征向量获得适合聚类的新表示。</p>
+<p><strong>核心思想：</strong> 不单纯根据聚类中心划分数据，而是研究哪些样本之间具有较强的连接关系。</p>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>根据样本相似性建立邻接图。</p>
+</li>
+<li><p>构造图拉普拉斯矩阵。</p>
+</li>
+<li><p>计算相关特征向量。</p>
+</li>
+<li><p>在新的特征空间中进行聚类。</p>
+</li>
+</ol>
+<p>图拉普拉斯矩阵的一种常见形式：</p>
+<p>$$<br>L&#x3D;D-W<br>$$</p>
+<p>其中，D 为度矩阵，W 为相似度矩阵。</p>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cluster import SpectralClustering</span><br><span class="line"></span><br><span class="line">model = SpectralClustering(</span><br><span class="line">    n_clusters=3,</span><br><span class="line">    affinity=&quot;nearest_neighbors&quot;,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">labels = model.fit_predict(X)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 能够处理部分复杂形状的群体，但对相似度图构造、邻居数量和聚类参数敏感。</p>
+<p><strong>论文中的作用：</strong> 用于比较不依赖简单中心划分的聚类方法。</p>
+<h3 id="16-HDBSCAN（层次密度聚类）"><a href="#16-HDBSCAN（层次密度聚类）" class="headerlink" title="16. HDBSCAN（层次密度聚类）"></a>16. HDBSCAN（层次密度聚类）</h3><p><strong>定义：</strong> HDBSCAN 是一种基于密度的层次聚类方法，通过分析数据在不同密度水平下形成的群体结构，寻找相对稳定的聚类。</p>
+<p><strong>核心思想：</strong> 密集区域可能形成群体，无法可靠归入稳定群体的稀疏样本可以被识别为噪声。</p>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>计算反映局部密度的距离关系。</p>
+</li>
+<li><p>构建基于密度的层次结构。</p>
+</li>
+<li><p>分析不同层次中群体的稳定性。</p>
+</li>
+<li><p>选择稳定群体，并标记未分配样本。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cluster import HDBSCAN</span><br><span class="line"></span><br><span class="line">model = HDBSCAN(</span><br><span class="line">    min_cluster_size=5</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">labels = model.fit_predict(X)</span><br></pre></td></tr></table></figure>
+
+<p>代码中的负一标签通常表示噪声。</p>
+<p><strong>特点：</strong> 不必事先固定群体数量，能够识别非规则形状和噪声，但对密度参数敏感。</p>
+<p><strong>论文中的作用：</strong> 用于研究数据中的密度结构，并观察自动聚类数量是否与材料区域数量一致。</p>
+<p><strong>注意：</strong> 被识别为噪声的压痕点不一定是错误测量，也可能具有真实材料学意义。</p>
+<h3 id="17-Bayesian-GMM（贝叶斯高斯混合模型）"><a href="#17-Bayesian-GMM（贝叶斯高斯混合模型）" class="headerlink" title="17. Bayesian GMM（贝叶斯高斯混合模型）"></a>17. Bayesian GMM（贝叶斯高斯混合模型）</h3><p><strong>定义：</strong> Bayesian GMM 在高斯混合模型基础上引入参数先验，通过贝叶斯推断估计混合分布。</p>
+<p><strong>核心思想：</strong> 在拟合观测数据的同时，利用先验对分量权重、均值和协方差等参数施加统计约束。</p>
+<p><strong>工作过程：</strong></p>
+<ol>
+<li><p>设置分量数量上限和先验参数。</p>
+</li>
+<li><p>初始化模型。</p>
+</li>
+<li><p>使用贝叶斯推断方法估计参数，常见实现采用变分推断。</p>
+</li>
+<li><p>根据学习到的分量权重和分布参数描述数据。</p>
+</li>
+</ol>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.mixture import BayesianGaussianMixture</span><br><span class="line"></span><br><span class="line">model = BayesianGaussianMixture(</span><br><span class="line">    n_components=6,</span><br><span class="line">    weight_concentration_prior_type=</span><br><span class="line">        &quot;dirichlet_process&quot;,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model.fit(X)</span><br><span class="line">labels = model.predict(X)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点：</strong> 可以通过先验使部分分量的权重变得很小，从而灵活控制有效分量数量，但结果仍受先验和初始化影响。</p>
+<p><strong>与普通 GMM 的区别：</strong> 普通 GMM 常使用最大似然估计，Bayesian GMM 则加入先验并进行贝叶斯推断。</p>
+<p><strong>论文中的作用：</strong> 允许最多六个分量，作为具有更灵活分量权重控制能力的概率混合模型进行比较。</p>
+<hr>
+<h2 id="四、模型拟合与参数优化"><a href="#四、模型拟合与参数优化" class="headerlink" title="四、模型拟合与参数优化"></a>四、模型拟合与参数优化</h2><h3 id="18-Probability-Density-Fitting（概率密度拟合）"><a href="#18-Probability-Density-Fitting（概率密度拟合）" class="headerlink" title="18. Probability Density Fitting（概率密度拟合）"></a>18. Probability Density Fitting（概率密度拟合）</h3><p><strong>定义：</strong> 使用数学概率模型描述观测数据在不同位置出现的概率密度。</p>
+<p><strong>核心思想：</strong> 不只是把数据分组，还要尽可能描述数据整体的分布规律。</p>
+<p>例如，在 H–Er 二维空间中，GMM 可以通过多个二维高斯分布描述测量点的联合分布。</p>
+<p><strong>作用：</strong> 用于统计建模、分布分析、异常检测和统计群体识别。</p>
+<p><strong>注意：</strong> 概率密度拟合效果好，不代表聚类结果一定与真实材料区域一致。</p>
+<h3 id="19-Maximum-Likelihood-Estimation（最大似然估计，MLE）"><a href="#19-Maximum-Likelihood-Estimation（最大似然估计，MLE）" class="headerlink" title="19. Maximum Likelihood Estimation（最大似然估计，MLE）"></a>19. Maximum Likelihood Estimation（最大似然估计，MLE）</h3><p><strong>定义：</strong> 一种统计参数估计方法，寻找使当前观测数据似然最大的模型参数。</p>
+<p><strong>核心思想：</strong> 如果某一组模型参数能够让已观察到的数据具有更大的似然，那么这些参数在最大似然准则下更合适。</p>
+<p>对于独立观测数据，常使用对数似然：</p>
+<p>$$<br>\ell(\theta)&#x3D;\sum_{i&#x3D;1}^{N}\ln p(x_i\mid\theta)<br>$$</p>
+<p>其中，θ 表示需要估计的模型参数。</p>
+<p><strong>作用：</strong> 用于估计概率模型参数，是普通 GMM 的主要估计准则。</p>
+<p><strong>注意：</strong> 训练似然较大，不一定代表模型泛化效果更好，也不一定代表最终力学统计量更稳定。</p>
+<h3 id="20-EM（Expectation-Maximization，期望最大化算法）"><a href="#20-EM（Expectation-Maximization，期望最大化算法）" class="headerlink" title="20. EM（Expectation-Maximization，期望最大化算法）"></a>20. EM（Expectation-Maximization，期望最大化算法）</h3><p><strong>定义：</strong> EM 是一种迭代优化方法，常用于包含隐变量的概率模型，例如 GMM。</p>
+<p><strong>核心思想：</strong> 交替估计样本与隐含群体之间的关系，以及模型本身的参数。</p>
+<p><strong>E 步（Expectation）：</strong> 计算样本属于不同高斯分量的后验概率。</p>
+<p>$$<br>\gamma_{ik}&#x3D;<br>\frac{\pi_k\mathcal{N}(x_i\mid\mu_k,\Sigma_k)}<br>{\sum_{j&#x3D;1}^{K}\pi_j\mathcal{N}(x_i\mid\mu_j,\Sigma_j)}<br>$$</p>
+<p><strong>M 步（Maximization）：</strong> 根据 E 步计算的归属概率，重新估计均值、协方差和混合权重。</p>
+<p>例如均值更新：</p>
+<p>$$<br>\mu_k&#x3D;<br>\frac{\sum_{i&#x3D;1}^{N}\gamma_{ik}x_i}<br>{\sum_{i&#x3D;1}^{N}\gamma_{ik}}<br>$$</p>
+<p><strong>完整过程：</strong></p>
+<p>初始化 → E 步 → M 步 → E 步 → M 步 → 收敛。</p>
+<p><strong>特点：</strong> 在标准条件下，EM 迭代不会降低训练数据的似然，但不保证找到全局最优解。</p>
+<h3 id="21-Initialization（初始化）"><a href="#21-Initialization（初始化）" class="headerlink" title="21. Initialization（初始化）"></a>21. Initialization（初始化）</h3><p><strong>定义：</strong> 在模型正式优化之前，为参数设置初始状态。</p>
+<p><strong>核心思想：</strong> 不同起点可能使优化算法走向不同的解。</p>
+<p>在 GMM 中，初始化可能涉及：</p>
+<ul>
+<li><p>各高斯分量的均值。</p>
+</li>
+<li><p>各分量的协方差。</p>
+</li>
+<li><p>各分量的混合权重。</p>
+</li>
+<li><p>初始化策略，例如使用 K-means 提供初始估计。</p>
+</li>
+</ul>
+<p><strong>常见相关概念：</strong></p>
+<p><strong>Local Optimum（局部最优）：</strong> 在当前附近的参数范围内已经较优，但不一定是全局最优。</p>
+<p><strong>Convergence（收敛）：</strong> 迭代更新逐渐达到规定的停止条件。</p>
+<p><strong>Multiple Starts（多次启动）：</strong> 使用不同初始状态重复优化，再按预定准则选取结果。</p>
+<p><strong>论文中的作用：</strong> 检验改变 GMM 初始化策略和启动预算后，各统计群体对应的硬度、模量和测量点比例是否稳定。</p>
+<h3 id="22-Covariance（协方差）"><a href="#22-Covariance（协方差）" class="headerlink" title="22. Covariance（协方差）"></a>22. Covariance（协方差）</h3><p><strong>定义：</strong> 协方差衡量两个变量共同变化的方向和程度。</p>
+<p>$$<br>Cov(X,Y)&#x3D;E[(X-E[X])(Y-E[Y])]<br>$$</p>
+<p><strong>核心思想：</strong></p>
+<ul>
+<li><p>协方差为正：两个变量倾向于同向变化。</p>
+</li>
+<li><p>协方差为负：两个变量倾向于反向变化。</p>
+</li>
+<li><p>协方差为零：不存在由协方差衡量的线性关系，但不代表完全独立。</p>
+</li>
+</ul>
+<p>对于 H、Er 两个特征，协方差矩阵为：</p>
+<p>$$<br>\Sigma&#x3D;<br>\begin{bmatrix}<br>\sigma_H^2 &amp; Cov(H,E_r)\<br>Cov(H,E_r) &amp; \sigma_{E_r}^2<br>\end{bmatrix}<br>$$</p>
+<p><strong>Diagonal Covariance（对角协方差）：</strong> 将非对角协方差项限制为零，对应的二维高斯等密度椭圆与坐标轴对齐。</p>
+<p><strong>Full Covariance（完整协方差）：</strong> 允许非对角协方差项存在，因此可以描述倾斜的椭圆形分布。</p>
+<p><strong>论文中的作用：</strong> 比较是否考虑硬度与模量的相关结构，会如何影响数据拟合效果和区域识别。</p>
+<h3 id="23-BIC（Bayesian-Information-Criterion，贝叶斯信息准则）"><a href="#23-BIC（Bayesian-Information-Criterion，贝叶斯信息准则）" class="headerlink" title="23. BIC（Bayesian Information Criterion，贝叶斯信息准则）"></a>23. BIC（Bayesian Information Criterion，贝叶斯信息准则）</h3><p><strong>定义：</strong> BIC 是用于模型选择的统计准则，同时考虑数据拟合效果和模型复杂度。</p>
+<p>$$<br>BIC&#x3D;-2\ln(\hat L)+p\ln(N)<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><p>L：模型的最大似然。</p>
+</li>
+<li><p>p：模型的自由参数数量。</p>
+</li>
+<li><p>N：样本数量。</p>
+</li>
+</ul>
+<p><strong>核心思想：</strong> 模型越复杂，可能越容易拟合训练数据，但也需要承担复杂度惩罚。</p>
+<p><strong>作用：</strong> 比较不同复杂度的概率模型，例如选择 GMM 的分量数量。</p>
+<p><strong>特点：</strong> 在相同数据和可比较模型之间，BIC 通常越低越好。</p>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for k in range(1, 7):</span><br><span class="line">    model = GaussianMixture(</span><br><span class="line">        n_components=k,</span><br><span class="line">        random_state=42</span><br><span class="line">    )</span><br><span class="line">    model.fit(X)</span><br><span class="line"></span><br><span class="line">    print(k, model.bic(X))</span><br></pre></td></tr></table></figure>
+
+<h3 id="24-Standardization（标准化）"><a href="#24-Standardization（标准化）" class="headerlink" title="24. Standardization（标准化）"></a>24. Standardization（标准化）</h3><p><strong>定义：</strong> 将不同尺度的特征转换为可比较的数值尺度。</p>
+<p>常见 Z-score 标准化：</p>
+<p>$$<br>z&#x3D;\frac{x-\mu}{\sigma}<br>$$</p>
+<p>其中，μ 为均值，σ 为标准差。</p>
+<p><strong>作用：</strong> 防止某些数值范围较大的特征在距离计算或模型优化中产生不合理的主导作用。</p>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line"></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line"></span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong> 测试集必须使用训练集估计得到的标准化参数，不能使用测试数据重新拟合标准化器。</p>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io">5lalaland</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://5lalaland.github.io/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">https://5lalaland.github.io/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://5lalaland.github.io" target="_blank">5lalaland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ai-safety/">ai-safety</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/" title="MIA 性能可靠性："><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">MIA 性能可靠性：</div></div><div class="info-2"><div class="info-item-1">MIA 性能可靠性：1. Background目前，LLM 上的 Membership Inference Attack（MIA，成员推断攻击）研究主要有两个方向：方向一：提升 MIA 的攻击性能。研究者希望设计更有效的攻击方法，使成员（Member）与非成员（Non-member）更容易区分。代表性方法包括：  loss,zlib,neighbor,lira,rmia….. 方向二：验证 MIA 性能的真实性。  -&gt;这篇文章的重点相比不断提出新的攻击方法，这一方向更关注：MIA 在 Benchmark 上获得的高 AUC，究竟来自模型真实的成员信息泄露，还是数据集本身存在的问题？ 所以为MIA发明一个benchmark十分重要 2. MIA Benchmark 的发展为什么发明一个Benchmark是困难的开源模型上的结论无法迁移至闭源模型但闭源模型无法构造出可靠的member&#x2F;nonmber数据 WikiMIA [1]：利用时间构造事后数据集。利用 Wikipedia 页面的发布时间构造成员和非成员。例如，将模型训练时间之前的文章作为候选成员，将训练时间之后...</div></div></div></a><a class="pagination-related" href="/2026/11/02/2026.10.30-%E8%A1%A5*%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A02/" title="2026.10.30-补*动手学深度学习2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">2026.10.30-补*动手学深度学习2</div></div><div class="info-2"><div class="info-item-1">1.感知机  二分类任务，1&#x2F;-1  yi[&lt;wi,xi&gt;+b]  表示yi乘 y_hat  &lt;&#x3D;0:分类分错了然后把w和b变大 w&#x3D;w-l*&#x2F;deta_loss   学习率乘损失函数  p是余量，涉及2个样本是否能分的很开r涉及样本数量 感知机的问题：不能拟合XOR函数，即坐标系 2.多层感知机 多几条线去分  激活函数：非线性，保证结果不是线性函数（线性函数本质就是单层感知机，会失去效果） 激活函数     3.多0感知机的从0开始实现 1234567891011121314151617181920212223242526272829303132333435import torchfrom torch import nnfrom d2l import torch as d2lbatch_size=256train_iter,test_iter=d2l.load_data_fashion_mnist(batch_size)//单隐藏层的多层感知机num_inputs,num_outputs,num_hiddens=784...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/07/13/2026.7.13-ai_safety_route/" title="2026-07-13｜AI Safety 学习路线"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-13</div><div class="info-item-2">2026-07-13｜AI Safety 学习路线</div></div><div class="info-2"><div class="info-item-1">1. 学习路线LLM基础↓OWASP LLM Top10↓Prompt Injection↓MIA↓RAG Security↓Agent Security↓Promptfoo↓Garak↓Privacy Attack 2. 技术栈要求   技术栈 需要掌握内容 达到标准（结果）    LLM 基础 Transformer、Attention、Decoder-only LLM、Tokenization、Inference流程 能解释 LLM 为什么会产生幻觉、泄露、越狱；能读懂安全论文   Prompt Engineering System&#x2F;User Prompt、Instruction hierarchy、Few-shot、CoT、Role Prompt 能设计攻击 prompt 和防御 prompt   Prompt Injection Direct Injection、Indirect Injection、Context Injection、Instruction Override 能针对 RAG&#x2F;Agent 设计攻击案例，并分析攻击链   Jailbre...</div></div></div></a><a class="pagination-related" href="/2026/10/21/2026.10.17-%E8%A1%A5*AI/" title="1. AI 安全常用术语"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-21</div><div class="info-item-2">1. AI 安全常用术语</div></div><div class="info-2"><div class="info-item-1">1. AI 安全常用术语1 Meta（元 &#x2F; 元学习）定义： Meta 表示“更高层次的”或“关于某事物本身的”。在机器学习中，Meta-learning（元学习）指让模型学会如何学习，从而快速适应新任务。 作用： 提高模型面对新任务、新数据或未知攻击时的适应能力。 例子： MAML（2017）是一种经典元学习方法，使模型能够利用少量样本和少数梯度更新快速适应新任务。 常见相关概念： Meta-analysis（元分析）、Metadata（元数据）、Meta-evaluation（元评估）。Meta 不一定指元学习，具体含义取决于上下文。 2 TF-IDF（词频-逆文档频率）定义： TF-IDF 是一种衡量词语在文档中重要程度的统计方法。一个词在当前文档中出现得越频繁，同时在其他文档中越少见，通常权重就越高。 计算公式： $[ TF\text{-}IDF(t,d)&#x3D;TF(t,d)\times IDF(t) ]$ 作用： 用于关键词提取、文本检索、文本分类和相似度计算。 例子： 在恶意提示词检测中，通过 TF-IDF 将输入文本转换为特征向量，再使用 SVM 等...</div></div></div></a><a class="pagination-related" href="/2026/11/02/2026.10.21-%E8%A1%A5*%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A01/" title="+ - * &#x2F; 都会按照元素对应位置计算"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-02</div><div class="info-item-2">+ - * &#x2F; 都会按照元素对应位置计算</div></div><div class="info-2"><div class="info-item-1">1. 数据基础 1234567891011121314151617181920212223242526#数据基础import torchx=torch.arange(12)# 0-11的一维向量x.shapex.numel() # 元素总数x.reshape(3,4)# 3行四列torch.zeros((2,3,4))# + - * / 都会按照元素对应位置计算X=x.reshape(3,4)Y=torch.ones((3,4))torch.cat((X,Y),dim=0)# 按行拼接，第一个结束了拼第二个torch.cat((X,Y),dim=1)# 按列拼接# 广播# a+b当中a和b形状不一样时，（3，1）+（1，2）=（3，2）x[-1] # 最后一个元素（对于矩阵则是最后一行）x[1:3] # 下标1和2的元素X[0:2,:] # 第0行和第1行a=x[0]a.item()  # Tensor -&gt; Python标量b=a.numpy()  # Tensor -&gt; NumPya=torch.tensor(b) # NumPy -&gt; Tensor  2....</div></div></div></a><a class="pagination-related" href="/2026/11/02/2026.10.30-%E8%A1%A5*%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A02/" title="2026.10.30-补*动手学深度学习2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-02</div><div class="info-item-2">2026.10.30-补*动手学深度学习2</div></div><div class="info-2"><div class="info-item-1">1.感知机  二分类任务，1&#x2F;-1  yi[&lt;wi,xi&gt;+b]  表示yi乘 y_hat  &lt;&#x3D;0:分类分错了然后把w和b变大 w&#x3D;w-l*&#x2F;deta_loss   学习率乘损失函数  p是余量，涉及2个样本是否能分的很开r涉及样本数量 感知机的问题：不能拟合XOR函数，即坐标系 2.多层感知机 多几条线去分  激活函数：非线性，保证结果不是线性函数（线性函数本质就是单层感知机，会失去效果） 激活函数     3.多0感知机的从0开始实现 1234567891011121314151617181920212223242526272829303132333435import torchfrom torch import nnfrom d2l import torch as d2lbatch_size=256train_iter,test_iter=d2l.load_data_fashion_mnist(batch_size)//单隐藏层的多层感知机num_inputs,num_outputs,num_hiddens=784...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">5lalaland</div><div class="author-info-description">我的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%8F%8A%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">机器学习基础知识及常见算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="toc-number">1.1.</span> <span class="toc-text">一、机器学习基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88Machine-Learning%EF%BC%8CML%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 机器学习（Machine Learning，ML）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.2.</span> <span class="toc-text">2. 机器学习的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AE%AD%E7%BB%83%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 机器学习的训练与验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%B8%B8%E8%A7%81%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="toc-number">1.1.4.</span> <span class="toc-text">4. 常见评价指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">二、监督学习算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-LR%EF%BC%88Logistic-Regression%EF%BC%8C%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">5. LR（Logistic Regression，逻辑回归）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-SVM%EF%BC%88Support-Vector-Machine%EF%BC%8C%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">6. SVM（Support Vector Machine，支持向量机）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-kNN%EF%BC%88K-Nearest-Neighbors%EF%BC%8CK%E8%BF%91%E9%82%BB%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">7. kNN（K-Nearest Neighbors，K近邻）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-RF%EF%BC%88Random-Forest%EF%BC%8C%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%EF%BC%89"><span class="toc-number">1.2.4.</span> <span class="toc-text">8. RF（Random Forest，随机森林）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-GNB%EF%BC%88Gaussian-Naive-Bayes%EF%BC%8C%E9%AB%98%E6%96%AF%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%EF%BC%89"><span class="toc-number">1.2.5.</span> <span class="toc-text">9. GNB（Gaussian Naive Bayes，高斯朴素贝叶斯）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-QDA%EF%BC%88Quadratic-Discriminant-Analysis%EF%BC%8C%E4%BA%8C%E6%AC%A1%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90%EF%BC%89"><span class="toc-number">1.2.6.</span> <span class="toc-text">10. QDA（Quadratic Discriminant Analysis，二次判别分析）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、无监督学习与聚类算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-K-means%EF%BC%88K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">11. K-means（K均值聚类）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-GMM%EF%BC%88Gaussian-Mixture-Model%EF%BC%8C%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">12. GMM（Gaussian Mixture Model，高斯混合模型）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-Fuzzy-C-means%EF%BC%88%E6%A8%A1%E7%B3%8AC%E5%9D%87%E5%80%BC%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">13. Fuzzy C-means（模糊C均值）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-Ward%EF%BC%88Ward%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB%EF%BC%89"><span class="toc-number">1.3.4.</span> <span class="toc-text">14. Ward（Ward层次聚类）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-Spectral-Clustering%EF%BC%88%E8%B0%B1%E8%81%9A%E7%B1%BB%EF%BC%89"><span class="toc-number">1.3.5.</span> <span class="toc-text">15. Spectral Clustering（谱聚类）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-HDBSCAN%EF%BC%88%E5%B1%82%E6%AC%A1%E5%AF%86%E5%BA%A6%E8%81%9A%E7%B1%BB%EF%BC%89"><span class="toc-number">1.3.6.</span> <span class="toc-text">16. HDBSCAN（层次密度聚类）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-Bayesian-GMM%EF%BC%88%E8%B4%9D%E5%8F%B6%E6%96%AF%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">1.3.7.</span> <span class="toc-text">17. Bayesian GMM（贝叶斯高斯混合模型）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88%E4%B8%8E%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96"><span class="toc-number">1.4.</span> <span class="toc-text">四、模型拟合与参数优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#18-Probability-Density-Fitting%EF%BC%88%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E6%8B%9F%E5%90%88%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">18. Probability Density Fitting（概率密度拟合）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#19-Maximum-Likelihood-Estimation%EF%BC%88%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%EF%BC%8CMLE%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">19. Maximum Likelihood Estimation（最大似然估计，MLE）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#20-EM%EF%BC%88Expectation-Maximization%EF%BC%8C%E6%9C%9F%E6%9C%9B%E6%9C%80%E5%A4%A7%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">20. EM（Expectation-Maximization，期望最大化算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#21-Initialization%EF%BC%88%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%89"><span class="toc-number">1.4.4.</span> <span class="toc-text">21. Initialization（初始化）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-Covariance%EF%BC%88%E5%8D%8F%E6%96%B9%E5%B7%AE%EF%BC%89"><span class="toc-number">1.4.5.</span> <span class="toc-text">22. Covariance（协方差）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#23-BIC%EF%BC%88Bayesian-Information-Criterion%EF%BC%8C%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BF%A1%E6%81%AF%E5%87%86%E5%88%99%EF%BC%89"><span class="toc-number">1.4.6.</span> <span class="toc-text">23. BIC（Bayesian Information Criterion，贝叶斯信息准则）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#24-Standardization%EF%BC%88%E6%A0%87%E5%87%86%E5%8C%96%EF%BC%89"><span class="toc-number">1.4.7.</span> <span class="toc-text">24. Standardization（标准化）</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/18/2026.11.1--the_state-of-the-art-of-MIA/" title="MIA 性能可靠性：">MIA 性能可靠性：</a><time datetime="2026-11-18T08:30:23.000Z" title="发表于 2026-11-18 16:30:23">2026-11-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/02/2026.10.10-%E8%A1%A5*%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" title="机器学习基础知识及常见算法">机器学习基础知识及常见算法</a><time datetime="2026-11-02T13:18:51.000Z" title="发表于 2026-11-02 21:18:51">2026-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/02/2026.10.30-%E8%A1%A5*%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A02/" title="2026.10.30-补*动手学深度学习2">2026.10.30-补*动手学深度学习2</a><time datetime="2026-11-02T13:16:10.000Z" title="发表于 2026-11-02 21:16:10">2026-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/02/2026.10.21-%E8%A1%A5*%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A01/" title="+ - * / 都会按照元素对应位置计算">+ - * / 都会按照元素对应位置计算</a><time datetime="2026-11-02T12:32:00.000Z" title="发表于 2026-11-02 20:32:00">2026-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/21/2026.10.17-%E8%A1%A5*AI/" title="1. AI 安全常用术语">1. AI 安全常用术语</a><time datetime="2026-10-21T12:33:29.000Z" title="发表于 2026-10-21 20:33:29">2026-10-21</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 5lalaland</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = '/vendor/mathjax/tex-mml-chtml.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
